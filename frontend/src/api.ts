@@ -109,3 +109,50 @@ export async function getDocument(id: number): Promise<unknown> {
 
   return response.json();
 }
+
+// CAD Viewer API functions
+export async function getCADViewerStatus(jobId: string): Promise<unknown> {
+  const response = await fetch(`${API_BASE}/viewer/status/${encodeURIComponent(jobId)}`);
+
+  if (!response.ok) {
+    const error = await response.json();
+    throw new Error(error.detail || 'Failed to get CAD viewer status');
+  }
+
+  return response.json();
+}
+
+export async function getCADPreview(jobId: string, page = 1, dpi = 150): Promise<Blob> {
+  const response = await fetch(
+    `${API_BASE}/viewer/preview/${encodeURIComponent(jobId)}?page=${page}&dpi=${dpi}`
+  );
+
+  if (!response.ok) {
+    const error = await response.json();
+    throw new Error(error.detail || 'Failed to get CAD preview');
+  }
+
+  return response.blob();
+}
+
+export async function getCADAttributes(jobId: string): Promise<unknown> {
+  const response = await fetch(`${API_BASE}/viewer/attributes/${encodeURIComponent(jobId)}`);
+
+  if (!response.ok) {
+    const error = await response.json();
+    throw new Error(error.detail || 'Failed to get CAD attributes');
+  }
+
+  return response.json();
+}
+
+export async function getCADLayers(jobId: string): Promise<unknown> {
+  const response = await fetch(`${API_BASE}/viewer/layers/${encodeURIComponent(jobId)}`);
+
+  if (!response.ok) {
+    const error = await response.json();
+    throw new Error(error.detail || 'Failed to get CAD layers');
+  }
+
+  return response.json();
+}

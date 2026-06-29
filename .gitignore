@@ -67,6 +67,9 @@ previews/
 models/
 ollama/
 
+# Frontend dependencies
+frontend/node_modules/
+
 # Temporary files
 tmp/
 temp/

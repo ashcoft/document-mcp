@@ -36,6 +36,11 @@ class Settings(BaseSettings):
     web_port: int = 8000
     web_host: str = "0.0.0.0"
     
+    # CAD Viewer Configuration
+    cad_viewer_enabled: bool = True
+    cad_viewer_base_url: str = "http://localhost:5173"
+    cad_preview_dpi: int = 150
+    
     # Celery Configuration
     celery_broker_url: str = "redis://localhost:6379/0"
     celery_result_backend: str = "redis://localhost:6379/1"
@@ -46,6 +51,7 @@ class Settings(BaseSettings):
     ocr_lang: str = "en"
     ocr_use_gpu: bool = True
     ocr_fallback_dpi: int = 150
+    ocr_cad_engine: str = "dots_ocr"
     
     # Chunking Configuration
     parent_chunk_size: int = 1024

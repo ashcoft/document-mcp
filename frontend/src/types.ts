@@ -81,3 +81,33 @@ export interface DocumentListResponse {
   page: number;
   page_size: number;
 }
+
+// CAD Viewer types
+export interface CADViewerStatus {
+  job_id: string;
+  document_id: number;
+  file_exists: boolean;
+  is_cad_file: boolean;
+  file_path: string | null;
+  status: string;
+}
+
+export interface CADLayer {
+  name: string;
+  visible: boolean;
+}
+
+export interface CADViewerLayers {
+  job_id: string;
+  document_id: number;
+  layers: string[];
+  total_layers: number;
+}
+
+export interface CADViewerAttributes {
+  job_id: string;
+  document_id: number;
+  title_block: Record<string, string>;
+  extraction_method: string;
+  text_preview: string;
+}

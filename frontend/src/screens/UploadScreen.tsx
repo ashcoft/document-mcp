@@ -1,6 +1,7 @@
 import { useState, useCallback, useRef, useEffect } from 'react';
 import { uploadDocument, getUploadStatus } from '../api';
 import type { UploadResponse, StatusResponse } from '../types';
+import CADViewer from '../components/CADViewer';
 
 export default function UploadScreen() {
   const [file, setFile] = useState<File | null>(null);
@@ -10,6 +11,13 @@ export default function UploadScreen() {
   const [status, setStatus] = useState<StatusResponse | null>(null);
   const [error, setError] = useState<string | null>(null);
   const pollIntervalRef = useRef<number | null>(null);
+
+  // Check if file is CAD format (DWG/DXF)
+  const isCADFile = useCallback((f: File | null): boolean => {
+    if (!f) return false;
+    const ext = f.name.toLowerCase().split('.').pop();
+    return ext === 'dwg' || ext === 'dxf';
+  }, []);
 
   const handleFileChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     const selected = e.target.files?.[0] ?? null;
@@ -155,6 +163,17 @@ export default function UploadScreen() {
             <strong>Updated:</strong>{' '}
             {new Date(status.updated_at).toLocaleString()}
           </p>
+        </div>
+      )}
+
+      {/* CAD Viewer - shown when DWG/DXF file is selected */}
+      {file && isCADFile(file) && (
+        <div style={{ marginTop: '1rem' }}>
+          <h3>CAD Viewer</h3>
+          <CADViewer
+            file={file}
+            onFileLoad={(f) => console.log('CAD file loaded:', f.name)}
+          />
         </div>
       )}
     </div>

@@ -1,0 +1,47 @@
+name: Security
+
+on:
+  push:
+    branches: [main]
+  schedule:
+    - cron: "0 0 * * 0"  # Weekly on Sunday
+
+jobs:
+  dependency-review:
+    name: Dependency Review
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/dependency-review-action@v4
+        with:
+          fail-on-severity: high
+          deny-licenses:
+            - GPL-1.0
+            - GPL-2.0
+            - LGPL-2.0
+            - LGPL-2.1
+
+  bandit:
+    name: Security Bandit Scan
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.14"
+
+      - name: Install bandit
+        run: pip install bandit bandit-sarif-formatter
+
+      - name: Run bandit
+        run: bandit -r src/ -f sarif -o bandit-results.sarif
+
+      - name: Upload results to GitHub Security tab
+        uses: github/codeql-action/upload-sarif@v3
+        with:
+          sarif_file: bandit-results.sarif

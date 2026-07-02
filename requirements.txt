@@ -29,7 +29,7 @@ python-pptx==1.0.2
 
 # LLM & Embeddings
 langchain==0.3.14
-langchain-ollama==0.3.0
+langchain-ollama==0.3.10
 ollama==0.4.7
 sentence-transformers==3.3.1
 torch==2.5.1

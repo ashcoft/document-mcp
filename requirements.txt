@@ -12,7 +12,7 @@ alembic==1.14.1
 psycopg2-binary==2.9.10
 
 # MCP
-mcp==1.28.0
+mcp==1.28.1
 
 # OCR & Document Processing
 paddleocr==3.6.0

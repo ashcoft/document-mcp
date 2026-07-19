@@ -14,6 +14,10 @@ const renderRejectionNote = (note: string | Record<string, unknown> | null | und
   return JSON.stringify(note);
 };
 
+/**
+ * UploadScreen - Document upload interface component
+ * Allows users to upload documents with optional discipline classification
+ */
 export default function UploadScreen() {
   const [file, setFile] = useState<File | null>(null);
   const [discipline, setDiscipline] = useState('');

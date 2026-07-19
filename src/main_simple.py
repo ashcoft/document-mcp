@@ -1,10 +1,14 @@
 """Simple backend server for testing frontend connection."""
+import logging
 import random
+import traceback
 from datetime import datetime
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
+
+logger = logging.getLogger(__name__)
 
 app = FastAPI()
 
@@ -41,9 +45,9 @@ async def upload_document():
             "message": "Document uploaded successfully. Processing will begin shortly."
         })
     except Exception as e:
+        logger.error("Upload failed: %s\n%s", str(e), traceback.format_exc())
         return JSONResponse({
-            "error": "Upload failed",
-            "detail": str(e)
+            "error": "Upload failed"
         }, status_code=500)
 
 @app.get("/api/upload/status/{job_id}")

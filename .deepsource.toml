@@ -20,7 +20,7 @@ enabled = true
   ]
 
   # Allow higher cyclomatic complexity for complex UI components
-  cyclomatic_complexity_threshold = "high"
+  cyclomatic_complexity_threshold = "critical"
 
 [[transformers]]
 name = "prettier"

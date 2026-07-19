@@ -15,7 +15,7 @@ psycopg2-binary==2.9.12
 mcp==1.28.1
 
 # OCR & Document Processing
-paddleocr==3.6.0
+paddleocr==3.7.0
 paddlepaddle-gpu==3.0.0
 pymupdf==1.24.14
 pdfplumber==0.11.10

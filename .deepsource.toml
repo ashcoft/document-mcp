@@ -1,0 +1,26 @@
+version = 1
+
+[[analyzers]]
+name = "javascript"
+enabled = true
+
+  [analyzers.meta]
+  # Configure for React with ES6 modules
+  plugins = ["react"]
+  module_system = "es-modules"
+  dialect = "typescript"
+
+  # Skip doc coverage for React component functions and arrow functions
+  # These are intentional for UI components
+  skip_doc_coverage = [
+    "function-expression",
+    "arrow-function-expression",
+    "method-definition"
+  ]
+
+  # Allow higher cyclomatic complexity for complex UI components
+  cyclomatic_complexity_threshold = "critical"
+
+[[transformers]]
+name = "prettier"
+enabled = true

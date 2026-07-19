@@ -12,7 +12,7 @@ export interface StatusResponse {
   status: string;
   progress: number;
   message?: string | null;
-  rejection_note?: Record<string, unknown> | null;
+  rejection_note?: string | Record<string, unknown> | null;
   created_at: string;
   updated_at: string;
 }

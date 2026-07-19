@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 from datetime import datetime
-from typing import TYPE_CHECKING, Optional
+from typing import TYPE_CHECKING, Any, Self
 
 from pgvector.sqlalchemy import Vector
 from sqlalchemy import (
@@ -177,7 +177,7 @@ class ValidationRule(Base):
     name: Mapped[str] = mapped_column(String(200), unique=True)
     rule_type: Mapped[str] = mapped_column(String(20))  # warning or blocking
     discipline: Mapped[str | None] = mapped_column(String(10), nullable=True)
-    definition: Mapped[dict] = mapped_column(JSONB)
+    definition: Mapped[dict[str, Any]] = mapped_column(JSONB)
     active: Mapped[bool] = mapped_column(Boolean, default=True)
     created_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow)
     updated_at: Mapped[datetime] = mapped_column(
@@ -196,7 +196,7 @@ class DisciplineSubmission(Base):
     status: Mapped[str] = mapped_column(String(10))  # pass or fail
     file_hash: Mapped[str] = mapped_column(String(64))
     docon_confirmation_ref: Mapped[str | None] = mapped_column(String(200))
-    rejection_note: Mapped[dict | None] = mapped_column(JSONB, nullable=True)
+    rejection_note: Mapped[dict[str, Any] | None] = mapped_column(JSONB, nullable=True)
     model_version: Mapped[str | None] = mapped_column(String(100))
     submitted_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow)
 
@@ -212,7 +212,7 @@ class LowConfidenceRegion(Base):
     id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
     document_id: Mapped[int] = mapped_column(ForeignKey("reference_documents.id"))
     page: Mapped[int] = mapped_column(Integer)
-    bbox: Mapped[dict] = mapped_column(JSONB)  # [x1, y1, x2, y2]
+    bbox: Mapped[dict[str, Any]] = mapped_column(JSONB)  # [x1, y1, x2, y2]
     text: Mapped[str | None] = mapped_column(String(2000))
     confidence: Mapped[float] = mapped_column(Float)
     reviewed: Mapped[bool] = mapped_column(Boolean, default=False)
@@ -293,7 +293,7 @@ class AgentAction(Base):
         String(50)
     )  # retry, fallback, proceed, flag_for_review, etc.
     reasoning: Mapped[str | None] = mapped_column(String(2000))
-    context: Mapped[dict | None] = mapped_column(JSONB)  # Additional context data
+    context: Mapped[dict[str, Any] | None] = mapped_column(JSONB)  # Additional context data
     model_version: Mapped[str | None] = mapped_column(String(100))
     confidence: Mapped[float | None] = mapped_column(Float)
     success: Mapped[bool] = mapped_column(Boolean, default=True)

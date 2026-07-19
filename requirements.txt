@@ -21,7 +21,7 @@ pymupdf==1.24.14
 pdfplumber==0.11.10
 ezdxf==1.4.4
 pytesseract==0.3.13
-Pillow==12.2.0
+Pillow==12.3.0
 numpy==1.26.4
 python-docx==1.2.0
 openpyxl==3.1.5

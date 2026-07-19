@@ -22,6 +22,9 @@ on:
       - 'setup.cfg'
       - 'requirements*.txt'
 
+permissions:
+  contents: read
+
 jobs:
   lint:
     name: Lint & Type Check

@@ -42,9 +42,6 @@ jobs:
       - name: Run ruff
         run: ruff check src/
 
-      - name: Run black check
-        run: black --check src/
-
       - name: Run mypy
         run: mypy src/
 

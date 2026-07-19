@@ -2,6 +2,22 @@ import { useState, useCallback, useRef, useEffect } from 'react';
 import { uploadDocument, getUploadStatus } from '../api';
 import type { UploadResponse, StatusResponse } from '../types';
 
+/**
+ * Safely render rejection_note which can be a string, object, or null
+ */
+const renderRejectionNote = (note: string | Record<string, unknown> | null | undefined) => {
+  if (!note) return null;
+  if (typeof note === 'string') return note;
+  if (typeof note === 'object' && 'reason' in note) {
+    return String((note as Record<string, unknown>).reason);
+  }
+  return JSON.stringify(note);
+};
+
+/**
+ * UploadScreen - Document upload interface component
+ * Allows users to upload documents with optional discipline classification
+ */
 export default function UploadScreen() {
   const [file, setFile] = useState<File | null>(null);
   const [discipline, setDiscipline] = useState('');
@@ -155,6 +171,11 @@ export default function UploadScreen() {
             <strong>Updated:</strong>{' '}
             {new Date(status.updated_at).toLocaleString()}
           </p>
+          {status.rejection_note && (
+            <p style={{ color: 'orange' }}>
+              <strong>Rejection Note:</strong> {renderRejectionNote(status.rejection_note)}
+            </p>
+          )}
         </div>
       )}
     </div>

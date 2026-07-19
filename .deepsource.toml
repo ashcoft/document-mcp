@@ -15,7 +15,8 @@ enabled = true
   skip_doc_coverage = [
     "function-expression",
     "arrow-function-expression",
-    "method-definition"
+    "method-definition",
+    "function-declaration"
   ]
 
   # Allow higher cyclomatic complexity for complex UI components

@@ -56,4 +56,4 @@ httpx==0.28.1
 # Code Quality
 ruff==0.15.22
 black==26.5.1
-mypy==1.20.2
+mypy==2.3.0

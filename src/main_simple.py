@@ -5,7 +5,7 @@ import logging
 import random
 import traceback
 from datetime import datetime
-from typing import Any, Dict
+from typing import Any
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
@@ -16,7 +16,7 @@ logger = logging.getLogger(__name__)
 app = FastAPI()
 
 # Simulate job progress storage
-job_progress: Dict[str, Dict[str, Any]] = {}
+job_progress: dict[str, dict[str, Any]] = {}
 
 app.add_middleware(
     CORSMiddleware,
@@ -27,7 +27,7 @@ app.add_middleware(
 )
 
 @app.get("/health")
-async def health_check() -> Dict[str, str]:
+async def health_check() -> dict[str, str]:
     return {"status": "healthy"}
 
 @app.post("/api/upload/")

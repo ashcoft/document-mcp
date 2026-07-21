@@ -1,15 +1,22 @@
 """Simple backend server for testing frontend connection."""
+from __future__ import annotations
+
+import logging
 import random
+import traceback
 from datetime import datetime
+from typing import Any
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 
+logger = logging.getLogger(__name__)
+
 app = FastAPI()
 
 # Simulate job progress storage
-job_progress = {}
+job_progress: dict[str, dict[str, Any]] = {}
 
 app.add_middleware(
     CORSMiddleware,
@@ -20,11 +27,11 @@ app.add_middleware(
 )
 
 @app.get("/health")
-async def health_check():
+async def health_check() -> dict[str, str]:
     return {"status": "healthy"}
 
 @app.post("/api/upload/")
-async def upload_document():
+async def upload_document() -> JSONResponse:
     try:
         job_id = f"job-{random.randint(1000, 9999)}"
         job_progress[job_id] = {
@@ -41,13 +48,13 @@ async def upload_document():
             "message": "Document uploaded successfully. Processing will begin shortly."
         })
     except Exception as e:
+        logger.error("Upload failed: %s\n%s", str(e), traceback.format_exc())
         return JSONResponse({
-            "error": "Upload failed",
-            "detail": str(e)
+            "error": "Upload failed"
         }, status_code=500)
 
 @app.get("/api/upload/status/{job_id}")
-async def get_upload_status(job_id: str):
+async def get_upload_status(job_id: str) -> JSONResponse:
     if job_id not in job_progress:
         # Initialize new job
         job_progress[job_id] = {
@@ -83,7 +90,7 @@ async def get_upload_status(job_id: str):
     })
 
 @app.post("/api/search")
-async def search_documents():
+async def search_documents() -> JSONResponse:
     return JSONResponse({
         "query": "test",
         "results": [],
@@ -91,7 +98,7 @@ async def search_documents():
     })
 
 @app.post("/api/ask")
-async def ask_question():
+async def ask_question() -> JSONResponse:
     return JSONResponse({
         "answer": "This is a test answer.",
         "confidence": "High",
@@ -101,7 +108,7 @@ async def ask_question():
     })
 
 @app.get("/api/documents")
-async def get_documents():
+async def get_documents() -> JSONResponse:
     return JSONResponse({
         "documents": [],
         "total": 0,

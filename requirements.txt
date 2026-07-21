@@ -36,7 +36,7 @@ torch==2.13.0
 
 # Background Processing
 celery==5.6.3
-redis==5.2.1
+redis==5.3.1
 
 # Utilities
 python-dotenv==1.2.2

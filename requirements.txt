@@ -50,7 +50,7 @@ passlib[bcrypt]==1.7.4
 # Testing
 pytest==9.1.1
 pytest-asyncio==1.4.0
-pytest-cov==6.3.0
+pytest-cov==7.1.0
 httpx==0.28.1
 
 # Code Quality

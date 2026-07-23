@@ -14,4 +14,4 @@ passlib[bcrypt]==1.7.4
 aiofiles==24.1.0
 
 # Database (optional - requires external service on Vercel)
-sqlalchemy==2.0.35
+sqlalchemy==2.0.51

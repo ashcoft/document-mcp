@@ -2,7 +2,7 @@
 fastapi==0.139.2
 uvicorn[standard]==0.32.0
 pydantic==2.13.4
-pydantic-settings==2.5.0
+pydantic-settings==2.14.2
 
 # Utilities
 python-dotenv==1.2.2

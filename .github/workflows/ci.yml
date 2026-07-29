@@ -40,7 +40,7 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install ruff black mypy types-requests types-aiofiles
+          pip install --only-binary :all: ruff==0.16.0 black==26.5.1 mypy==2.3.0 types-requests types-aiofiles
 
       - name: Run ruff
         run: ruff check src/
@@ -48,23 +48,6 @@ jobs:
   test:
     name: Test
     runs-on: ubuntu-latest
-    # Skip test on PRs for now due to pre-existing infrastructure issues
-    if: github.event_name == 'push'
-    services:
-      postgres:
-        image: pgvector/pgvector:pg16
-        env:
-          POSTGRES_USER: test
-          POSTGRES_PASSWORD: test
-          POSTGRES_DB: test
-        options: >-
-          --health-cmd pg_isready
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
-        ports:
-          - 5432:5432
-
     steps:
       - uses: actions/checkout@v7
 
@@ -76,17 +59,11 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install -e ".[dev]"
-
-      - name: Run migrations
-        env:
-          DATABASE_URL: postgresql://test:test@localhost:5432/test
-        run: alembic upgrade head
+          pip install --only-binary :all: pytest==9.1.1 pytest-asyncio==1.4.0 pydantic-settings==2.14.2
 
       - name: Run tests
         env:
-          DATABASE_URL: postgresql://test:test@localhost:5432/test
-          OLLAMA_HOST: http://localhost:11434
+          PYTHONPATH: ${{ github.workspace }}
         run: pytest tests/ -v --tb=short
 
   docker:

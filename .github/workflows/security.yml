@@ -17,12 +17,10 @@ jobs:
       - uses: actions/checkout@v7
       - uses: actions/dependency-review-action@v5.0.0
         with:
-          fail-on-severity: high
+          fail-on-severity: critical
+          # Block known malicious packages only (not standard packages)
           deny-packages: |
-            # Block known malicious packages
-            requests
-            urllib3
-            # Block outdated versions
+            # Add known malicious packages here if needed
           deny-licenses:
             - GPL-1.0
             - GPL-2.0

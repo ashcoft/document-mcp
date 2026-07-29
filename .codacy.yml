@@ -1,0 +1,13 @@
+---
+engines:
+  pyflakes:
+    enabled: true
+  pep8:
+    enabled: true
+  pylint:
+    enabled: true
+
+exclude_paths:
+  - "tests/**"
+  - "**/*_test.py"
+  - "**/test_*.py"

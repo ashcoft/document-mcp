@@ -11,15 +11,19 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 # Copy requirements first for caching
 COPY requirements.txt .
 
-# Install Python dependencies
+# Install Python dependencies (allow source builds since not all deps have wheels for Python 3.14)
 RUN pip install --no-cache-dir --upgrade pip && \
-    pip install --no-cache-dir --only-binary :all: -r requirements.txt
+    pip install --no-cache-dir -r requirements.txt
+
+# Create non-root user for security
+RUN useradd -m app && chown -R app:app /app
+USER app
 
 # Copy application code
-COPY src/ ./src/
-COPY alembic/ ./alembic/
-COPY alembic.ini .
-COPY pyproject.toml .
+COPY --chown=app:app src/ ./src/
+COPY --chown=app:app alembic/ ./alembic/
+COPY --chown=app:app alembic.ini .
+COPY --chown=app:app pyproject.toml .
 
 # Set Python path
 ENV PYTHONPATH=/app

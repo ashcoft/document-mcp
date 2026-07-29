@@ -48,8 +48,6 @@ jobs:
   test:
     name: Test
     runs-on: ubuntu-latest
-    # Skip test on PRs for now due to pre-existing infrastructure issues
-    if: github.event_name == 'push'
     services:
       postgres:
         image: pgvector/pgvector:pg16
@@ -87,6 +85,7 @@ jobs:
         env:
           DATABASE_URL: postgresql://test:test@localhost:5432/test
           OLLAMA_HOST: http://localhost:11434
+          PYTHONPATH: ${{ github.workspace }}
         run: pytest tests/ -v --tb=short
 
   docker:

@@ -1,4 +1,50 @@
-const API_BASE = 'http://localhost:8000/api';
+const API_BASE = '/api';
+
+/**
+ * Wraps fetch() to convert network-level failures (backend unreachable,
+ * DNS errors, etc.) into a clear, user-friendly error message instead of
+ * the raw browser "NetworkError when attempting to fetch resource".
+ */
+async function apiFetch(input: string, init?: RequestInit): Promise<Response> {
+  try {
+    const response = await fetch(input, init);
+    return response;
+  } catch (err) {
+    // fetch() throws a TypeError on network-level failures
+    if (err instanceof TypeError) {
+      throw new Error(
+        'Cannot connect to the server. Please ensure the backend is running (http://localhost:8000).'
+      );
+    }
+    throw err;
+  }
+}
+
+/**
+ * Safely parses an error response body as JSON, falling back to raw text.
+ *
+ * Gateway/proxy errors (502, 503, 504) typically have an empty body and an
+ * unhelpful statusText (e.g. "OK"). When the Vite dev-proxy cannot reach the
+ * backend, it responds with one of these codes, so we translate them into a
+ * clear, actionable message instead of the raw "502 OK".
+ */
+async function parseErrorResponse(response: Response): Promise<string> {
+  // Gateway/proxy errors – the backend is unreachable or crashed.
+  if ([502, 503, 504].includes(response.status)) {
+    return (
+      'Cannot connect to the backend server. ' +
+      'Please ensure the backend is running (http://localhost:8000).'
+    );
+  }
+
+  const text = await response.text();
+  try {
+    const error = JSON.parse(text);
+    return error.detail || error.message || `${response.status} ${response.statusText}`;
+  } catch {
+    return text || `${response.status} ${response.statusText}`;
+  }
+}
 
 export async function uploadDocument(file: File, discipline?: string): Promise<unknown> {
   const formData = new FormData();
@@ -7,26 +53,20 @@ export async function uploadDocument(file: File, discipline?: string): Promise<u
     formData.append('discipline', discipline);
   }
 
-  const response = await fetch(`${API_BASE}/upload/`, {
+  const response = await apiFetch(`${API_BASE}/upload/`, {
     method: 'POST',
     body: formData,
   });
 
   if (!response.ok) {
-    const text = await response.text();
-    try {
-      const error = JSON.parse(text);
-      throw new Error(error.detail || error.message || 'Upload failed');
-    } catch {
-      throw new Error(`Upload failed: ${response.status} ${response.statusText}`);
-    }
+    throw new Error(await parseErrorResponse(response));
   }
 
   const text = await response.text();
   if (!text) {
     throw new Error('Empty response from server');
   }
-  
+
   try {
     return JSON.parse(text);
   } catch {
@@ -35,11 +75,10 @@ export async function uploadDocument(file: File, discipline?: string): Promise<u
 }
 
 export async function getUploadStatus(jobId: string): Promise<unknown> {
-  const response = await fetch(`${API_BASE}/upload/status/${encodeURIComponent(jobId)}`);
+  const response = await apiFetch(`${API_BASE}/upload/status/${encodeURIComponent(jobId)}`);
 
   if (!response.ok) {
-    const error = await response.json();
-    throw new Error(error.detail || 'Failed to get status');
+    throw new Error(await parseErrorResponse(response));
   }
 
   return response.json();
@@ -51,7 +90,7 @@ export async function searchDocuments(request: {
   discipline?: string;
   document_ids?: number[];
 }): Promise<unknown> {
-  const response = await fetch(`${API_BASE}/search`, {
+  const response = await apiFetch(`${API_BASE}/search`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -60,8 +99,7 @@ export async function searchDocuments(request: {
   });
 
   if (!response.ok) {
-    const error = await response.json();
-    throw new Error(error.detail || 'Search failed');
+    throw new Error(await parseErrorResponse(response));
   }
 
   return response.json();
@@ -72,7 +110,7 @@ export async function askQuestion(request: {
   discipline?: string;
   document_ids?: number[];
 }): Promise<unknown> {
-  const response = await fetch(`${API_BASE}/ask`, {
+  const response = await apiFetch(`${API_BASE}/ask`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -81,30 +119,27 @@ export async function askQuestion(request: {
   });
 
   if (!response.ok) {
-    const error = await response.json();
-    throw new Error(error.detail || 'Question failed');
+    throw new Error(await parseErrorResponse(response));
   }
 
   return response.json();
 }
 
 export async function getDocuments(page = 1, pageSize = 20): Promise<unknown> {
-  const response = await fetch(`${API_BASE}/documents?page=${page}&page_size=${pageSize}`);
+  const response = await apiFetch(`${API_BASE}/documents?page=${page}&page_size=${pageSize}`);
 
   if (!response.ok) {
-    const error = await response.json();
-    throw new Error(error.detail || 'Failed to fetch documents');
+    throw new Error(await parseErrorResponse(response));
   }
 
   return response.json();
 }
 
 export async function getDocument(id: number): Promise<unknown> {
-  const response = await fetch(`${API_BASE}/documents/${id}`);
+  const response = await apiFetch(`${API_BASE}/documents/${id}`);
 
   if (!response.ok) {
-    const error = await response.json();
-    throw new Error(error.detail || 'Failed to fetch document');
+    throw new Error(await parseErrorResponse(response));
   }
 
   return response.json();

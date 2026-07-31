@@ -7,7 +7,7 @@ import traceback
 from datetime import datetime
 from typing import Any
 
-from fastapi import FastAPI
+from fastapi import FastAPI, File, Form, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 
@@ -31,21 +31,25 @@ async def health_check() -> dict[str, str]:
     return {"status": "healthy"}
 
 @app.post("/api/upload/")
-async def upload_document() -> JSONResponse:
+async def upload_document(
+    file: UploadFile = File(...),
+    discipline: str | None = Form(default=None),
+) -> JSONResponse:
     try:
         job_id = f"job-{random.randint(1000, 9999)}"
+        filename = file.filename or "test.pdf"
         job_progress[job_id] = {
             "status": "Checking",
             "progress": 0,
             "document_id": random.randint(1, 100),
-            "filename": "test.pdf"
+            "filename": filename,
         }
         return JSONResponse({
             "job_id": job_id,
             "document_id": job_progress[job_id]["document_id"],
-            "filename": job_progress[job_id]["filename"],
+            "filename": filename,
             "status": "Checking",
-            "message": "Document uploaded successfully. Processing will begin shortly."
+            "message": "Document uploaded successfully. Processing will begin shortly.",
         })
     except Exception as e:
         logger.error("Upload failed: %s\n%s", str(e), traceback.format_exc())

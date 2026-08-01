@@ -1,8 +1,25 @@
 import { defineConfig } from 'vite';
-import react from '@vitejs/plugin-react';
+import vue from '@vitejs/plugin-vue';
+import vuetify from 'vite-plugin-vuetify';
+import { fileURLToPath, URL } from 'node:url';
 
 export default defineConfig({
-  plugins: [react()],
+  plugins: [
+    vue({
+      template: {
+        transformAssetUrls: {
+          base: null,
+          includeAbsolute: false,
+        },
+      },
+    }),
+    vuetify({ autoImport: true }),
+  ],
+  resolve: {
+    alias: {
+      '@': fileURLToPath(new URL('./src', import.meta.url)),
+    },
+  },
   server: {
     port: 5173,
     proxy: {
@@ -13,13 +30,11 @@ export default defineConfig({
           proxy.on('error', (err, _req, _res) => {
             console.log('proxy error', err);
           });
-          proxy.on('proxyReq', (proxyReq, _req, _res) => {
-            console.log('Sending Request to the Target');
-          });
-          proxy.on('proxyRes', (proxyRes, _req, _res) => {
-            console.log('Received Response from the Target');
-          });
         },
+      },
+      '/ws': {
+        target: 'ws://localhost:8000',
+        ws: true,
       },
     },
   },

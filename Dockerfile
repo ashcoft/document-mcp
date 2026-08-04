@@ -8,12 +8,15 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     curl \
     && rm -rf /var/lib/apt/lists/*
 
+# Install uv for faster dependency resolution
+RUN curl -LsSf https://astral.sh/uv/install.sh | sh
+ENV PATH="/root/.local/bin:$PATH"
+
 # Copy requirements first for caching
 COPY requirements.txt .
 
-# Install Python dependencies
-RUN pip install --no-cache-dir --upgrade pip && \
-    pip install --no-cache-dir -r requirements.txt
+# Install Python dependencies using uv (faster resolution)
+RUN UV_NO_PROMPT=1 uv pip install --system -r requirements.txt
 
 # Create non-root user for security
 RUN useradd -m app && chown -R app:app /app

@@ -2,7 +2,7 @@
 from __future__ import annotations
 
 import logging
-import random
+import secrets
 import traceback
 from datetime import datetime, timedelta
 from typing import Any
@@ -12,6 +12,10 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 
 logger = logging.getLogger(__name__)
+
+# Constants to avoid duplication
+SINGLE_LINE_DIAGRAM_TITLE = "Single Line Diagram - Main Substation"
+OLLAMA_LLAMA3_MODEL = "ollama/llama3:8b"
 
 app = FastAPI()
 
@@ -23,7 +27,7 @@ documents: dict[int, dict[str, Any]] = {
     1: {
         "id": 1,
         "document_number": "DOC-ELC-001",
-        "title": "Single Line Diagram - Main Substation",
+        "title": SINGLE_LINE_DIAGRAM_TITLE,
         "revision": "B",
         "issue_status": "Final",
         "contract_number": "CN-2024-001",
@@ -98,9 +102,9 @@ async def upload_document(
     discipline: str | None = Form(default=None),
 ) -> JSONResponse:
     try:
-        job_id = f"job-{random.randint(1000, 9999)}"
+        job_id = f"job-{secrets.randbelow(9000) + 1000}"
         filename = file.filename or "test.pdf"
-        doc_id = random.randint(1, 100)
+        doc_id = secrets.randbelow(100) + 1
         job_progress[job_id] = {
             "status": "Checking",
             "progress": 0,
@@ -170,7 +174,7 @@ async def search_documents() -> JSONResponse:
                 "content": "The main transformer has a rated voltage of 33kV on the primary side and 11kV on the secondary side. The transformer is rated at 10MVA.",
                 "document_id": 1,
                 "document_number": "DOC-ELC-001",
-                "title": "Single Line Diagram - Main Substation",
+                "title": SINGLE_LINE_DIAGRAM_TITLE,
                 "discipline": "ELC",
                 "score": 0.92,
                 "search_type": "semantic",
@@ -180,7 +184,7 @@ async def search_documents() -> JSONResponse:
                 "content": "Equipment ratings: Transformer TR-001, 33/11kV, 10MVA, Dyn11, impedance 8.5%",
                 "document_id": 1,
                 "document_number": "DOC-ELC-001",
-                "title": "Single Line Diagram - Main Substation",
+                "title": SINGLE_LINE_DIAGRAM_TITLE,
                 "discipline": "ELC",
                 "score": 0.85,
                 "search_type": "keyword",
@@ -198,7 +202,7 @@ async def ask_question() -> JSONResponse:
         "citations": [
             {
                 "document_number": "DOC-ELC-001",
-                "title": "Single Line Diagram - Main Substation",
+                "title": SINGLE_LINE_DIAGRAM_TITLE,
                 "page_or_sheet": "Sheet 1, Page 2",
             }
         ],
@@ -379,7 +383,7 @@ async def get_agent_actions(
             "decision": "proceed",
             "reasoning": "OCR confidence above threshold (92%). Document quality is acceptable.",
             "context": {"confidence": 0.92, "threshold": 0.8},
-            "model_version": "ollama/llama3:8b",
+            "model_version": OLLAMA_LLAMA3_MODEL,
             "confidence": 0.92,
             "success": True,
             "created_at": (datetime.now() - timedelta(hours=2)).isoformat(),
@@ -392,7 +396,7 @@ async def get_agent_actions(
             "decision": "fallback",
             "reasoning": "PDF parsing failed, falling back to OCR-based extraction.",
             "context": {"strategy": "ocr_fallback"},
-            "model_version": "ollama/llama3:8b",
+            "model_version": OLLAMA_LLAMA3_MODEL,
             "confidence": 0.85,
             "success": True,
             "created_at": (datetime.now() - timedelta(hours=1, minutes=30)).isoformat(),
@@ -405,7 +409,7 @@ async def get_agent_actions(
             "decision": "proceed",
             "reasoning": "All validation rules passed. Document approved for reference.",
             "context": {"rules_passed": 5, "rules_failed": 0},
-            "model_version": "ollama/llama3:8b",
+            "model_version": OLLAMA_LLAMA3_MODEL,
             "confidence": 0.95,
             "success": True,
             "created_at": (datetime.now() - timedelta(hours=1)).isoformat(),

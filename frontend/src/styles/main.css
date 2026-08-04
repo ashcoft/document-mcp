@@ -83,7 +83,7 @@ body {
 
 /* Gradient header for cards */
 .gradient-header {
-  background: linear-gradient(135deg, #e65100 0%, #ff6f00 100%);
+  background: linear-gradient(135deg, #bf360c 0%, #e65100 100%);
   color: white;
 }
 

@@ -31,6 +31,7 @@
               @click="triggerFileInput"
             >
               <input
+                id="file-upload-input"
                 ref="fileInput"
                 type="file"
                 class="d-none"

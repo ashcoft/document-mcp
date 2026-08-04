@@ -4,14 +4,14 @@ WORKDIR /app
 
 # Install system dependencies and uv in one layer
 # Note: Packages sorted alphabetically for maintainability
-# Note: Installing uv via pip which provides verification via PyPI
+# Note: Installing uv via pip with --only-binary :all: to prevent setup scripts
 RUN apt-get update && apt-get install -y --no-install-recommends \
         build-essential \
         ca-certificates \
         curl \
         gnupg \
     && rm -rf /var/lib/apt/lists/* \
-    && pip install --no-cache-dir --root-user-action=ignore uv==0.12.1
+    && pip install --no-cache-dir --root-user-action=ignore --only-binary :all: uv==0.12.1
 
 ENV PATH="/usr/local/bin:$PATH"
 
@@ -19,8 +19,8 @@ ENV PATH="/usr/local/bin:$PATH"
 COPY requirements.txt .
 
 # Install Python dependencies using uv (faster resolution)
-# Note: Using --no-build to prevent setup scripts execution
-RUN UV_NO_PROMPT=1 uv pip install --system --no-build -r requirements.txt
+# Note: Using --only-binary :all: to prevent building from source
+RUN UV_NO_PROMPT=1 uv pip install --system --only-binary :all: -r requirements.txt
 
 # Create non-root user for security
 RUN useradd -m app && chown -R app:app /app

@@ -16,13 +16,13 @@ mcp==2.0.0
 
 # OCR & Document Processing
 paddleocr==3.7.0
-paddlepaddle-gpu==3.0.0
+paddlepaddle==3.3.1
 pymupdf==1.28.0
 pdfplumber==0.11.10
 ezdxf==1.4.4
 pytesseract==0.3.13
 Pillow==12.3.0
-numpy==2.5.1
+numpy>=1.24,<2.4
 python-docx==1.2.0
 openpyxl==3.1.5
 python-pptx==1.0.2
@@ -43,7 +43,7 @@ python-dotenv==1.2.2
 python-multipart==0.0.32
 httpx==0.28.1
 aiofiles==25.1.0
-websockets==17.0.1
+websockets>=14,<16
 pyjwt==2.13.0
 passlib[bcrypt]==1.7.4
 

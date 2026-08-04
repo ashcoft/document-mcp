@@ -30,14 +30,14 @@ jobs:
         uses: actions/setup-node@v7
         with:
           node-version: '24'
-          cache: 'npm'
-          cache-dependency-path: frontend/package-lock.json
 
-      - name: Install dependencies
-        run: npm ci --ignore-scripts
+      - name: Clean install dependencies
+        run: |
+          rm -rf node_modules
+          npm ci --ignore-scripts
 
       - name: TypeScript type check
-        run: ./node_modules/.bin/tsc --noEmit
+        run: ./node_modules/.bin/vue-tsc --noEmit
 
       - name: Build
         run: npm run build

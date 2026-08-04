@@ -11,7 +11,7 @@ test.describe("Document Control Frontend", () => {
     await expect(page.getByRole("link", { name: "Dashboard" })).toBeVisible();
     await expect(page.getByRole("link", { name: "Upload" })).toBeVisible();
     await expect(page.getByRole("link", { name: "Ask & Search" })).toBeVisible();
-    await expect(page.getByRole("link", { name: "Documents" })).toBeVisible();
+    await expect(page.getByRole("link", { name: "Documents" }).first()).toBeVisible();
     await expect(page.getByRole("link", { name: "Review Queue" })).toBeVisible();
   });
 
@@ -26,8 +26,8 @@ test.describe("Document Control Frontend", () => {
     await page.getByRole("link", { name: "Ask & Search" }).click();
     await expect(page).toHaveURL(/\/ask/);
 
-    // Switch to Documents screen
-    await page.getByRole("link", { name: "Documents" }).click();
+    // Switch to Documents screen - use first() to handle multiple Documents links
+    await page.getByRole("link", { name: "Documents" }).first().click();
     await expect(page).toHaveURL(/\/documents/);
 
     // Switch to Review screen

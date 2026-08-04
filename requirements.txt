@@ -16,7 +16,7 @@ mcp==2.0.0
 
 # OCR & Document Processing
 paddleocr==3.7.0
-paddlepaddle-gpu==3.0.0
+paddlepaddle==3.0.0
 pymupdf==1.28.0
 pdfplumber==0.11.10
 ezdxf==1.4.4

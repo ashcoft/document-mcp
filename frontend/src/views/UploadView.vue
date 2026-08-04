@@ -264,6 +264,7 @@ const isDragging = ref(false);
 const fileInput = ref<HTMLInputElement | null>(null);
 
 let pollInterval: ReturnType<typeof setInterval> | null = null;
+let hasUnmounted = false;
 
 const disciplines = [
   { label: 'Electrical (ELC)', value: 'ELC' },
@@ -374,7 +375,17 @@ async function handleUpload() {
     uploadResult.value = result;
 
     // Start polling for status
+    if (hasUnmounted) {
+      return;
+    }
     pollInterval = setInterval(async () => {
+      if (hasUnmounted) {
+        if (pollInterval) {
+          clearInterval(pollInterval);
+          pollInterval = null;
+        }
+        return;
+      }
       try {
         const statusUpdate = await getUploadStatus(result.job_id);
         status.value = statusUpdate;
@@ -401,8 +412,10 @@ async function handleUpload() {
 }
 
 onUnmounted(() => {
+  hasUnmounted = true;
   if (pollInterval) {
     clearInterval(pollInterval);
+    pollInterval = null;
   }
 });
 </script>

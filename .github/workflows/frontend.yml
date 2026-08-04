@@ -36,7 +36,7 @@ jobs:
       - name: Clean install dependencies
         run: |
           rm -rf node_modules
-          npm install
+          npm ci --ignore-scripts
 
       - name: TypeScript type check
         run: ./node_modules/.bin/vue-tsc --noEmit

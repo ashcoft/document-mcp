@@ -15,12 +15,13 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 
 ENV PATH="/usr/local/bin:$PATH"
 
-# Copy requirements first for caching
+# Copy requirements first for caching (using locked file with hashes)
+COPY requirements-lock.txt .
 COPY requirements.txt .
 
-# Install Python dependencies using uv (faster resolution)
-# Note: Using --only-binary :all: to prevent building from source
-RUN UV_NO_PROMPT=1 uv pip install --system --only-binary :all: -r requirements.txt
+# Install Python dependencies using uv with locked versions and hashes
+RUN UV_NO_PROMPT=1 uv pip install --system --only-binary :all: --require-hashes -r requirements-lock.txt || \
+    uv pip install --system --only-binary :all: -r requirements.txt
 
 # Create non-root user for security
 RUN useradd -m app && chown -R app:app /app

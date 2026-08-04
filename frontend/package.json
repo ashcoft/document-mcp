@@ -25,5 +25,8 @@
     "vite": "^6.0.5",
     "vite-plugin-vuetify": "^2.0.4",
     "vue-tsc": "^2.1.10"
+  },
+  "overrides": {
+    "nanoid": ">=5.1.16"
   }
 }

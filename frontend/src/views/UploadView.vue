@@ -30,6 +30,7 @@
               @drop.prevent="handleDrop"
               @click="triggerFileInput"
             >
+              <label for="file-upload-input" class="sr-only">File upload input</label>
               <input
                 id="file-upload-input"
                 ref="fileInput"

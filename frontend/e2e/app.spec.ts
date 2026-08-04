@@ -8,34 +8,39 @@ test.describe("Document Control Frontend", () => {
 
   test("should display navigation menu", async ({ page }) => {
     await page.goto("/");
-    await expect(page.getByRole("link", { name: "Dashboard" })).toBeVisible();
-    await expect(page.getByRole("link", { name: "Upload" })).toBeVisible();
-    await expect(page.getByRole("link", { name: "Ask & Search" })).toBeVisible();
-    await expect(page.getByRole("link", { name: "Documents" }).first()).toBeVisible();
-    await expect(page.getByRole("link", { name: "Review Queue" })).toBeVisible();
+    // Use navigation drawer specific locator
+    const navDrawer = page.locator(".v-navigation-drawer");
+    await expect(navDrawer.getByRole("link", { name: "Dashboard" })).toBeVisible();
+    await expect(navDrawer.getByRole("link", { name: "Upload" })).toBeVisible();
+    await expect(navDrawer.getByRole("link", { name: "Ask & Search" })).toBeVisible();
+    await expect(navDrawer.getByRole("link", { name: "Documents" })).toBeVisible();
+    await expect(navDrawer.getByRole("link", { name: "Review Queue" })).toBeVisible();
   });
 
   test("should switch between screens", async ({ page }) => {
     await page.goto("/");
 
+    // Use navigation drawer specific locator
+    const navDrawer = page.locator(".v-navigation-drawer");
+
     // Switch to Upload screen
-    await page.getByRole("link", { name: "Upload" }).click();
+    await navDrawer.getByRole("link", { name: "Upload" }).click();
     await expect(page).toHaveURL(/\/upload/);
 
     // Switch to Ask screen
-    await page.getByRole("link", { name: "Ask & Search" }).click();
+    await navDrawer.getByRole("link", { name: "Ask & Search" }).click();
     await expect(page).toHaveURL(/\/ask/);
 
-    // Switch to Documents screen - use first() to handle multiple Documents links
-    await page.getByRole("link", { name: "Documents" }).first().click();
+    // Switch to Documents screen
+    await navDrawer.getByRole("link", { name: "Documents" }).click();
     await expect(page).toHaveURL(/\/documents/);
 
     // Switch to Review screen
-    await page.getByRole("link", { name: "Review Queue" }).click();
+    await navDrawer.getByRole("link", { name: "Review Queue" }).click();
     await expect(page).toHaveURL(/\/review/);
 
     // Back to Dashboard
-    await page.getByRole("link", { name: "Dashboard" }).click();
+    await navDrawer.getByRole("link", { name: "Dashboard" }).click();
     await expect(page).toHaveURL(/\/$/);
   });
 });

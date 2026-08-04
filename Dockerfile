@@ -4,16 +4,14 @@ WORKDIR /app
 
 # Install system dependencies and uv in one layer
 # Note: Packages sorted alphabetically for maintainability
+# Note: Installing uv via pip which provides verification via PyPI
 RUN apt-get update && apt-get install -y --no-install-recommends \
         build-essential \
         ca-certificates \
         curl \
         gnupg \
     && rm -rf /var/lib/apt/lists/* \
-    && curl -LsSf https://astral.sh/uv/0.12.1/install.sh | sh \
-    && mv /root/.local/bin/uv /usr/local/bin/ \
-    && mv /root/.local/bin/uvx /usr/local/bin/ \
-    && rm -rf /root/.local/bin
+    && pip install --no-cache-dir --root-user-action=ignore uv==0.12.1
 
 ENV PATH="/usr/local/bin:$PATH"
 
@@ -21,7 +19,8 @@ ENV PATH="/usr/local/bin:$PATH"
 COPY requirements.txt .
 
 # Install Python dependencies using uv (faster resolution)
-RUN UV_NO_PROMPT=1 uv pip install --system -r requirements.txt
+# Note: Using --no-build to prevent setup scripts execution
+RUN UV_NO_PROMPT=1 uv pip install --system --no-build -r requirements.txt
 
 # Create non-root user for security
 RUN useradd -m app && chown -R app:app /app

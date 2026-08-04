@@ -2,26 +2,21 @@ FROM python:3.12-slim
 
 WORKDIR /app
 
-# Install system dependencies and uv in one layer
+# Install system dependencies, uv, and Python dependencies in one layer
 # Note: Packages sorted alphabetically for maintainability
 # Note: Installing uv via pip with --only-binary :all: to prevent setup scripts
+# Note: Using requirements-lock.txt with hashes for locked dependency versions
+COPY requirements-lock.txt .
 RUN apt-get update && apt-get install -y --no-install-recommends \
         build-essential \
         ca-certificates \
         curl \
         gnupg \
     && rm -rf /var/lib/apt/lists/* \
-    && pip install --no-cache-dir --root-user-action=ignore --only-binary :all: uv==0.12.1
+    && pip install --no-cache-dir --root-user-action=ignore --only-binary :all: uv==0.12.1 \
+    && UV_NO_PROMPT=1 uv pip install --system --only-binary :all: --require-hashes -r requirements-lock.txt
 
 ENV PATH="/usr/local/bin:$PATH"
-
-# Copy requirements first for caching (using locked file with hashes)
-COPY requirements-lock.txt .
-COPY requirements.txt .
-
-# Install Python dependencies using uv with locked versions and hashes
-RUN UV_NO_PROMPT=1 uv pip install --system --only-binary :all: --require-hashes -r requirements-lock.txt || \
-    uv pip install --system --only-binary :all: -r requirements.txt
 
 # Create non-root user for security
 RUN useradd -m app && chown -R app:app /app

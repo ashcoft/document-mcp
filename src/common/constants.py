@@ -1,9 +1,11 @@
 """Domain-specific constants for the engineering document control system."""
+
 from enum import StrEnum
 
 
 class Discipline(StrEnum):
     """Engineering disciplines supported by the system."""
+
     ELC = "ELC"  # Electrical
     MEC = "MEC"  # Mechanical
     INS = "INS"  # Instrumentation
@@ -12,6 +14,7 @@ class Discipline(StrEnum):
 
 class IssueStatus(StrEnum):
     """Document issue status codes per engineering document control standards."""
+
     IFR = "IFR"  # Issued for Review
     IFA = "IFA"  # Issued for Approval
     IFC = "IFC"  # Issued for Construction
@@ -21,6 +24,7 @@ class IssueStatus(StrEnum):
 
 class DocumentStatus(StrEnum):
     """Internal document processing status."""
+
     CHECKING = "Checking"
     APPROVED = "Approved"
     REJECTED = "Rejected"
@@ -28,18 +32,21 @@ class DocumentStatus(StrEnum):
 
 class ValidationRuleType(StrEnum):
     """Types of validation rules."""
+
     WARNING = "warning"
     BLOCKING = "blocking"
 
 
 class ChunkLevel(StrEnum):
     """Chunk hierarchy levels for parent-child retrieval."""
+
     PARENT = "parent"
     CHILD = "child"
 
 
 class ConfidenceLevel(StrEnum):
     """Q&A answer confidence levels."""
+
     HIGH = "High"
     MEDIUM = "Medium"
     LOW = "Low"
@@ -47,6 +54,7 @@ class ConfidenceLevel(StrEnum):
 
 class SubmissionStatus(StrEnum):
     """Document Controller submission status."""
+
     PASS = "pass"  # noqa: B105 - status value, not a password
     FAIL = "fail"
 

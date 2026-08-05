@@ -2,7 +2,7 @@
 
 import io
 import logging
-import subprocess
+import subprocess  # nosec: B404 - subprocess used only to call trusted ODA File Converter binary with hardcoded path and timeout
 import tempfile
 from pathlib import Path
 

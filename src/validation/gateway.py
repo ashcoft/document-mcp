@@ -1,4 +1,5 @@
 """Validation gateway - evaluates documents against configurable rules."""
+
 import logging
 from datetime import datetime
 
@@ -51,19 +52,23 @@ class ValidationGateway:
                 if not result["passed"]:
                     if rule.rule_type == "blocking":
                         passed = False
-                        failed_rules.append({
-                            "rule_name": rule.name,
-                            "rule_type": rule.rule_type,
-                            "message": result["message"],
-                            "details": result.get("details"),
-                        })
+                        failed_rules.append(
+                            {
+                                "rule_name": rule.name,
+                                "rule_type": rule.rule_type,
+                                "message": result["message"],
+                                "details": result.get("details"),
+                            }
+                        )
                     else:
-                        warnings.append({
-                            "rule_name": rule.name,
-                            "rule_type": rule.rule_type,
-                            "message": result["message"],
-                            "details": result.get("details"),
-                        })
+                        warnings.append(
+                            {
+                                "rule_name": rule.name,
+                                "rule_type": rule.rule_type,
+                                "message": result["message"],
+                                "details": result.get("details"),
+                            }
+                        )
 
             # Create validation result
             result = {
@@ -107,8 +112,7 @@ class ValidationGateway:
             # Filter by discipline if specified
             if discipline:
                 query = query.where(
-                    (ValidationRule.discipline == discipline) |
-                    (ValidationRule.discipline is None)
+                    (ValidationRule.discipline == discipline) | (ValidationRule.discipline is None)
                 )
 
             result = await session.execute(query)

@@ -1,4 +1,5 @@
 """Parent-child chunking for document retrieval."""
+
 import logging
 import re
 from dataclasses import dataclass
@@ -193,7 +194,7 @@ class ParentChildChunker:
                         content=current_child_text.strip(),
                         level=ChunkLevel.CHILD,
                         document_id=document_id,
-                        parent_id=parent.id if hasattr(parent, 'id') else None,
+                        parent_id=parent.id if hasattr(parent, "id") else None,
                         chunk_index=child_index,
                         token_count=current_tokens,
                         metadata={"parent_index": parent.chunk_index},
@@ -219,7 +220,7 @@ class ParentChildChunker:
                     content=current_child_text.strip(),
                     level=ChunkLevel.CHILD,
                     document_id=document_id,
-                    parent_id=parent.id if hasattr(parent, 'id') else None,
+                    parent_id=parent.id if hasattr(parent, "id") else None,
                     chunk_index=child_index,
                     token_count=current_tokens,
                     metadata={"parent_index": parent.chunk_index},

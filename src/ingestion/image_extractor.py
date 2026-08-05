@@ -1,4 +1,5 @@
 """Image extractor for raster images (PNG, JPG, TIFF) with OCR."""
+
 import logging
 from pathlib import Path
 
@@ -75,6 +76,7 @@ class ImageExtractor:
         """
         try:
             from PIL import Image
+
             return Image.open(file_path)
         except ImportError:
             raise OCRError("PIL/Pillow is required for image loading")

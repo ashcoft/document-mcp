@@ -1,4 +1,5 @@
 """Search and Q&A router."""
+
 import logging
 
 from fastapi import APIRouter, Depends, HTTPException, status
@@ -40,16 +41,18 @@ async def search_documents(
         # Transform to response format
         search_results = []
         for item in result["results"]:
-            search_results.append({
-                "chunk_id": item["chunk"]["id"],
-                "content": item["chunk"]["content"],
-                "document_id": item["document"]["id"],
-                "document_number": item["document"].get("document_number"),
-                "title": item["document"].get("title"),
-                "discipline": item["document"].get("discipline"),
-                "score": item["score"],
-                "search_type": item["search_type"],
-            })
+            search_results.append(
+                {
+                    "chunk_id": item["chunk"]["id"],
+                    "content": item["chunk"]["content"],
+                    "document_id": item["document"]["id"],
+                    "document_number": item["document"].get("document_number"),
+                    "title": item["document"].get("title"),
+                    "discipline": item["document"].get("discipline"),
+                    "score": item["score"],
+                    "search_type": item["search_type"],
+                }
+            )
 
         return SearchResponse(
             query=result["query"],

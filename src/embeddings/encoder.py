@@ -1,4 +1,5 @@
 """On-device embedding encoder using BAAI/bge-small-en-v1.5."""
+
 import asyncio
 import logging
 
@@ -177,9 +178,7 @@ class EmbeddingEncoder:
                 )
 
                 # Add to cache and results
-                for idx, text, embedding in zip(
-                    indices_to_encode, texts_to_encode, new_embeddings
-                ):
+                for idx, text, embedding in zip(indices_to_encode, texts_to_encode, new_embeddings):
                     text_hash = compute_text_hash(text)
                     if use_cache:
                         self._add_to_cache(text_hash, embedding)

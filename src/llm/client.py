@@ -1,4 +1,5 @@
 """Local LLM client for Q&A via Ollama."""
+
 import logging
 
 import httpx
@@ -76,7 +77,11 @@ class LLMClient:
 
             doc_number = doc_info.get("document_number", "Unknown")
             doc_title = doc_info.get("title", "Unknown")
-            page_or_sheet = chunk_info.get("page_numbers", ["N/A"])[0] if chunk_info.get("page_numbers") else "N/A"
+            page_or_sheet = (
+                chunk_info.get("page_numbers", ["N/A"])[0]
+                if chunk_info.get("page_numbers")
+                else "N/A"
+            )
 
             context_parts.append(
                 f"[{i}] Document: {doc_number} - {doc_title} (Page/Sheet: {page_or_sheet})\n"
@@ -188,11 +193,17 @@ ANSWER:"""
             for chunk in context_chunks:
                 doc_info = chunk.get("document", {})
                 if doc_info.get("document_number") == doc_number:
-                    citations.append({
-                        "document_number": doc_number,
-                        "title": doc_info.get("title", "Unknown"),
-                        "page_or_sheet": f"Sheet {page}" if "sheet" in citations_text.lower() else f"Page {page}",
-                    })
+                    citations.append(
+                        {
+                            "document_number": doc_number,
+                            "title": doc_info.get("title", "Unknown"),
+                            "page_or_sheet": (
+                                f"Sheet {page}"
+                                if "sheet" in citations_text.lower()
+                                else f"Page {page}"
+                            ),
+                        }
+                    )
                     break
 
         return citations
@@ -223,11 +234,13 @@ ANSWER:"""
             page_numbers = chunk_info.get("page_numbers", [])
             page_or_sheet = f"Sheet {page_numbers[0]}" if page_numbers else "N/A"
 
-            citations.append({
-                "document_number": doc_number,
-                "title": doc_info.get("title", "Unknown"),
-                "page_or_sheet": page_or_sheet,
-            })
+            citations.append(
+                {
+                    "document_number": doc_number,
+                    "title": doc_info.get("title", "Unknown"),
+                    "page_or_sheet": page_or_sheet,
+                }
+            )
 
         return citations[:5]  # Limit to top 5 citations
 

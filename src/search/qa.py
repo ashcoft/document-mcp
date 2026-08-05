@@ -1,4 +1,5 @@
 """Q&A service with grounded answers and citations."""
+
 import logging
 
 from src.common.audit import create_qa_audit

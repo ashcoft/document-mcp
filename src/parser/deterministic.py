@@ -1,4 +1,5 @@
 """Deterministic parser for engineering documents - regex and position-based extraction."""
+
 import logging
 import re
 from dataclasses import dataclass, field
@@ -16,6 +17,7 @@ logger = logging.getLogger(__name__)
 @dataclass
 class ParsedDocument:
     """Structured data extracted from an engineering document."""
+
     document_number: str | None = None
     title: str | None = None
     revision: str | None = None
@@ -55,13 +57,14 @@ class DeterministicParser:
 
         # Contract number pattern: varies, but often contains "CONTRACT" or "CTR"
         self.contract_regex = re.compile(
-            r"(?:Contract|CTR|Agreement)[\s#:]+([A-Z0-9\-]+)",
-            re.IGNORECASE
+            r"(?:Contract|CTR|Agreement)[\s#:]+([A-Z0-9\-]+)", re.IGNORECASE
         )
 
         # Page count pattern
         self.page_count_regex = re.compile(r"(?:Page|Sheet)\s+(?:of|/)\s*(\d+)", re.IGNORECASE)
-        self.page_count_regex_alt = re.compile(r"(\d+)\s*(?:of|/)\s*(\d+)\s*(?:pages|sheets)", re.IGNORECASE)
+        self.page_count_regex_alt = re.compile(
+            r"(\d+)\s*(?:of|/)\s*(\d+)\s*(?:pages|sheets)", re.IGNORECASE
+        )
 
         # Title block patterns
         self.title_patterns = [
@@ -107,7 +110,9 @@ class DeterministicParser:
                 "fields_extracted": self._count_extracted_fields(doc),
             }
 
-            logger.info(f"Deterministic parsing complete: {doc.extraction_metadata['fields_extracted']} fields extracted")
+            logger.info(
+                f"Deterministic parsing complete: {doc.extraction_metadata['fields_extracted']} fields extracted"
+            )
 
         except Exception as e:
             logger.error(f"Deterministic parsing failed: {e}", exc_info=True)
@@ -140,7 +145,7 @@ class DeterministicParser:
         if doc_num_match:
             # Get text after document number
             start = doc_num_match.end()
-            next_lines = text[start:start + 200].split("\n")[:3]
+            next_lines = text[start : start + 200].split("\n")[:3]
             for line in next_lines:
                 line = line.strip()
                 if line and len(line) > 5 and not re.match(r"^[A-Z0-9\-]+$", line):
@@ -227,12 +232,14 @@ class DeterministicParser:
             if rev_match:
                 parts = line.split()
                 if len(parts) >= 2:
-                    revisions.append({
-                        "rev": rev_match.group(1),
-                        "date": parts[1] if len(parts) > 1 else None,
-                        "description": " ".join(parts[2:]) if len(parts) > 2 else None,
-                        "raw": line.strip(),
-                    })
+                    revisions.append(
+                        {
+                            "rev": rev_match.group(1),
+                            "date": parts[1] if len(parts) > 1 else None,
+                            "description": " ".join(parts[2:]) if len(parts) > 2 else None,
+                            "raw": line.strip(),
+                        }
+                    )
 
         return revisions
 
@@ -267,11 +274,13 @@ class DeterministicParser:
             contractor_response = match.group(3).strip() if match.group(3) else None
 
             if client_comment:
-                comments.append({
-                    "seq": seq,
-                    "client_comment": client_comment,
-                    "contractor_response": contractor_response,
-                })
+                comments.append(
+                    {
+                        "seq": seq,
+                        "client_comment": client_comment,
+                        "contractor_response": contractor_response,
+                    }
+                )
 
         return comments
 
@@ -303,10 +312,12 @@ class DeterministicParser:
             description = match.group(2).strip()
 
             if symbol and description and len(symbol) > 1:
-                symbols.append({
-                    "symbol": symbol,
-                    "description": description,
-                })
+                symbols.append(
+                    {
+                        "symbol": symbol,
+                        "description": description,
+                    }
+                )
 
         return symbols
 
@@ -330,14 +341,16 @@ class DeterministicParser:
         )
 
         for match in equipment_pattern.finditer(text):
-            ratings.append({
-                "tag": match.group(1),
-                "rating": match.group(2).strip() if match.group(2) else None,
-                "voltage": match.group(3),
-                "phase": match.group(4),
-                "frequency": match.group(5),
-                "power": match.group(6),
-            })
+            ratings.append(
+                {
+                    "tag": match.group(1),
+                    "rating": match.group(2).strip() if match.group(2) else None,
+                    "voltage": match.group(3),
+                    "phase": match.group(4),
+                    "frequency": match.group(5),
+                    "power": match.group(6),
+                }
+            )
 
         return ratings
 
@@ -367,10 +380,12 @@ class DeterministicParser:
             sheet_title = match.group(2).strip()
 
             if sheet_no and sheet_title:
-                index_entries.append({
-                    "sheet_no": sheet_no,
-                    "sheet_title": sheet_title,
-                })
+                index_entries.append(
+                    {
+                        "sheet_no": sheet_no,
+                        "sheet_title": sheet_title,
+                    }
+                )
 
         return index_entries
 

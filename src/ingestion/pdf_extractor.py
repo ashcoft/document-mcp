@@ -1,4 +1,5 @@
 """PDF extractor with native text extraction and OCR fallback."""
+
 import logging
 from pathlib import Path
 
@@ -43,7 +44,9 @@ class PDFExtractor:
             low_confidence_regions = []
 
             if needs_ocr:
-                logger.info(f"Native text sparse ({len(native_text)} chars), triggering OCR fallback")
+                logger.info(
+                    f"Native text sparse ({len(native_text)} chars), triggering OCR fallback"
+                )
                 ocr_result = self._extract_with_ocr(file_path, page_count or detected_pages)
                 all_text = ocr_result["text"]
                 all_blocks = ocr_result["blocks"]

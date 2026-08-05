@@ -36,7 +36,7 @@ class TestComputeContentHash:
 
     def test_unicode_content(self):
         """Unicode content should hash correctly."""
-        content = "こんにちは世界".encode("utf-8")
+        content = "こんにちは世界".encode()
         expected = hashlib.sha256(content).hexdigest()
         assert compute_content_hash(content) == expected
 

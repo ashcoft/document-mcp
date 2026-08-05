@@ -2187,14 +2187,16 @@ ollama==0.6.2 \
     # via
     #   -r requirements.txt
     #   langchain-ollama
-opencv-contrib-python==4.10.0.84 \
-    --hash=sha256:040575b69e4f3aa761676bace4e3d1b8485fbfaf77ef77b266ab6bda5a3b5e9b \
-    --hash=sha256:2a36257ec1375d1bec2a62177ea39828ff9804de6831ee39646bdc875c343cec \
-    --hash=sha256:47ec3160dae75f70e099b286d1a2e086d20dac8b06e759f60eaf867e6bdecba7 \
-    --hash=sha256:4a3eae0ed9cadf1abe9293a6938a25a540e2fd6d7fc308595caa5896c8b36a0c \
-    --hash=sha256:a261223db41f6e512d76deaf21c8fcfb4fbbcbc2de62ca7f74a05f2c9ee489ef \
-    --hash=sha256:dea80d4db73b8acccf9e16b5744bf3654f47b22745074263f0a6c10de26c5ef5 \
-    --hash=sha256:ee4b0919026d8c533aeb69b16c6ec4a891a2f6844efaa14121bf68838753209c
+opencv-contrib-python==5.0.0.93 \
+    --hash=sha256:29b916da864002a921c79b6df4cfb2dcf79870f166ddf3ce1179b558bc7313d7 \
+    --hash=sha256:3ebb8e0506573f36f54038116321a086c97aeda8ef154198931f3ea18b435cc7 \
+    --hash=sha256:45a1ce7c68828907348e649edd471a7dc5244d3d0ac21989e67c63d2f4fa629a \
+    --hash=sha256:461622db95c964652d4d8fda171034961c3de270f78a6095aaad31050771774a \
+    --hash=sha256:8427dcb0561dc3ba32f3771c627f52b87c29932c265bea28ffcb54804c3c3fec \
+    --hash=sha256:b84f0b0fcdbd2421b5819e517542463e71eed7f41e0a0c4ec280ed88b7269a66 \
+    --hash=sha256:cac609c9a4fce67feb287837c671a2c4da9467df8e47fa0cce7bdc453d12a529 \
+    --hash=sha256:da0ba61096b08c63cb4440d8fd6f323835cbb78b714c5ba22a39e1db68c83166 \
+    --hash=sha256:dd8a80a04a8610c033757135b7846ad2027ba2d3bf9faf2f83f3dc6ed9e3814a
     # via paddlex
 openpyxl==3.1.5 \
     --hash=sha256:5282c12b107bffeef825f4617dc029afaf41d0ea60823bbb665ef3079dc79de2 \

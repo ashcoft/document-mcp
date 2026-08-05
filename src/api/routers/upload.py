@@ -1,4 +1,5 @@
 """Upload router for document ingestion."""
+
 import logging
 import uuid
 from pathlib import Path
@@ -66,7 +67,9 @@ async def upload_document(
         existing = existing_doc.scalar_one_or_none()
 
         if existing:
-            logger.info(f"Duplicate upload detected: {file_hash[:16]}... (document_id={existing.id})")
+            logger.info(
+                f"Duplicate upload detected: {file_hash[:16]}... (document_id={existing.id})"
+            )
             return UploadResponse(
                 job_id=existing.job_id or str(uuid.uuid4()),
                 document_id=existing.id,

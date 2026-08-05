@@ -1,4 +1,5 @@
 """Documents router for listing and retrieving document details."""
+
 import logging
 
 from fastapi import APIRouter, Depends, HTTPException, Query, status

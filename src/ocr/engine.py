@@ -1,4 +1,5 @@
 """OCR engine with PaddleOCR primary and Tesseract fallback."""
+
 import io
 import logging
 from pathlib import Path
@@ -130,12 +131,14 @@ class OCREngine:
                     y_coords = [point[1] for point in bbox]
                     bbox_flat = [min(x_coords), min(y_coords), max(x_coords), max(y_coords)]
 
-                    text_blocks.append(TextBlock(
-                        text=text,
-                        confidence=confidence,
-                        bbox=bbox_flat,
-                        page=page,
-                    ))
+                    text_blocks.append(
+                        TextBlock(
+                            text=text,
+                            confidence=confidence,
+                            bbox=bbox_flat,
+                            page=page,
+                        )
+                    )
 
         return text_blocks
 
@@ -175,12 +178,14 @@ class OCREngine:
             h = ocr_data["height"][i]
             bbox = [x, y, x + w, y + h]
 
-            text_blocks.append(TextBlock(
-                text=text,
-                confidence=confidence,
-                bbox=bbox,
-                page=page,
-            ))
+            text_blocks.append(
+                TextBlock(
+                    text=text,
+                    confidence=confidence,
+                    bbox=bbox,
+                    page=page,
+                )
+            )
 
         return text_blocks
 

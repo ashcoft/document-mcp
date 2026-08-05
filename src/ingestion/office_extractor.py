@@ -1,4 +1,5 @@
 """Office document extractor for DOCX/XLSX/PPTX using standard libraries."""
+
 import logging
 from pathlib import Path
 
@@ -66,10 +67,12 @@ class OfficeExtractor:
 
                     # Check if it's a heading
                     if para.style and para.style.name.startswith("Heading"):
-                        headings.append({
-                            "level": para.style.name,
-                            "text": para.text,
-                        })
+                        headings.append(
+                            {
+                                "level": para.style.name,
+                                "text": para.text,
+                            }
+                        )
 
             # Extract tables
             for table in doc.tables:
@@ -125,10 +128,12 @@ class OfficeExtractor:
                     text_parts.append(row_text)
                     sheet_rows += 1
 
-                sheets_info.append({
-                    "name": sheet_name,
-                    "rows": sheet_rows,
-                })
+                sheets_info.append(
+                    {
+                        "name": sheet_name,
+                        "rows": sheet_rows,
+                    }
+                )
 
             wb.close()
 
@@ -175,10 +180,12 @@ class OfficeExtractor:
 
                 text_parts.extend(slide_texts)
 
-                slides_info.append({
-                    "number": i,
-                    "text_blocks": len(slide_texts),
-                })
+                slides_info.append(
+                    {
+                        "number": i,
+                        "text_blocks": len(slide_texts),
+                    }
+                )
 
             return {
                 "text": "\n".join(text_parts),

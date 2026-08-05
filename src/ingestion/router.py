@@ -1,4 +1,5 @@
 """File format router for document ingestion."""
+
 import logging
 from pathlib import Path
 

@@ -1,4 +1,5 @@
 """Audit trail utilities for logging system events."""
+
 import logging
 from datetime import UTC, datetime
 from typing import Any
@@ -56,10 +57,7 @@ class AuditEvent:
     def log(self) -> None:
         """Log the audit event."""
         event_dict = self.to_dict()
-        logger.info(
-            f"AUDIT: {self.event_type}",
-            extra={"audit_event": event_dict}
-        )
+        logger.info(f"AUDIT: {self.event_type}", extra={"audit_event": event_dict})
 
 
 def create_ocr_audit(

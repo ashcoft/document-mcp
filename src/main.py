@@ -1,4 +1,5 @@
 """Application entry point for the Engineering Document Control System."""
+
 import logging
 from contextlib import asynccontextmanager
 

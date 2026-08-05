@@ -55,7 +55,7 @@ class ConfidenceLevel(StrEnum):
 class SubmissionStatus(StrEnum):
     """Document Controller submission status."""
 
-    PASS = "pass"  # noqa: B105 - status value, not a password
+    PASS = "pass"  # nosec: B105, Codacy suppress hardcoded-password - status value, not a password
     FAIL = "fail"
 
 

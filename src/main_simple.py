@@ -1,4 +1,5 @@
 """Simple backend server for testing frontend connection."""
+
 from __future__ import annotations
 
 import logging
@@ -96,6 +97,7 @@ async def health_check() -> dict[str, str]:
 # Upload endpoints
 # ============================================================
 
+
 @app.post("/api/upload/")
 async def upload_document(
     file: UploadFile = File(...),
@@ -111,18 +113,18 @@ async def upload_document(
             "document_id": doc_id,
             "filename": filename,
         }
-        return JSONResponse({
-            "job_id": job_id,
-            "document_id": doc_id,
-            "filename": filename,
-            "status": "Checking",
-            "message": "Document uploaded successfully. Processing will begin shortly.",
-        })
+        return JSONResponse(
+            {
+                "job_id": job_id,
+                "document_id": doc_id,
+                "filename": filename,
+                "status": "Checking",
+                "message": "Document uploaded successfully. Processing will begin shortly.",
+            }
+        )
     except Exception as e:
         logger.error("Upload failed: %s\n%s", str(e), traceback.format_exc())
-        return JSONResponse({
-            "error": "Upload failed"
-        }, status_code=500)
+        return JSONResponse({"error": "Upload failed"}, status_code=500)
 
 
 @app.get("/api/upload/status/{job_id}")
@@ -132,7 +134,7 @@ async def get_upload_status(job_id: str) -> JSONResponse:
             "status": "Checking",
             "progress": 0,
             "document_id": 1,
-            "filename": "test.pdf"
+            "filename": "test.pdf",
         }
 
     job = job_progress[job_id]
@@ -148,72 +150,80 @@ async def get_upload_status(job_id: str) -> JSONResponse:
         else:
             job["status"] = "Checking"
 
-    return JSONResponse({
-        "job_id": job_id,
-        "document_id": job["document_id"],
-        "status": job["status"],
-        "progress": job["progress"],
-        "message": None,
-        "rejection_note": None,
-        "created_at": datetime.now().isoformat(),
-        "updated_at": datetime.now().isoformat()
-    })
+    return JSONResponse(
+        {
+            "job_id": job_id,
+            "document_id": job["document_id"],
+            "status": job["status"],
+            "progress": job["progress"],
+            "message": None,
+            "rejection_note": None,
+            "created_at": datetime.now().isoformat(),
+            "updated_at": datetime.now().isoformat(),
+        }
+    )
 
 
 # ============================================================
 # Search & Q&A endpoints
 # ============================================================
 
+
 @app.post("/api/search")
 async def search_documents() -> JSONResponse:
-    return JSONResponse({
-        "query": "test",
-        "results": [
-            {
-                "chunk_id": 1,
-                "content": "The main transformer has a rated voltage of 33kV on the primary side and 11kV on the secondary side. The transformer is rated at 10MVA.",
-                "document_id": 1,
-                "document_number": "DOC-ELC-001",
-                "title": SINGLE_LINE_DIAGRAM_TITLE,
-                "discipline": "ELC",
-                "score": 0.92,
-                "search_type": "semantic",
-            },
-            {
-                "chunk_id": 2,
-                "content": "Equipment ratings: Transformer TR-001, 33/11kV, 10MVA, Dyn11, impedance 8.5%",
-                "document_id": 1,
-                "document_number": "DOC-ELC-001",
-                "title": SINGLE_LINE_DIAGRAM_TITLE,
-                "discipline": "ELC",
-                "score": 0.85,
-                "search_type": "keyword",
-            },
-        ],
-        "total": 2
-    })
+    return JSONResponse(
+        {
+            "query": "test",
+            "results": [
+                {
+                    "chunk_id": 1,
+                    "content": "The main transformer has a rated voltage of 33kV on the primary side and 11kV on the secondary side. The transformer is rated at 10MVA.",
+                    "document_id": 1,
+                    "document_number": "DOC-ELC-001",
+                    "title": SINGLE_LINE_DIAGRAM_TITLE,
+                    "discipline": "ELC",
+                    "score": 0.92,
+                    "search_type": "semantic",
+                },
+                {
+                    "chunk_id": 2,
+                    "content": "Equipment ratings: Transformer TR-001, 33/11kV, 10MVA, Dyn11, impedance 8.5%",
+                    "document_id": 1,
+                    "document_number": "DOC-ELC-001",
+                    "title": SINGLE_LINE_DIAGRAM_TITLE,
+                    "discipline": "ELC",
+                    "score": 0.85,
+                    "search_type": "keyword",
+                },
+            ],
+            "total": 2,
+        }
+    )
 
 
 @app.post("/api/ask")
 async def ask_question() -> JSONResponse:
-    return JSONResponse({
-        "answer": "The main transformer (TR-001) has a rated voltage of 33kV on the primary side and 11kV on the secondary side, with a power rating of 10MVA. The vector group is Dyn11 with an impedance of 8.5%.",
-        "confidence": "High",
-        "citations": [
-            {
-                "document_number": "DOC-ELC-001",
-                "title": SINGLE_LINE_DIAGRAM_TITLE,
-                "page_or_sheet": "Sheet 1, Page 2",
-            }
-        ],
-        "query": "test",
-        "context_chunks_used": 3
-    })
+    return JSONResponse(
+        {
+            "answer": "The main transformer (TR-001) has a rated voltage of 33kV on the primary side and 11kV on the secondary side, with a power rating of 10MVA. The vector group is Dyn11 with an impedance of 8.5%.",
+            "confidence": "High",
+            "citations": [
+                {
+                    "document_number": "DOC-ELC-001",
+                    "title": SINGLE_LINE_DIAGRAM_TITLE,
+                    "page_or_sheet": "Sheet 1, Page 2",
+                }
+            ],
+            "query": "test",
+            "context_chunks_used": 3,
+        }
+    )
 
 
 # ============================================================
 # Document endpoints
 # ============================================================
+
 
 @app.get("/api/documents")
 async def get_documents(
@@ -237,12 +247,9 @@ async def get_documents(
     end = start + page_size
     paginated = filtered[start:end]
 
-    return JSONResponse({
-        "documents": paginated,
-        "total": total,
-        "page": page,
-        "page_size": page_size
-    })
+    return JSONResponse(
+        {"documents": paginated, "total": total, "page": page, "page_size": page_size}
+    )
 
 
 @app.get("/api/documents/{document_id}")
@@ -322,21 +329,26 @@ async def get_document_chunks(document_id: int) -> JSONResponse:
     """Get document chunks for preview."""
     if document_id in document_chunks:
         chunks = document_chunks[document_id]
-        return JSONResponse({
+        return JSONResponse(
+            {
+                "document_id": document_id,
+                "chunks": chunks,
+                "total": len(chunks),
+            }
+        )
+    return JSONResponse(
+        {
             "document_id": document_id,
-            "chunks": chunks,
-            "total": len(chunks),
-        })
-    return JSONResponse({
-        "document_id": document_id,
-        "chunks": [],
-        "total": 0,
-    })
+            "chunks": [],
+            "total": 0,
+        }
+    )
 
 
 # ============================================================
 # Admin endpoints
 # ============================================================
+
 
 @app.get("/api/admin/metrics")
 async def get_system_metrics() -> JSONResponse:
@@ -344,25 +356,27 @@ async def get_system_metrics() -> JSONResponse:
     checking = sum(1 for d in documents.values() if d["status"] == "Checking")
     rejected = sum(1 for d in documents.values() if d["status"] == "Rejected")
 
-    return JSONResponse({
-        "documents": {
-            "total": len(documents),
-            "by_status": {
-                "Approved": approved,
-                "Checking": checking,
-                "Rejected": rejected,
+    return JSONResponse(
+        {
+            "documents": {
+                "total": len(documents),
+                "by_status": {
+                    "Approved": approved,
+                    "Checking": checking,
+                    "Rejected": rejected,
+                },
             },
-        },
-        "review_queue": {
-            "unreviewed_regions": 3,
-        },
-        "activity": {
-            "recent_agent_actions": 12,
-            "recent_qa_queries": 5,
-            "total_submissions": len(documents),
-        },
-        "timestamp": datetime.now().isoformat(),
-    })
+            "review_queue": {
+                "unreviewed_regions": 3,
+            },
+            "activity": {
+                "recent_agent_actions": 12,
+                "recent_qa_queries": 5,
+                "total_submissions": len(documents),
+            },
+            "timestamp": datetime.now().isoformat(),
+        }
+    )
 
 
 @app.get("/api/admin/actions")
@@ -425,41 +439,46 @@ async def get_agent_actions(
         actions = [a for a in actions if a["success"] == success]
 
     total = len(actions)
-    paginated = actions[offset:offset + limit]
+    paginated = actions[offset : offset + limit]
 
-    return JSONResponse({
-        "actions": paginated,
-        "total": total,
-        "limit": limit,
-        "offset": offset,
-    })
+    return JSONResponse(
+        {
+            "actions": paginated,
+            "total": total,
+            "limit": limit,
+            "offset": offset,
+        }
+    )
 
 
 @app.get("/api/admin/actions/stats")
 async def get_agent_action_stats(hours: int = 24) -> JSONResponse:
-    return JSONResponse({
-        "period_hours": hours,
-        "total_actions": 12,
-        "successful_actions": 11,
-        "success_rate": 91.7,
-        "by_action_type": {
-            "ocr_quality_eval": 4,
-            "parse_strategy": 3,
-            "validation_decision": 5,
-        },
-        "by_decision": {
-            "proceed": 9,
-            "fallback": 2,
-            "flag_for_review": 1,
-        },
-        "average_confidence": 0.887,
-        "cutoff": (datetime.now() - timedelta(hours=hours)).isoformat(),
-    })
+    return JSONResponse(
+        {
+            "period_hours": hours,
+            "total_actions": 12,
+            "successful_actions": 11,
+            "success_rate": 91.7,
+            "by_action_type": {
+                "ocr_quality_eval": 4,
+                "parse_strategy": 3,
+                "validation_decision": 5,
+            },
+            "by_decision": {
+                "proceed": 9,
+                "fallback": 2,
+                "flag_for_review": 1,
+            },
+            "average_confidence": 0.887,
+            "cutoff": (datetime.now() - timedelta(hours=hours)).isoformat(),
+        }
+    )
 
 
 # ============================================================
 # Review endpoints
 # ============================================================
+
 
 @app.get("/api/review/flagged")
 async def get_flagged_regions(
@@ -513,34 +532,43 @@ async def get_flagged_regions(
 
 @app.get("/api/review/stats/summary")
 async def get_review_stats() -> JSONResponse:
-    return JSONResponse({
-        "total_flagged": 3,
-        "unreviewed": 3,
-        "reviewed": 0,
-        "average_confidence": 0.55,
-        "review_progress": 0.0,
-    })
+    return JSONResponse(
+        {
+            "total_flagged": 3,
+            "unreviewed": 3,
+            "reviewed": 0,
+            "average_confidence": 0.55,
+            "review_progress": 0.0,
+        }
+    )
 
 
 # ============================================================
 # Validation endpoints
 # ============================================================
 
+
 @app.post("/api/validation/{document_id}")
 async def validate_document(document_id: int) -> JSONResponse:
-    return JSONResponse({
-        "document_id": document_id,
-        "passed": True,
-        "rules_evaluated": 5,
-        "rules_failed": 0,
-        "failed_rules": [],
-        "warnings": [
-            {"rule": "check_revision_format", "message": "Revision format uses non-standard naming."}
-        ],
-        "validated_at": datetime.now().isoformat(),
-    })
+    return JSONResponse(
+        {
+            "document_id": document_id,
+            "passed": True,
+            "rules_evaluated": 5,
+            "rules_failed": 0,
+            "failed_rules": [],
+            "warnings": [
+                {
+                    "rule": "check_revision_format",
+                    "message": "Revision format uses non-standard naming.",
+                }
+            ],
+            "validated_at": datetime.now().isoformat(),
+        }
+    )
 
 
 if __name__ == "__main__":
     import uvicorn
+
     uvicorn.run(app, host="0.0.0.0", port=8000)

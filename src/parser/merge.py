@@ -1,4 +1,5 @@
 """Merge deterministic and LLM extraction results."""
+
 import logging
 
 from src.common.exceptions import ParseError

@@ -1,4 +1,5 @@
 """Hybrid search combining pgvector cosine similarity and SQL full-text search."""
+
 import asyncio
 import logging
 
@@ -23,7 +24,7 @@ class HybridSearch:
     def __init__(self):
         """Initialize hybrid search."""
         self.vector_weight = 0.6  # Weight for vector similarity
-        self.text_weight = 0.4    # Weight for full-text search
+        self.text_weight = 0.4  # Weight for full-text search
 
     async def search(
         self,
@@ -99,7 +100,9 @@ class HybridSearch:
                     select(
                         DocumentChunk,
                         ReferenceDocument,
-                        func.cosine_distance(DocumentChunk.embedding, query_embedding).label("distance"),
+                        func.cosine_distance(DocumentChunk.embedding, query_embedding).label(
+                            "distance"
+                        ),
                     )
                     .join(ReferenceDocument, DocumentChunk.document_id == ReferenceDocument.id)
                     .where(DocumentChunk.level == "child")
@@ -124,25 +127,27 @@ class HybridSearch:
                 results = []
                 for chunk, doc, distance in rows:
                     similarity = 1 - distance  # Convert distance to similarity
-                    results.append({
-                        "chunk": {
-                            "id": chunk.id,
-                            "content": chunk.content,
-                            "level": chunk.level,
-                            "token_count": chunk.token_count,
-                            "page_numbers": [],  # Could be extracted from content
-                        },
-                        "document": {
-                            "id": doc.id,
-                            "document_number": doc.document_number,
-                            "title": doc.title,
-                            "discipline": doc.discipline,
-                            "revision": doc.revision,
-                            "issue_status": doc.issue_status,
-                        },
-                        "score": similarity,
-                        "search_type": "vector",
-                    })
+                    results.append(
+                        {
+                            "chunk": {
+                                "id": chunk.id,
+                                "content": chunk.content,
+                                "level": chunk.level,
+                                "token_count": chunk.token_count,
+                                "page_numbers": [],  # Could be extracted from content
+                            },
+                            "document": {
+                                "id": doc.id,
+                                "document_number": doc.document_number,
+                                "title": doc.title,
+                                "discipline": doc.discipline,
+                                "revision": doc.revision,
+                                "issue_status": doc.issue_status,
+                            },
+                            "score": similarity,
+                            "search_type": "vector",
+                        }
+                    )
 
                 return results
 
@@ -205,25 +210,27 @@ class HybridSearch:
                 # Format results
                 results = []
                 for chunk, doc, rank in rows:
-                    results.append({
-                        "chunk": {
-                            "id": chunk.id,
-                            "content": chunk.content,
-                            "level": chunk.level,
-                            "token_count": chunk.token_count,
-                            "page_numbers": [],
-                        },
-                        "document": {
-                            "id": doc.id,
-                            "document_number": doc.document_number,
-                            "title": doc.title,
-                            "discipline": doc.discipline,
-                            "revision": doc.revision,
-                            "issue_status": doc.issue_status,
-                        },
-                        "score": min(rank, 1.0),  # Normalize rank to 0-1
-                        "search_type": "text",
-                    })
+                    results.append(
+                        {
+                            "chunk": {
+                                "id": chunk.id,
+                                "content": chunk.content,
+                                "level": chunk.level,
+                                "token_count": chunk.token_count,
+                                "page_numbers": [],
+                            },
+                            "document": {
+                                "id": doc.id,
+                                "document_number": doc.document_number,
+                                "title": doc.title,
+                                "discipline": doc.discipline,
+                                "revision": doc.revision,
+                                "issue_status": doc.issue_status,
+                            },
+                            "score": min(rank, 1.0),  # Normalize rank to 0-1
+                            "search_type": "text",
+                        }
+                    )
 
                 return results
 
@@ -333,12 +340,14 @@ class HybridSearch:
 
                 if parent_chunk:
                     parent_ids_seen.add(parent_id)
-                    expanded_results.append({
-                        "chunk": parent_chunk,
-                        "document": result["document"],
-                        "score": result["score"],
-                        "search_type": "parent_expansion",
-                    })
+                    expanded_results.append(
+                        {
+                            "chunk": parent_chunk,
+                            "document": result["document"],
+                            "score": result["score"],
+                            "search_type": "parent_expansion",
+                        }
+                    )
 
         return expanded_results
 

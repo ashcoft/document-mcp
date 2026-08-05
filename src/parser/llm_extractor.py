@@ -1,4 +1,5 @@
 """LLM-based extraction using local Ollama for free-text and complex fields."""
+
 import json
 import logging
 

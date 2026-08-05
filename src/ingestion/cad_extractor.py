@@ -1,4 +1,5 @@
 """CAD extractor for DWG/DXF files using ODA File Converter and ezdxf."""
+
 import io
 import logging
 import subprocess
@@ -177,6 +178,7 @@ class CADExtractor:
 
                         # Create text block for OCR confidence tracking
                         from src.ocr.engine import TextBlock
+
                         block = TextBlock(
                             text=text,
                             confidence=1.0,  # Native DXF text has full confidence
@@ -196,6 +198,7 @@ class CADExtractor:
                         text_parts.append(text)
 
                         from src.ocr.engine import TextBlock
+
                         block = TextBlock(
                             text=text,
                             confidence=1.0,
@@ -254,7 +257,7 @@ class CADExtractor:
 
         try:
             # Look for title block in layout
-            if hasattr(doc, 'layout'):
+            if hasattr(doc, "layout"):
                 for layout_name in doc.layout_names:
                     layout = doc.layout(layout_name)
 
@@ -298,9 +301,7 @@ class CADExtractor:
             blocks = ocr_engine.ocr_image(image, page=1)
 
             # Apply confidence gating
-            passing_blocks, low_conf = self.confidence_gate.evaluate(
-                blocks, document_id=0
-            )
+            passing_blocks, low_conf = self.confidence_gate.evaluate(blocks, document_id=0)
 
             # Collect text
             text = "\n".join(block.text for block in passing_blocks)
@@ -339,12 +340,14 @@ class CADExtractor:
                     img_bytes = pix.tobytes("png")
                     doc.close()
                     from PIL import Image
+
                     return Image.open(io.BytesIO(img_bytes))
             except Exception:
                 pass
 
             # Fallback: use PIL to open image files
             from PIL import Image
+
             return Image.open(file_path)
 
         except ImportError:

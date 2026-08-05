@@ -1,4 +1,5 @@
 """OCR confidence gating - routes low-confidence blocks to review queue."""
+
 import logging
 
 from src.common.constants import OCR_CONFIDENCE_THRESHOLD

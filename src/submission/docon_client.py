@@ -1,4 +1,5 @@
 """Document Controller client for submitting approved documents."""
+
 import logging
 from datetime import datetime
 
@@ -193,7 +194,9 @@ class DocumentControllerClient:
                 result = response.json()
 
                 # Extract confirmation reference
-                confirmation_ref = result.get("confirmation_ref") or result.get("reference") or result.get("id")
+                confirmation_ref = (
+                    result.get("confirmation_ref") or result.get("reference") or result.get("id")
+                )
 
                 if not confirmation_ref:
                     raise ExternalServiceError(
@@ -203,7 +206,9 @@ class DocumentControllerClient:
                 return str(confirmation_ref)
 
         except httpx.HTTPStatusError as e:
-            logger.error(f"Document Controller HTTP error: {e.response.status_code} - {e.response.text}")
+            logger.error(
+                f"Document Controller HTTP error: {e.response.status_code} - {e.response.text}"
+            )
             raise ExternalServiceError(
                 f"Document Controller returned error: {e.response.status_code}"
             ) from e
@@ -285,7 +290,9 @@ async def submit_document(
             response.raise_for_status()
             result = response.json()
             return {
-                "confirmation_ref": result.get("confirmation_ref") or result.get("reference") or result.get("id"),
+                "confirmation_ref": result.get("confirmation_ref")
+                or result.get("reference")
+                or result.get("id"),
                 "status": "submitted",
             }
     except httpx.HTTPStatusError as e:

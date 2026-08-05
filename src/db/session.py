@@ -1,4 +1,5 @@
 """Async database session management with pgvector support."""
+
 from collections.abc import AsyncGenerator
 
 from sqlalchemy.ext.asyncio import (
@@ -13,6 +14,7 @@ from src.config.settings import settings
 
 class Base(DeclarativeBase):
     """Base class for all ORM models."""
+
     pass
 
 
@@ -61,6 +63,7 @@ async def init_db() -> None:
     # Register pgvector types for asyncpg if available
     try:
         from pgvector.sqlalchemy import register_vector_async
+
         register_vector_async(engine)
     except ImportError:
         # pgvector < 0.3.0 or different API - vector type will be handled by SQLAlchemy

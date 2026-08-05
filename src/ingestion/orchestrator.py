@@ -1,4 +1,5 @@
 """Ingestion orchestrator - routes files through the extraction pipeline."""
+
 import logging
 from pathlib import Path
 
@@ -50,7 +51,9 @@ class IngestionOrchestrator:
         try:
             # Step 1: Compute file hash for idempotency
             file_hash = compute_file_hash(file_path)
-            logger.info(f"Processing document {document_id}: {file_path.name} (hash: {file_hash[:16]}...)")
+            logger.info(
+                f"Processing document {document_id}: {file_path.name} (hash: {file_hash[:16]}...)"
+            )
 
             # Step 2: Route to appropriate extractor
             extractor_type = format_router.route(file_path)

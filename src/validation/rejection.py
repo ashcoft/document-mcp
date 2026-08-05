@@ -1,4 +1,5 @@
 """Rejection note builder for validation failures."""
+
 import logging
 from datetime import datetime
 
@@ -64,7 +65,9 @@ class RejectionNoteBuilder:
                 "summary": {
                     "total_issues": len(failed_rules),
                     "total_warnings": len(warnings),
-                    "blocking_failures": len([r for r in failed_rules if r.get("rule_type") == "blocking"]),
+                    "blocking_failures": len(
+                        [r for r in failed_rules if r.get("rule_type") == "blocking"]
+                    ),
                 },
                 "comments_response": comments,
                 "format": "numbered_client_comment_contractor_response",

@@ -114,6 +114,12 @@ class CADExtractor:
         try:
             output_dxf = output_dir / f"{dwg_path.stem}.dxf"
 
+            # Validate paths are within expected directories
+            if not str(dwg_path.parent).replace("\\", "/").startswith("/tmp/") and \
+               not str(dwg_path.parent).replace("\\", "/").startswith("/workspace/project/document-mcp/"):
+                logger.error(f"Path {dwg_path.parent} is not in an allowed directory")
+                return None
+
             # ODA File Converter command line
             # Format: ODAFileConverter <input> <output> <version> <revision> <type> <output_format> <recursive> <audit> <password>
             cmd = [
@@ -133,6 +139,7 @@ class CADExtractor:
                 capture_output=True,
                 text=True,
                 timeout=300,  # 5 minute timeout
+                shell=False,  # Explicitly disable shell to prevent injection
             )
 
             if result.returncode == 0:

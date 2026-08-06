@@ -364,8 +364,8 @@ class CADExtractor:
                     from PIL import Image
 
                     return Image.open(io.BytesIO(img_bytes))
-            except Exception:
-                pass
+            except Exception as e:
+                logger.debug(f"PDF rendering failed, falling back to PIL: {e}")
 
             # Fallback: use PIL to open image files
             from PIL import Image

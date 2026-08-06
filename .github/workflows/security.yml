@@ -18,10 +18,6 @@ jobs:
       - uses: actions/dependency-review-action@v5.0.0
         with:
           fail-on-severity: critical
-          # Block known malicious packages only (not standard packages)
-          deny-packages: |
-            # Add known malicious packages here if needed
-          # Allow common open source licenses
 
   bandit:
     name: Security Bandit Scan
@@ -53,13 +49,14 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: read
+      security-events: write
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v7
 
       - name: Run Trivy vulnerability scanner
-        uses: aquasecurity/trivy-action@master
+        uses: aquasecurity/trivy-action@ed142fd0673e97e23eac54620cfb913e5ce36c25
         with:
           scan-type: "fs"
           scan-ref: "."

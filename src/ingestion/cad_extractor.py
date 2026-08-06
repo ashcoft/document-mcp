@@ -115,8 +115,11 @@ class CADExtractor:
             output_dxf = output_dir / f"{dwg_path.stem}.dxf"
 
             # Validate paths are within expected directories
-            if not str(dwg_path.parent).replace("\\", "/").startswith("/tmp/") and \
-               not str(dwg_path.parent).replace("\\", "/").startswith("/workspace/project/document-mcp/"):
+            parent_str = str(dwg_path.parent).replace("\\", "/")
+            if not (
+                parent_str.startswith("/tmp/")
+                or parent_str.startswith("/workspace/project/document-mcp/")
+            ):
                 logger.error(f"Path {dwg_path.parent} is not in an allowed directory")
                 return None
 

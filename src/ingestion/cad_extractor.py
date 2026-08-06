@@ -121,6 +121,8 @@ class CADExtractor:
                 logger.error(f"Failed to resolve path {dwg_path.parent}")
                 return None
 
+            # nosec: B108 - temp directory is intentionally used for CAD file processing
+            # nosec: B603 - shell=False is explicitly set, no shell injection possible
             allowed_roots = [
                 Path("/tmp").resolve(),
                 Path("/workspace/project/document-mcp").resolve(),

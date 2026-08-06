@@ -1,10 +1,13 @@
 """Local file storage utilities for uploads and previews."""
 
+import logging
 import uuid
 from pathlib import Path
 
 from src.common.exceptions import FileStorageError
 from src.config.settings import settings
+
+logger = logging.getLogger(__name__)
 
 
 class FileStorage:
@@ -143,8 +146,8 @@ class FileStorage:
                     try:
                         file_path.unlink()
                         deleted += 1
-                    except Exception:
-                        pass
+                    except Exception as e:
+                        logger.warning(f"Failed to delete temp file {file_path}: {e}")
 
         return deleted
 

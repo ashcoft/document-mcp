@@ -27,7 +27,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          pip install --only-binary :all: python-semantic-release==9.15.0
+          pip install --no-cache-dir --only-binary :all: python-semantic-release==9.15.0
 
       - name: Run semantic-release
         id: semantic

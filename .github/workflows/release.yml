@@ -13,6 +13,8 @@ jobs:
     name: Semantic Release
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/main'
+    outputs:
+      version: ${{ steps.semantic.outputs.version }}
     steps:
       - uses: actions/checkout@v7
         with:
@@ -30,9 +32,12 @@ jobs:
           pip install python-semantic-release
 
       - name: Run semantic-release
+        id: semantic
         env:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
-        run: semantic-release publish
+        run: |
+          semantic-release version
+          echo "version=$(python -c "import configparser; c=configparser.ConfigParser(); c.read('pyproject.toml'); print(c['project']['version'])")" >> $GITHUB_OUTPUT
 
   docker:
     name: Release Docker Image
@@ -43,6 +48,8 @@ jobs:
       packages: write
     steps:
       - uses: actions/checkout@v7
+        with:
+          ref: v${{ needs.release.outputs.version }}
 
       - name: Extract metadata
         id: meta
@@ -51,6 +58,7 @@ jobs:
           images: ghcr.io/${{ github.repository }}
           tags: |
             type=semver,pattern={{version}}
+            type=semver,pattern={{major}}.{{minor}}
             type=sha,prefix=
 
       - name: Set up Docker Buildx

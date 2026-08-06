@@ -34,7 +34,8 @@ class Settings(BaseSettings):
     # Web UI Configuration
     start_web_ui: bool = True
     web_port: int = 8000
-    web_host: str = "0.0.0.0"
+    # nosec: B104 - bind to localhost by default; use WEB_HOST env var to expose
+    web_host: str = "127.0.0.1"
 
     # Celery Configuration
     celery_broker_url: str = "redis://localhost:6379/0"

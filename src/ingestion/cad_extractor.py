@@ -117,18 +117,19 @@ class CADExtractor:
             # Validate paths are within expected directories (use canonical paths)
             try:
                 resolved_parent = dwg_path.parent.resolve()
-                allowed_roots = [
-                    Path("/tmp").resolve(),
-                    Path("/workspace/project/document-mcp").resolve(),
-                ]
-                if not any(
-                    resolved_parent == root or resolved_parent.is_relative_to(root)
-                    for root in allowed_roots
-                ):
-                    logger.error(f"Path {dwg_path.parent} is not in an allowed directory")
-                    return None
-            except (OSError, RuntimeError):
+            except OSError:
                 logger.error(f"Failed to resolve path {dwg_path.parent}")
+                return None
+
+            allowed_roots = [
+                Path("/tmp").resolve(),
+                Path("/workspace/project/document-mcp").resolve(),
+            ]
+            if not any(
+                resolved_parent == root or resolved_parent.is_relative_to(root)
+                for root in allowed_roots
+            ):
+                logger.error(f"Path {dwg_path.parent} is not in an allowed directory")
                 return None
 
             # ODA File Converter command line

@@ -114,6 +114,27 @@ class CADExtractor:
         try:
             output_dxf = output_dir / f"{dwg_path.stem}.dxf"
 
+            # Validate paths are within expected directories (use canonical paths)
+            try:
+                resolved_parent = dwg_path.parent.resolve()
+            except OSError:
+                logger.error(f"Failed to resolve path {dwg_path.parent}")
+                return None
+
+            # nosec: B108 - temp directory is intentionally used for CAD file processing
+            # nosec: B603 - shell=False is explicitly set, no shell injection possible
+            # NOSONAR - temp directory is intentionally used for CAD file processing
+            allowed_roots = [  # nosec: B108
+                Path("/tmp").resolve(),  # NOSONAR
+                Path("/workspace/project/document-mcp").resolve(),
+            ]
+            if not any(
+                resolved_parent == root or resolved_parent.is_relative_to(root)
+                for root in allowed_roots
+            ):
+                logger.error(f"Path {dwg_path.parent} is not in an allowed directory")
+                return None
+
             # ODA File Converter command line
             # Format: ODAFileConverter <input> <output> <version> <revision> <type> <output_format> <recursive> <audit> <password>
             cmd = [
@@ -128,11 +149,12 @@ class CADExtractor:
                 "",  # No password
             ]
 
-            result = subprocess.run(
+            result = subprocess.run(  # nosec: B603
                 cmd,
                 capture_output=True,
                 text=True,
                 timeout=300,  # 5 minute timeout
+                shell=False,  # Explicitly disable shell to prevent injection
             )
 
             if result.returncode == 0:

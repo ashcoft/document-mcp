@@ -32,7 +32,7 @@ class TestSettingsDefaults:
         settings = Settings()
         assert settings.start_web_ui is True
         assert settings.web_port == 8000
-        assert settings.web_host == "0.0.0.0"
+        assert settings.web_host == "127.0.0.1"  # B104 fix: bind to localhost by default
 
     def test_ocr_defaults(self):
         """Verify default OCR settings."""

@@ -123,8 +123,9 @@ class CADExtractor:
 
             # nosec: B108 - temp directory is intentionally used for CAD file processing
             # nosec: B603 - shell=False is explicitly set, no shell injection possible
+            # NOSONAR - temp directory is intentionally used for CAD file processing
             allowed_roots = [  # nosec: B108
-                Path("/tmp").resolve(),
+                Path("/tmp").resolve(),  # NOSONAR
                 Path("/workspace/project/document-mcp").resolve(),
             ]
             if not any(

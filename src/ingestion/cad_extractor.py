@@ -114,13 +114,21 @@ class CADExtractor:
         try:
             output_dxf = output_dir / f"{dwg_path.stem}.dxf"
 
-            # Validate paths are within expected directories
-            parent_str = str(dwg_path.parent).replace("\\", "/")
-            if not (
-                parent_str.startswith("/tmp/")
-                or parent_str.startswith("/workspace/project/document-mcp/")
-            ):
-                logger.error(f"Path {dwg_path.parent} is not in an allowed directory")
+            # Validate paths are within expected directories (use canonical paths)
+            try:
+                resolved_parent = dwg_path.parent.resolve()
+                allowed_roots = [
+                    Path("/tmp").resolve(),
+                    Path("/workspace/project/document-mcp").resolve(),
+                ]
+                if not any(
+                    resolved_parent == root or resolved_parent.is_relative_to(root)
+                    for root in allowed_roots
+                ):
+                    logger.error(f"Path {dwg_path.parent} is not in an allowed directory")
+                    return None
+            except (OSError, RuntimeError):
+                logger.error(f"Failed to resolve path {dwg_path.parent}")
                 return None
 
             # ODA File Converter command line

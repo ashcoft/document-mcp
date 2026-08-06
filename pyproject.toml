@@ -44,3 +44,14 @@ ignore_missing_imports = true
 [tool.pytest.ini_options]
 asyncio_mode = "auto"
 testpaths = ["tests"]
+
+[tool.semantic_release]
+version_toml = ["pyproject.toml:project.version"]
+branch = "main"
+build_command = "pip install build && python -m build"
+
+[tool.semantic_release.changelog]
+include_commit_author = true
+
+[tool.semantic_release.publish]
+upload_to_vcs_release = true

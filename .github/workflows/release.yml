@@ -32,15 +32,16 @@ jobs:
       - name: Run semantic-release
         id: semantic
         env:
-          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           semantic-release version
-          echo "version=$(python -c "import configparser; c=configparser.ConfigParser(); c.read('pyproject.toml'); print(c['project']['version'])")" >> $GITHUB_OUTPUT
+          echo "version=$(python3 -c 'import tomllib; print(tomllib.load(open("pyproject.toml", "rb"))["project"]["version"])')" >> "$GITHUB_OUTPUT"
 
   docker:
     name: Release Docker Image
     runs-on: ubuntu-latest
     needs: [release]
+    if: needs.release.outputs.version != ''
     permissions:
       contents: read
       packages: write

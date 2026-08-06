@@ -46,13 +46,12 @@ asyncio_mode = "auto"
 testpaths = ["tests"]
 
 [tool.semantic_release]
-version_variable = [
-    "pyproject.toml:version",
-]
+version_toml = ["pyproject.toml:project.version"]
 branch = "main"
 build_command = "pip install build && python -m build"
-upload_to_pypi = false
-upload_to_release = true
 
 [tool.semantic_release.changelog]
 include_commit_author = true
+
+[tool.semantic_release.publish]
+upload_to_vcs_release = true

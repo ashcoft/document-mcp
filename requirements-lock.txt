@@ -3757,9 +3757,9 @@ scipy==1.18.0 \
     # via
     #   scikit-learn
     #   sentence-transformers
-sentence-transformers==5.6.1 \
-    --hash=sha256:16af5d682ef66672b076d58599a23905800e850ec2bfb1865938306bf684ad72 \
-    --hash=sha256:cefbb17b6325a982a4732c8c49fb013375392687049d1de3d435c4b04060680b
+sentence-transformers==5.7.0 \
+    --hash=sha256:b78141da3d8137e70d965866e2ca43190b9266f3d4d8752e250ded75e7136730 \
+    --hash=sha256:fd8c8fc35e6323631dff9f3760969ebf7980dc3cfda0ab1354bc6a774cc0e5d8
     # via -r requirements.txt
 shapely==2.1.2 \
     --hash=sha256:0036ac886e0923417932c2e6369b6c52e38e0ff5d9120b90eef5cd9a5fc5cae9 \

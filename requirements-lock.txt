@@ -3920,9 +3920,9 @@ scipy==1.18.0 \
     # via
     #   scikit-learn
     #   sentence-transformers
-sentence-transformers==5.7.0 \
-    --hash=sha256:b78141da3d8137e70d965866e2ca43190b9266f3d4d8752e250ded75e7136730 \
-    --hash=sha256:fd8c8fc35e6323631dff9f3760969ebf7980dc3cfda0ab1354bc6a774cc0e5d8
+sentence-transformers==6.0.0 \
+    --hash=sha256:9e8c2c24f3b1c7473cd5f519a3d3cff60daaeb95533b82d045ffb43ee5f2dac4 \
+    --hash=sha256:b974ac67523ea2a955afa87b1024129305472bd884367dcc969261cb086790e9
     # via -r requirements.txt
 shapely==2.1.2 \
     --hash=sha256:0036ac886e0923417932c2e6369b6c52e38e0ff5d9120b90eef5cd9a5fc5cae9 \

@@ -16,6 +16,11 @@
       "matchPackageNames": ["transformers", "tokenizers"],
       "groupName": "transformers-tokenizers",
       "description": "transformers and tokenizers are coupled under sentence-transformers and must be updated together; grouping avoids partial updates that break resolution (e.g. transformers 5.16.1 requires tokenizers>=0.23.1 while tokenizers stayed at 0.22.2)"
+    },
+    {
+      "matchPackageNames": ["typescript"],
+      "allowedVersions": "<7",
+      "description": "vue-tsc cannot consume TypeScript 7: TS 7 no longer exposes the typescript/lib/tsc subpath that vue-tsc loads, so the type-check/build CI fails at runtime (ERR_PACKAGE_PATH_NOT_EXPORTED)"
     }
   ]
 }

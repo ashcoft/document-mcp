@@ -11,6 +11,11 @@
       "matchPackagePatterns": ["^numpy$"],
       "enabled": false,
       "description": "numpy is capped at <2.4 by paddlex (via paddleocr); do not bump until a paddlex release supports numpy 2.5+"
+    },
+    {
+      "matchPackageNames": ["transformers", "tokenizers"],
+      "groupName": "transformers-tokenizers",
+      "description": "transformers and tokenizers are coupled under sentence-transformers and must be updated together; grouping avoids partial updates that break resolution (e.g. transformers 5.16.1 requires tokenizers>=0.23.1 while tokenizers stayed at 0.22.2)"
     }
   ]
 }

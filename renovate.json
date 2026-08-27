@@ -1,0 +1,11 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": ["config:recommended"],
+  "packageRules": [
+    {
+      "matchPackagePatterns": ["^nvidia-.*cu13$"],
+      "enabled": false,
+      "description": "nvidia-*-cu13 packages are transitive dependencies pinned exactly by torch; do not bump them independently"
+    }
+  ]
+}

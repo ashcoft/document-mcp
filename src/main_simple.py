@@ -271,7 +271,7 @@ document_chunks: dict[int, list[dict[str, Any]]] = {
             "document_id": 1,
             "level": "parent",
             "content": "SINGLE LINE DIAGRAM - MAIN SUBSTATION\n\nDocument Number: DOC-ELC-001\nRevision: B\nIssue Status: Final\nDiscipline: Electrical (ELC)\n\nThis document presents the single line diagram for the main substation, including all major electrical equipment, their ratings, and interconnections.\n\nSheet 1: Main Single Line Diagram\nThe main substation receives power at 33kV from the utility grid. The incoming feeder connects to a 33kV vacuum circuit breaker (VCB-001), which feeds the primary side of the main transformer (TR-001).\n\nTransformer TR-001 Specifications:\n- Rated Voltage: 33kV / 11kV\n- Rated Power: 10 MVA\n- Vector Group: Dyn11\n- Impedance: 8.5%\n- Cooling: ONAN/ONAF\n\nThe secondary side of TR-001 at 11kV connects through another vacuum circuit breaker (VCB-002) to the 11kV switchgear bus. From the 11kV bus, multiple outgoing feeders distribute power to various plant areas.",
-            "token_count": 180,
+            "token_count": 180,  # nosec B105 - mock token count, not a password
             "page": 1,
         },
         {
@@ -279,7 +279,7 @@ document_chunks: dict[int, list[dict[str, Any]]] = {
             "document_id": 1,
             "level": "child",
             "content": "Sheet 2: Equipment Ratings Table\n\n| Tag | Equipment | Rating | Voltage | Phase | Frequency |\n|-----|-----------|--------|---------|-------|-----------|\n| TR-001 | Main Transformer | 10 MVA | 33/11kV | 3-Phase | 50 Hz |\n| VCB-001 | Vacuum CB (Primary) | 1200A | 33kV | 3-Phase | 50 Hz |\n| VCB-002 | Vacuum CB (Secondary) | 2000A | 11kV | 3-Phase | 50 Hz |\n| CT-001 | Current Transformer | 600/5A | 33kV | - | - |\n| PT-001 | Potential Transformer | 33000/110V | 33kV | - | - |\n| TR-002 | Auxiliary Transformer | 100 kVA | 11/0.4kV | 3-Phase | 50 Hz |\n\nProtection System:\n- Overcurrent Protection: 50/51 relay on both primary and secondary\n- Differential Protection: 87T for transformer protection\n- Earth Fault Protection: 51N on neutral\n- Buchholz Relay for internal transformer faults",
-            "token_count": 150,
+            "token_count": 150,  # nosec B105 - mock token count, not a password
             "page": 2,
         },
         {
@@ -287,7 +287,7 @@ document_chunks: dict[int, list[dict[str, Any]]] = {
             "document_id": 1,
             "level": "child",
             "content": "Sheet 3: Legend and Notes\n\nLegend Symbols:\n- □ : Circuit Breaker (Vacuum)\n- ○ : Current Transformer\n- ⌁ : Potential Transformer\n- △ : Delta Connection\n- Y : Wye (Star) Connection\n- ⏚ : Earth/Ground Connection\n\nGeneral Notes:\n1. All equipment shall comply with IEC 62271 standard for high-voltage switchgear.\n2. Transformer impedance shall be 8.5% as specified.\n3. Protection relays shall be numerical type with communication capability.\n4. All CT secondary circuits shall be grounded at one point only.\n5. Cable sizing shall be based on short circuit current of 25kA for 1 second.\n\nRevision History:\n| Rev | Date | Description | Prepared By | Checked By | Approved By |\n|-----|------|-------------|-------------|------------|-------------|\n| A | 2024-01-15 | Initial Issue | J. Smith | M. Johnson | R. Brown |\n| B | 2024-06-20 | Updated transformer rating | J. Smith | M. Johnson | R. Brown |",
-            "token_count": 160,
+            "token_count": 160,  # nosec B105 - mock token count, not a password
             "page": 3,
         },
     ],
@@ -297,7 +297,7 @@ document_chunks: dict[int, list[dict[str, Any]]] = {
             "document_id": 2,
             "level": "parent",
             "content": "MECHANICAL EQUIPMENT LAYOUT\n\nDocument Number: DOC-MEC-002\nRevision: A\nIssue Status: For Construction\nDiscipline: Mechanical (MEC)\n\nThis document presents the mechanical equipment layout for the plant area, showing the placement of all major mechanical equipment, piping, and support structures.\n\nEquipment List:\n1. Pump P-001: Centrifugal pump, 150kW, 1500 RPM\n2. Pump P-002: Centrifugal pump, 75kW, 1500 RPM\n3. Compressor C-001: Screw compressor, 250kW\n4. Heat Exchanger HX-001: Shell and tube, 2MW capacity\n5. Storage Tank T-001: 50m³ capacity, stainless steel\n\nLayout Description:\nThe mechanical equipment is arranged in a logical flow pattern. Pumps P-001 and P-002 are located near the process area, with the compressor C-001 positioned adjacent to provide compressed air. The heat exchanger HX-001 is placed between the process and utility areas. Storage tank T-001 is located in the tank farm area with appropriate secondary containment.",
-            "token_count": 170,
+            "token_count": 170,  # nosec B105 - mock token count, not a password
             "page": 1,
         },
     ],
@@ -307,7 +307,7 @@ document_chunks: dict[int, list[dict[str, Any]]] = {
             "document_id": 3,
             "level": "parent",
             "content": "INSTRUMENTATION LOOP DIAGRAMS\n\nDocument Number: DOC-INS-003\nRevision: C\nIssue Status: Final\nDiscipline: Instrumentation (INS)\n\nThis document contains instrumentation loop diagrams for the main process control loops.\n\nLoop 1: Temperature Control Loop (TIC-101)\n- Sensor: RTD PT100, Range 0-200°C\n- Transmitter: TT-101, 4-20mA output\n- Controller: TIC-101, PID control\n- Control Valve: TV-101, pneumatic actuator\n\nLoop 2: Pressure Control Loop (PIC-201)\n- Sensor: Pressure Transmitter PT-201, Range 0-10 bar\n- Controller: PIC-201, PID control\n- Control Valve: PV-201, pneumatic actuator\n\nLoop 3: Flow Control Loop (FIC-301)\n- Sensor: Electromagnetic Flow Meter FT-301\n- Controller: FIC-301, PID control\n- Control Valve: FV-301, motorized",
-            "token_count": 140,
+            "token_count": 140,  # nosec B105 - mock token count, not a password
             "page": 1,
         },
     ],
@@ -317,7 +317,7 @@ document_chunks: dict[int, list[dict[str, Any]]] = {
             "document_id": 4,
             "level": "parent",
             "content": "SIMULATION MODEL VALIDATION REPORT\n\nDocument Number: DOC-SIM-004\nRevision: 1\nIssue Status: Draft\nDiscipline: Simulation (SIM)\n\nThis report presents the validation results of the simulation model against actual plant performance data.\n\nExecutive Summary:\nThe simulation model was validated against operational data collected over a 30-day period. The model shows good correlation with actual data, with an average error of less than 5% across all key parameters.\n\nValidation Results:\n- Temperature accuracy: ±2.1°C (within acceptable range)\n- Pressure accuracy: ±0.3 bar (within acceptable range)\n- Flow rate accuracy: ±3.2% (within acceptable range)\n- Energy balance: 98.7% closure (acceptable)\n\nRecommendations:\n1. Fine-tune heat transfer coefficients for the heat exchanger model\n2. Update pump efficiency curves based on actual performance data\n3. Consider adding dynamic response modeling for startup/shutdown scenarios",
-            "token_count": 160,
+            "token_count": 160,  # nosec B105 - mock token count, not a password
             "page": 1,
         },
     ],

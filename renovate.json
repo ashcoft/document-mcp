@@ -21,6 +21,12 @@
       "matchPackageNames": ["typescript"],
       "allowedVersions": "<7",
       "description": "vue-tsc cannot consume TypeScript 7: TS 7 no longer exposes the typescript/lib/tsc subpath that vue-tsc loads, so the type-check/build CI fails at runtime (ERR_PACKAGE_PATH_NOT_EXPORTED)"
+    },
+    {
+      "matchPackageNames": ["websockets"],
+      "matchFileNames": ["requirements.txt"],
+      "allowedVersions": ">=14.0.0, <16",
+      "description": "websockets is capped at <16 to match the declared constraint in requirements.txt (langgraph-sdk resolves websockets>=14,,<17); scoped to requirements.txt via matchFileNames so the separate Vercel deployment's websockets==17.0.1 pin in requirements.vercel.txt is not affected"
     }
   ]
 }

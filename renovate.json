@@ -11,6 +11,13 @@
     },
     {
       "enabled": false,
+      "description": "triton is a transitive dependency pinned exactly by torch (torch==2.13.0 requires triton==3.7.1 on Linux); do not bump it independently",
+      "matchPackageNames": [
+        "/^triton$/"
+      ]
+    },
+    {
+      "enabled": false,
       "description": "numpy is capped at <2.4 by paddlex (via paddleocr); do not bump until a paddlex release supports numpy 2.5+",
       "matchPackageNames": [
         "/^numpy$/"

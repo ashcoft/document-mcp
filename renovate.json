@@ -3,14 +3,18 @@
   "extends": ["config:recommended"],
   "packageRules": [
     {
-      "matchPackagePatterns": ["^nvidia-.*cu13$"],
       "enabled": false,
-      "description": "nvidia-*-cu13 packages are transitive dependencies pinned exactly by torch; do not bump them independently"
+      "description": "nvidia-*-cu13 packages are transitive dependencies pinned exactly by torch; do not bump them independently",
+      "matchPackageNames": [
+        "/^nvidia-.*cu13$/"
+      ]
     },
     {
-      "matchPackagePatterns": ["^numpy$"],
       "enabled": false,
-      "description": "numpy is capped at <2.4 by paddlex (via paddleocr); do not bump until a paddlex release supports numpy 2.5+"
+      "description": "numpy is capped at <2.4 by paddlex (via paddleocr); do not bump until a paddlex release supports numpy 2.5+",
+      "matchPackageNames": [
+        "/^numpy$/"
+      ]
     },
     {
       "matchPackageNames": ["transformers", "tokenizers"],

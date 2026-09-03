@@ -294,9 +294,9 @@ attrs==26.1.0 \
     #   aiohttp
     #   jsonschema
     #   referencing
-bce-python-sdk==0.9.76 \
-    --hash=sha256:01c630ce8dcbf8be0563d65f18b5201eaac6bd954b3dc776040aec268f81b6ff \
-    --hash=sha256:e629181d060f4ed8f29749f47139bf08f1f9b0d8b15daedc956900785587e8d8
+bce-python-sdk==0.9.79 \
+    --hash=sha256:71799ac8740505e0759d30873f6f1a478fa8f83aedf425d511f1419a5f30082e \
+    --hash=sha256:cd77476b43347ed28d0211d5ad557e524e1ec648bd093d57c6a6d3de075a7508
     # via aistudio-sdk
 bcrypt==5.0.0 \
     --hash=sha256:046ad6db88edb3c5ece4369af997938fb1c19d6a699b9c1b27b0db432faae4c4 \

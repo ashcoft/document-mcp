@@ -1052,8 +1052,8 @@ cuda-bindings==13.3.1 \
     --hash=sha256:e32d08f71ebcdf00f0f41eab2eb37e8da94c8ed411cc9f7f7a019ce6b34abe3a \
     --hash=sha256:efd4c814d311ec08c981f6dded1dbe7d4b371067ee4f6c14cccec4bde9590f80
     # via torch
-cuda-pathfinder==1.8.0 \
-    --hash=sha256:c44e574dc997fae2814721d1ae97d0fd6db76db82decbe9b753bf75de53f515e
+cuda-pathfinder==1.8.1 \
+    --hash=sha256:ae0137ff9e56ea97499bcbf54f5f2778ec25f3266715ac86da192a795af982a8
     # via cuda-bindings
 cuda-toolkit[cublas,cudart,cufft,cufile,cupti,curand,cusolver,cusparse,nvjitlink,nvrtc,nvtx]==13.0.3.0 \
     --hash=sha256:d693caaa261214ddd7dbb60d68e71cbed884e68c2be7509778f3051da0b91c3f

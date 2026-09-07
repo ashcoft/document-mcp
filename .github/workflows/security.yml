@@ -12,6 +12,8 @@ jobs:
   dependency-review:
     name: Dependency Review
     runs-on: ubuntu-latest
+    # dependency-review-action requires base/head refs, which are only
+    # present on pull_request/merge_group events; skip schedule runs
     if: github.event_name != 'schedule'
     permissions:
       contents: read

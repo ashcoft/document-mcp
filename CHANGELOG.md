@@ -1,6 +1,40 @@
 # CHANGELOG
 
 
+## v0.1.1 (2026-09-08)
+
+### Bug Fixes
+
+- **ci**: Bump mcp-types to 2.2.0 to match mcp in lockfile
+  ([`5458988`](https://github.com/ashcoft/document-mcp/commit/5458988b529d9db7b35bb204c6859eee56886fc4))
+
+mcp 2.2.0 depends on mcp-types==2.2.0, but the lock file still pinned mcp-types==2.1.1, causing uv
+  resolution to fail in Docker Build (unsatisfiable requirements). Update the pin and hashes.
+
+### Chores
+
+- **deps**: Update dependency @types/node to v26.5.0
+  ([`8dfdd6c`](https://github.com/ashcoft/document-mcp/commit/8dfdd6c702ed0c06239fddd998d76f7a045c47c7))
+
+- **deps**: Update dependency anyio to v4.15.1
+  ([`65f3433`](https://github.com/ashcoft/document-mcp/commit/65f343322fca08a9caa88f257999747ae7e92861))
+
+- **deps**: Update dependency ast-serialize to v0.10.0
+  ([`9019d84`](https://github.com/ashcoft/document-mcp/commit/9019d848b62c25dbc84293cd66ed8e10049843de))
+
+- **deps**: Update dependency langchain-core to v1.6.2
+  ([`d810890`](https://github.com/ashcoft/document-mcp/commit/d810890323676b9388fc602b11028e8ff6e781ed))
+
+- **deps**: Update dependency langsmith to v0.12.2
+  ([`491d13a`](https://github.com/ashcoft/document-mcp/commit/491d13a29722309787cc1208642ded2122b2ff0d))
+
+- **deps**: Update dependency mcp to v2.2.0
+  ([`7a7228a`](https://github.com/ashcoft/document-mcp/commit/7a7228a3ce2bc18c7bf2789e07c48dc8e759a6c5))
+
+- **deps**: Update dependency sse-starlette to v3.4.11
+  ([`1b65527`](https://github.com/ashcoft/document-mcp/commit/1b6552771932b8b3ac49003be879439e6cd1d0fd))
+
+
 ## v0.1.0 (2026-09-07)
 
 ### Bug Fixes

@@ -24,6 +24,13 @@
       ]
     },
     {
+      "enabled": false,
+      "description": "uuid-utils is capped at <1.0 by langchain-core and langsmith (>=0.12.0,<1.0 with the locked versions); do not bump until a langchain-core/langsmith release relaxes the upper bound",
+      "matchPackageNames": [
+        "/^uuid-utils$/"
+      ]
+    },
+    {
       "matchPackageNames": ["transformers", "tokenizers"],
       "groupName": "transformers-tokenizers",
       "description": "transformers and tokenizers are coupled under sentence-transformers and must be updated together; grouping avoids partial updates that break resolution (e.g. transformers 5.16.1 requires tokenizers>=0.23.1 while tokenizers stayed at 0.22.2)"

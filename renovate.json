@@ -4,9 +4,11 @@
   "packageRules": [
     {
       "enabled": false,
-      "description": "nvidia-*-cu13 packages are transitive dependencies pinned exactly by torch; do not bump them independently",
+      "description": "nvidia-* and cuda-toolkit/cuda-bindings are CUDA components transitively pinned by torch via exact or wildcard pins (e.g. cuda-toolkit==13.0.3.0 requires nvidia-curand==10.4.0.35.*; cuda-toolkit==13.4.1 requires nvidia-cublas==13.7.0.27.*); do not bump them independently",
       "matchPackageNames": [
-        "/^nvidia-.*cu13$/"
+        "/^nvidia-/",
+        "/^cuda-toolkit$/",
+        "/^cuda-bindings$/"
       ]
     },
     {

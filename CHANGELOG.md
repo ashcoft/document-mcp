@@ -1,6 +1,158 @@
 # CHANGELOG
 
 
+## v0.1.2 (2026-09-15)
+
+### Bug Fixes
+
+- Bump httpx2 to 2.13.0 to match httpcore2 dependency
+  ([`aaa82a1`](https://github.com/ashcoft/document-mcp/commit/aaa82a1c4fa2fcb783fb061d2d4b69522b39cb34))
+
+httpx2==2.12.0 hard-pins httpcore2==2.12.0, so bumping httpcore2 to 2.13.0 alone makes Docker build
+  resolution unsatisfiable ("No solution found when resolving dependencies"). httpx2 and httpcore2
+  are released together from the same upstream monorepo and must move in lockstep; httpx2 2.13.0
+  requires httpcore2==2.13.0, satisfying this bump.
+
+Co-authored-by: openhands <openhands@all-hands.dev>
+
+### Chores
+
+- **deps**: Update dependency @types/node to v26.5.1
+  ([`42b4f55`](https://github.com/ashcoft/document-mcp/commit/42b4f55176692703a7e8688e79cbc56ab15b5e5e))
+
+- **deps**: Update dependency @vitejs/plugin-vue to v6.0.9
+  ([`99770b1`](https://github.com/ashcoft/document-mcp/commit/99770b14379c364af1504b0b2260e6cb221a002e))
+
+- **deps**: Update dependency alembic to v1.20.0
+  ([`20329d2`](https://github.com/ashcoft/document-mcp/commit/20329d258ce185bc75ca8f2b451f1023c4fbff10))
+
+- **deps**: Update dependency ast-serialize to v0.11.0
+  ([`1681953`](https://github.com/ashcoft/document-mcp/commit/1681953aceeb672f2b243293125b0161115f6ea6))
+
+- **deps**: Update dependency ast-serialize to v0.11.1
+  ([`8fb3e6c`](https://github.com/ashcoft/document-mcp/commit/8fb3e6c40bdb66b71129d4319334eebe34e7f8eb))
+
+- **deps**: Update dependency ast-serialize to v0.11.2
+  ([`859b4c0`](https://github.com/ashcoft/document-mcp/commit/859b4c02be7088dc623656144418f3fe3fd083b1))
+
+- **deps**: Update dependency coverage to v7.16.1
+  ([`0af6c4c`](https://github.com/ashcoft/document-mcp/commit/0af6c4c6694320ce86d4fdc781e1af474c09b4aa))
+
+- **deps**: Update dependency crc32c to v2.9.post0
+  ([`8ba216b`](https://github.com/ashcoft/document-mcp/commit/8ba216b2cc6263cf38bc8ca9e7fc6625125a8391))
+
+- **deps**: Update dependency filelock to v3.32.6
+  ([`21c3e4d`](https://github.com/ashcoft/document-mcp/commit/21c3e4d5bf83a4323ee3ff71ae6a5fa82f105770))
+
+- **deps**: Update dependency fonttools to v4.65.0
+  ([`c311bb7`](https://github.com/ashcoft/document-mcp/commit/c311bb7fd66ecb8b20b8202296af674989b33959))
+
+- **deps**: Update dependency greenlet to v3.5.6
+  ([`fcbff13`](https://github.com/ashcoft/document-mcp/commit/fcbff13d6a881508fd585bd4714e0bf726244a50))
+
+- **deps**: Update dependency httpcore2 to v2.13.0
+  ([`a185d3c`](https://github.com/ashcoft/document-mcp/commit/a185d3c12bbd0eb981d6176bb9e51ff3c136e30f))
+
+- **deps**: Update dependency huggingface-hub to v1.31.0
+  ([`24fc3b8`](https://github.com/ashcoft/document-mcp/commit/24fc3b8fa37b5b2da55d37b64219e2e8753b6725))
+
+- **deps**: Update dependency langchain-core to v1.6.3
+  ([`1c424c9`](https://github.com/ashcoft/document-mcp/commit/1c424c9b49f96fe3708a786336ed88d2de92b583))
+
+- **deps**: Update dependency langsmith to v0.12.4
+  ([`0d70a31`](https://github.com/ashcoft/document-mcp/commit/0d70a314da3c4ed27ca26eb3a7b9983c1adb3d6f))
+
+- **deps**: Update dependency modelscope to v1.40.0
+  ([`68578a0`](https://github.com/ashcoft/document-mcp/commit/68578a03989d36073bb1fcac1c79ae9dd8c8cbaf))
+
+- **deps**: Update dependency modelscope-hub to v0.4.2
+  ([`e1e1422`](https://github.com/ashcoft/document-mcp/commit/e1e14229ff14642de7ff28eaa51e6f18f411fff8))
+
+- **deps**: Update dependency multidict to v6.8.0
+  ([`abe0c89`](https://github.com/ashcoft/document-mcp/commit/abe0c892a8db05f9269aaafcf9f3885704e76054))
+
+- **deps**: Update dependency narwhals to v2.26.0
+  ([`cf1ad61`](https://github.com/ashcoft/document-mcp/commit/cf1ad6191547e7027e622f91a7ed1fa896e14950))
+
+- **deps**: Update dependency platformdirs to v4.11.8
+  ([`ec2a0ad`](https://github.com/ashcoft/document-mcp/commit/ec2a0ad30459780793bf0fa96b8ba75e11965255))
+
+- **deps**: Update dependency psycopg2-binary to v2.9.13
+  ([`45f74ea`](https://github.com/ashcoft/document-mcp/commit/45f74ea6f62b788b34301342e3b61b9325ca0d3f))
+
+- **deps**: Update dependency pyjwt to v2.14.0
+  ([`e1da2ee`](https://github.com/ashcoft/document-mcp/commit/e1da2ee564cb5992cefc82eb2944939d650aff53))
+
+- **deps**: Update dependency regex to v2026.9.10
+  ([`1e2e12f`](https://github.com/ashcoft/document-mcp/commit/1e2e12f98b05965234004c56878f398d7de0423c))
+
+- **deps**: Update dependency ruff to v0.16.7
+  ([`1489a01`](https://github.com/ashcoft/document-mcp/commit/1489a01347517cd8bbdef89fc29250d7180c8acd))
+
+- **deps**: Update dependency scikit-learn to v1.9.1
+  ([`b0741eb`](https://github.com/ashcoft/document-mcp/commit/b0741ebe5c4bae5fa33aa1bf73daad26f26285af))
+
+- **deps**: Update dependency sqlalchemy to v2.0.53
+  ([`d4780b1`](https://github.com/ashcoft/document-mcp/commit/d4780b1f8fb03a8f94c745ee5a4d6c498d0a4e2d))
+
+- **deps**: Update dependency tqdm to v4.70.1
+  ([`3eccf70`](https://github.com/ashcoft/document-mcp/commit/3eccf70412138ddae71ddadf273f5a7b109b0343))
+
+- **deps**: Update dependency transformers to v5.17.0
+  ([`66aa4be`](https://github.com/ashcoft/document-mcp/commit/66aa4be2f7c50769fda9e0b9ca5fe8fcbec00995))
+
+- **deps**: Update dependency tzdata to v2026.4
+  ([`2312487`](https://github.com/ashcoft/document-mcp/commit/23124876676a1ae1215daf100a250564dab42f9b))
+
+- **deps**: Update dependency uuid-utils to v0.17.1
+  ([`75d07b0`](https://github.com/ashcoft/document-mcp/commit/75d07b0af6db1fd0d9850b924a2301b16980724f))
+
+- **deps**: Update dependency uvicorn to v0.52.4
+  ([`5f98a84`](https://github.com/ashcoft/document-mcp/commit/5f98a84cc3d85f4f6159911b4a9f614f1f3959fd))
+
+- **deps**: Update dependency uvicorn to v0.53.0
+  ([`e141a8f`](https://github.com/ashcoft/document-mcp/commit/e141a8fd793f700af911851fcd5a04be59415e5a))
+
+- **deps**: Update dependency vite to v8.3.0
+  ([`be96fe8`](https://github.com/ashcoft/document-mcp/commit/be96fe8390f0cc6e15b7af05585ee182810330ee))
+
+- **deps**: Update dependency vuetify to v4.2.1
+  ([`d7e48a9`](https://github.com/ashcoft/document-mcp/commit/d7e48a98988db6e5dc556b0f7a5e198334c7d210))
+
+- **renovate**: Exclude nvidia-* and cuda-toolkit/cuda-bindings
+  ([#472](https://github.com/ashcoft/document-mcp/pull/472),
+  [`3ccb6da`](https://github.com/ashcoft/document-mcp/commit/3ccb6da3a34a12dd5960e1290b74fc258bc91d3c))
+
+These CUDA components are transitively pinned by torch via exact or wildcard pins (e.g.
+  cuda-toolkit==13.0.3.0 pins nvidia-curand==10.4.0.35.*; cuda-toolkit==13.4.1 pins
+  nvidia-cublas==13.7.0.27.*); their individual bumps always fail Docker Build resolution (PRs
+  #462/#469/#468). Broaden the previous nvidia-*-cu13 rule to cover the whole nvidia-*/cuda family
+
+Co-authored-by: openhands <openhands@all-hands.dev>
+
+- **renovate**: Exclude pydantic-core pinned by pydantic
+  ([`bc150ef`](https://github.com/ashcoft/document-mcp/commit/bc150ef910cf382b5e60723b90481dee44c25fd9))
+
+Renovate keeps opening pydantic-core bumps (PR #481 to 2.49.0) that can never resolve:
+  pydantic==2.13.5 hard-pins pydantic-core==2.46.5 and no stable pydantic
+
+release requires anything newer (only the 2.14.0b* prereleases require 2.49.0). Docker Build runs uv
+  pip install --require-hashes, which fails with "No solution found when resolving dependencies".
+  Disable the package in renovate.json (same as the existing numpy/triton/nvidia-*/uuid-utils rules)
+  until a stable pydantic release moves the pin.
+
+Co-authored-by: openhands <openhands@all-hands.dev>
+
+- **renovate**: Exclude uuid-utils while langchain-core caps it at <1.0
+  ([`587d2e2`](https://github.com/ashcoft/document-mcp/commit/587d2e298f497e9d68c690ff062146fa43f15483))
+
+Repeated Renovate PRs bump uuid-utils whenever a 1.x release appears, but both locked
+  langchain-core==1.6.2 and langsmith==0.12.2 require uuid-utils>=0.12.0,<1.0, making uuid-utils 1.x
+  unresolvable in Docker Build (No solution found при uv pip install). Disable the package in
+  renovate.json (matching the existing numpy/triton/nvidia rules) until a langchain-core/langsmith
+  release relaxes the upper bound.
+
+
 ## v0.1.1 (2026-09-08)
 
 ### Bug Fixes

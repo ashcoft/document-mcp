@@ -40,6 +40,11 @@
       ]
     },
     {
+      "matchPackageNames": ["httpx2", "httpcore2"],
+      "groupName": "httpx2-httpcore2",
+      "description": "httpx2 and httpcore2 are released together from the same upstream monorepo and httpx2 hard-pins httpcore2 exactly (httpx2==2.13.0 requires httpcore2==2.13.0); group them so a one-sided bump cannot break Docker Build resolution (e.g. httpcore2 2.13.0 alone is unsatisfiable while httpx2 stays at 2.12.0)"
+    },
+    {
       "matchPackageNames": ["transformers", "tokenizers"],
       "groupName": "transformers-tokenizers",
       "description": "transformers and tokenizers are coupled under sentence-transformers and must be updated together; grouping avoids partial updates that break resolution (e.g. transformers 5.16.1 requires tokenizers>=0.23.1 while tokenizers stayed at 0.22.2)"

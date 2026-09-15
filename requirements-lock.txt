@@ -2054,9 +2054,9 @@ mdurl==0.1.2 \
     --hash=sha256:84008a41e51615a49fc9966191ff91509e3c40b939176e643fd50a5c2196b8f8 \
     --hash=sha256:bb413d29f5eea38f31dd4754dd7377d4465116fb207585f97bf925588687c1ba
     # via markdown-it-py
-modelscope==1.40.0 \
-    --hash=sha256:2b1d7076bc7eac19f8ac32d4467d021649e374c968f3a42cc36c699da5aae075 \
-    --hash=sha256:ed2a3882bdd2aa652f1ec692cee8e999ba7809a371a0b863f33649bb2f2de6ef
+modelscope==1.40.1 \
+    --hash=sha256:6f135fe80903e7bfcd6ccc707f4f6f85c8e445cf497b624bd07299582486e2c1 \
+    --hash=sha256:7b46d74fc3905a0a34a60bdefe774677d709d9ee2ada8cf85401a50ea533f9ae
     # via paddlex
 modelscope-hub==0.4.2 \
     --hash=sha256:ddf47b859ae812738850f53c3cc7a935df5cf5ee58c4678cf4fbeefe3d203f43 \

@@ -1583,9 +1583,9 @@ kombu==5.6.2 \
     --hash=sha256:8060497058066c6f5aed7c26d7cd0d3b574990b09de842a8c5aaed0b92cc5a55 \
     --hash=sha256:efcfc559da324d41d61ca311b0c64965ea35b4c55cc04ee36e55386145dace93
     # via celery
-langchain==1.4.1 \
-    --hash=sha256:1286dd89c7fe2c552ba5b058fae16576e0acc8b0a5c1d060edc24d7d1f9230b7 \
-    --hash=sha256:5080fc66792a4c97ec20898006b740dc008f8777a46ff8c6f05b4ff8132928af
+langchain==1.4.2 \
+    --hash=sha256:30a27c34cfa0004bf659dcdef488b99a9b90acb08bcc514a5a74264755da536c \
+    --hash=sha256:5b476418cacbfb8f0da6e63b3b263eefdcec13b48abd6117565a25728ec10b77
     # via -r requirements.txt
 langchain-core==1.6.3 \
     --hash=sha256:114fe1868c9ed60606662b9dd0074bf3152cc6b0b1522ba37cbd6b04f55ca77d \

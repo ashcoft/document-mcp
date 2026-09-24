@@ -1128,9 +1128,9 @@ fastapi==0.141.1 \
     --hash=sha256:bfb91aa2d334c61cb35ba9a116fc123b3d3df31640b801cf57a7a78ec3f603b3 \
     --hash=sha256:e8822fc40db1e1858054d7a949a888695bc9bdce70139178e33bd2871a453ca1
     # via -r requirements.txt
-filelock==4.0.1 \
-    --hash=sha256:481a321a27bef441e23c53371c6abc8d7d16e26b97090074ba44f7538a3fd55a \
-    --hash=sha256:fdefc3f3e87716d855ae2b732c1cfd521dd99799ef2b4d00e8c0d4dcdc7cc94b
+filelock==4.0.2 \
+    --hash=sha256:0b7b3b63255dc289a48076c8b77eb63c973fb913185c6dc4651b16820cc1097d \
+    --hash=sha256:ac613ea13d8a99f9e9c05cd3d0991bbcbaed81e4b53790350ddf4077996e5d70
     # via
     #   huggingface-hub
     #   modelscope

@@ -32,7 +32,7 @@ python-pptx==1.0.2
 # LLM & Embeddings
 langchain==1.4.3
 langchain-ollama==1.1.0
-ollama==0.6.2
+ollama==0.6.3
 sentence-transformers==6.1.0
 # torch pins nvidia-nccl-cu13 (and other nvidia-*-cu13 packages) to exact versions
 # matching its release; do not bump those transitive nvidia packages independently.

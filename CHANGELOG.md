@@ -1,6 +1,35 @@
 # CHANGELOG
 
 
+## v0.1.5 (2026-10-13)
+
+### Bug Fixes
+
+- **ci**: Keep Docker image on Python 3.12 and cap Renovate's docker python
+  ([`eb4661b`](https://github.com/ashcoft/document-mcp/commit/eb4661bc5083eaac8f77eea5bdbd71b636e99b76))
+
+Bumping the Docker base image to python:3.15-slim breaks the Docker Build job: the full
+  requirements-lock.txt cannot be installed on Python 3.14+
+
+because paddlepaddle==3.3.1 ships wheels only up to cp313 and cuda-bindings==13.3.1 up to cp314, so
+  `uv pip install --require-hashes` fails with "No solution found".
+
+Revert the image to python:3.12-slim and add a docker-scoped Renovate rule so the runtime image is
+  not bumped past 3.13. The actions/setup-python "python-version" bump to 3.15 is kept: those jobs
+  only install the lightweight lint/test tools and pass on 3.15.
+
+### Chores
+
+- **deps**: Update dependency python
+  ([`0a3bab7`](https://github.com/ashcoft/document-mcp/commit/0a3bab75b456b994c3fb7488799c21910575ca07))
+
+- **deps**: Update dependency shapely to v2.2.0
+  ([`36d8929`](https://github.com/ashcoft/document-mcp/commit/36d89299cefda5fda92289e794c502eb6375bf7d))
+
+- **deps**: Update dependency starlette to v1.8.0
+  ([`5076c7d`](https://github.com/ashcoft/document-mcp/commit/5076c7da2e0b7806a02c2d2578547abca90f71b5))
+
+
 ## v0.1.4 (2026-10-13)
 
 ### Bug Fixes

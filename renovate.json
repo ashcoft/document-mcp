@@ -66,6 +66,12 @@
       "matchFileNames": ["requirements.txt"],
       "allowedVersions": ">=14.0.0, <16",
       "description": "websockets is capped at <16 to match the declared constraint in requirements.txt (langgraph-sdk resolves websockets>=14,,<17); scoped to requirements.txt via matchFileNames so the separate Vercel deployment's websockets==17.0.1 pin in requirements.vercel.txt is not affected"
+    },
+    {
+      "matchDatasources": ["docker"],
+      "matchPackageNames": ["python"],
+      "allowedVersions": "<3.14",
+      "description": "The Docker runtime image must stay on a Python version the locked dependencies support: paddlepaddle==3.3.1 only ships wheels up to cp313 and cuda-bindings==13.3.1 up to cp314, so `uv pip install --require-hashes -r requirements-lock.txt` fails with 'No solution found' on Python 3.14+. Cap the image below 3.14 until those dependencies publish newer wheels. Scoped to the docker datasource so the actions/setup-python 'python-version' bump (which only installs the lightweight lint/test tools) is unaffected"
     }
   ]
 }

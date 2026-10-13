@@ -1,6 +1,53 @@
 # CHANGELOG
 
 
+## v0.1.4 (2026-10-13)
+
+### Bug Fixes
+
+- **deps**: Bump pydantic-core to 2.50.1 to match pydantic in lockfile
+  ([`f7343d5`](https://github.com/ashcoft/document-mcp/commit/f7343d5873ac033b0ee1ea9d143b09bd8279af9e))
+
+pydantic 2.14.1 hard-pins pydantic-core==2.50.1, but requirements-lock.txt still pinned
+  pydantic-core==2.46.5. That made the Docker Build step fail with "No solution found when resolving
+  dependencies" during `uv pip install --require-hashes -r requirements-lock.txt`.
+
+Update the pin and the full set of wheel/sdist hashes (137 files) so the locked set resolves.
+  Verified with `uv pip install --dry-run --only-binary :all: --require-hashes`.
+
+### Chores
+
+- **deps**: Update dependency langchain to v1.4.5
+  ([`ae71e20`](https://github.com/ashcoft/document-mcp/commit/ae71e20939b9fb9197735706e08d9e3be86680a2))
+
+- **deps**: Update dependency langgraph to v1.2.15
+  ([`443acf3`](https://github.com/ashcoft/document-mcp/commit/443acf3ed73b29bec1245c31f82f08089892c9cf))
+
+- **deps**: Update dependency langgraph-checkpoint to v4.3.0
+  ([`4c4d976`](https://github.com/ashcoft/document-mcp/commit/4c4d976c1ef0682799c7fb9ac67081e385447fe6))
+
+- **deps**: Update dependency modelscope to v1.40.2
+  ([`324013a`](https://github.com/ashcoft/document-mcp/commit/324013ac0f31c8ab7b00f0403a915613b6512d0b))
+
+- **deps**: Update dependency pycryptodome to v3.24.1
+  ([`c1ebae9`](https://github.com/ashcoft/document-mcp/commit/c1ebae9e3e1cc087f6dc182e097add4cafba3250))
+
+- **deps**: Update dependency pydantic to v2.14.1
+  ([`478fe5f`](https://github.com/ashcoft/document-mcp/commit/478fe5ffdfff97cfd290272a33630c57f7266af4))
+
+- **deps**: Update dependency pypdfium2 to v5.14.0
+  ([`b9157af`](https://github.com/ashcoft/document-mcp/commit/b9157af7577d1be1200b726e2e2ca3187a87e078))
+
+- **deps**: Update dependency rpds-py to v2026.9.1
+  ([`6d704db`](https://github.com/ashcoft/document-mcp/commit/6d704db5886883dc57300b6d9d181ec07ff641cc))
+
+- **deps**: Update dependency ruff to v0.17.0
+  ([`857794e`](https://github.com/ashcoft/document-mcp/commit/857794e5d2d120320132b4fa8fed331149a237e1))
+
+- **deps**: Update dependency vue to v3.5.44
+  ([`86ff180`](https://github.com/ashcoft/document-mcp/commit/86ff18086974a6cf5e1e0474adc543ea10ba24e2))
+
+
 ## v0.1.3 (2026-10-13)
 
 ### Bug Fixes

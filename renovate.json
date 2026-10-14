@@ -63,9 +63,9 @@
     },
     {
       "matchPackageNames": ["websockets"],
-      "matchFileNames": ["requirements.txt"],
+      "matchFileNames": ["requirements.txt", "requirements-lock.txt"],
       "allowedVersions": ">=14.0.0, <16",
-      "description": "websockets is capped at <16 to match the declared constraint in requirements.txt (langgraph-sdk resolves websockets>=14,,<17); scoped to requirements.txt via matchFileNames so the separate Vercel deployment's websockets==17.0.1 pin in requirements.vercel.txt is not affected"
+      "description": "websockets is capped at <16 to match the declared constraint in requirements.txt (langgraph-sdk resolves websockets>=14,<17); requirements-lock.txt must stay inside the same range or `uv pip install --require-hashes` fails against langgraph-sdk's <17 cap (e.g. bumping the lock to websockets==17.2 makes the requirements unsatisfiable). Scoped to requirements.txt and requirements-lock.txt via matchFileNames so the separate Vercel deployment's websockets pin in requirements.vercel.txt is not affected"
     },
     {
       "matchDatasources": ["docker"],

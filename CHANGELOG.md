@@ -1,6 +1,48 @@
 # CHANGELOG
 
 
+## v0.1.6 (2026-10-14)
+
+### Bug Fixes
+
+- **deps**: Keep websockets below 17 in the lockfile and cap it in Renovate
+  ([`2ba8acb`](https://github.com/ashcoft/document-mcp/commit/2ba8acb3174d830ca1a7e903635243ed07f00ddb))
+
+Renovate bumped websockets to 17.2 in requirements-lock.txt, but langgraph-sdk==0.4.7 requires
+  websockets>=14,<17, so Docker Build failed with "No solution found when resolving dependencies".
+
+Revert the lock's websockets to 15.0.1 (the version the locked requirements.txt range
+  `websockets>=14,<16` resolves to) and extend the existing Renovate websockets rule to also match
+  requirements-lock.txt so the lock can no longer be bumped out of range. The
+  requirements.vercel.txt pin (17.2) is kept, as that deployment does not depend on langgraph-sdk.
+
+### Chores
+
+- **deps**: Update dependency multidict to v7
+  ([`bca931c`](https://github.com/ashcoft/document-mcp/commit/bca931ca17addcc95eb013eb78e1ad9caf26110f))
+
+- **deps**: Update dependency tenacity to v9.2.1
+  ([`86f0008`](https://github.com/ashcoft/document-mcp/commit/86f00088dc850d80252c56a7e86b2a90c1d370fc))
+
+- **deps**: Update dependency tzdata to v2026.5
+  ([`709896d`](https://github.com/ashcoft/document-mcp/commit/709896d93d53ddd13ab8d2a8582a0bf9561cbef3))
+
+- **deps**: Update dependency uvloop to v0.23.0
+  ([`f54f225`](https://github.com/ashcoft/document-mcp/commit/f54f2257d9f27e72a8fbe1909fe9baaba74a159a))
+
+- **deps**: Update dependency vue-router to v5.4.0
+  ([`6d005d8`](https://github.com/ashcoft/document-mcp/commit/6d005d8f943a74214edab7f22fd7a794135bb480))
+
+- **deps**: Update dependency vuetify to v4.2.5
+  ([`51913cb`](https://github.com/ashcoft/document-mcp/commit/51913cb69fe86221ec1bf7cee6c9264256c1ce26))
+
+- **deps**: Update dependency websockets to v17.2
+  ([`10d5a6a`](https://github.com/ashcoft/document-mcp/commit/10d5a6ab89cedce2ed14ee2c17b120e650d1bb17))
+
+- **deps**: Update python docker tag to v3.13
+  ([`6e5953c`](https://github.com/ashcoft/document-mcp/commit/6e5953c5d2abd3207797f6f365fc61847689d60a))
+
+
 ## v0.1.5 (2026-10-13)
 
 ### Bug Fixes

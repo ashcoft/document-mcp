@@ -1204,9 +1204,9 @@ ezdxf==1.4.4 \
     --hash=sha256:f093bd2228f5782d483aed3bd89cdb74b672b5f90c677c4125cd236ee5649151 \
     --hash=sha256:fbd70284ac9c39581e4973589d10afd941bc6c64c1cdd087ecd387ce7697bd50
     # via -r requirements.txt
-fastapi==0.143.0 \
-    --hash=sha256:1acffe48206a80917cf7dac21992b5c44b25384e8902bf745c1fd9dabcf6c51f \
-    --hash=sha256:3e9395fd35276425b61b516a31fdd7c77fe2af83e41b4da22e30696fb1304c5d
+fastapi==0.143.1 \
+    --hash=sha256:4cafaab64df8534758bf0fce61947f5e27e6cd512798ccbbaad5425086c3b664 \
+    --hash=sha256:687beb445804e4c4dbe2a76fd83c25e9b973ac48c267defb86f791e099baecc4
     # via -r requirements.txt
 filelock==4.1.1 \
     --hash=sha256:3f4a557945a7b0f95efeb1f432267affe5d45ac8ddde2aed1b97ebb62382c089 \

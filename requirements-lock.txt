@@ -4575,9 +4575,9 @@ tqdm==4.70.1 \
     #   modelscope-hub
     #   sentence-transformers
     #   transformers
-transformers==5.20.0 \
-    --hash=sha256:5f4afd201f9ae5118b006513a0f647962b531de5592043e558a66d326378685b \
-    --hash=sha256:d82335f354755ff4dc557fa4080472192d2f19349d59b97e05ab981f4177c679
+transformers==5.20.1 \
+    --hash=sha256:25b30879e4c243f00630c1079171ede6d4f6bf76e68f978acd47628a640bc8a0 \
+    --hash=sha256:5f51ce444193e5d0a751e3fa489ddbc2224ff12f6675a5cfefd4044b09757c19
     # via sentence-transformers
 triton==3.8.0 \
     --hash=sha256:398f4b009c7ab08ed9aeb1d1282dee822945b53f399a5e12a4fecb643cf2007d \

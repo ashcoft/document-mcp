@@ -1,6 +1,240 @@
 # CHANGELOG
 
 
+## v0.1.7 (2026-10-22)
+
+### Bug Fixes
+
+- **deps**: Pin pymupdf 2.0 transitive deps in lock file
+  ([`1434da4`](https://github.com/ashcoft/document-mcp/commit/1434da4bf1c57244454b62c99d973ec3a3b01681))
+
+pymupdf 2.0 unvendored its layout/LLM helpers and now depends on pymupdf-layout==2.0,
+  pymupdf4llm==2.0, onnxruntime, tabulate and flatbuffers (via onnxruntime), none of which are in
+  requirements-lock.txt. uv --require-hashes rejects the unpinned transitive dependencies, so Docker
+  Build fails with "In --require-hashes mode, all requirements must be pinned upfront with ==, but
+  found: pymupdf-layout". Add the missing packages with hashes.
+
+Co-authored-by: openhands <openhands@all-hands.dev>
+
+### Chores
+
+- **deps**: Bump fastapi to 0.159.1
+  ([`a391b1d`](https://github.com/ashcoft/document-mcp/commit/a391b1d70d5635677ae5bcc3e726ad657e5960e7))
+
+Mirrors the diff from #763 (fastapi 0.156.8 -> 0.159.1) so the AI review can run on the rewritten
+  content; the Renovate branch was force-pushed, so its automatic review never started.
+
+- **deps**: Update dependency @playwright/test to v1.64.1
+  ([`2d120a7`](https://github.com/ashcoft/document-mcp/commit/2d120a7f90961bf2dd355e2222918c686da9ad13))
+
+- **deps**: Update dependency alembic to v1.20.1
+  ([`6a0cd9e`](https://github.com/ashcoft/document-mcp/commit/6a0cd9ec944542d76369bfad0ab19adc149c4010))
+
+- **deps**: Update dependency ast-serialize to v0.13.1
+  ([`f14f3ba`](https://github.com/ashcoft/document-mcp/commit/f14f3bac3aeec756f5d33d84a29ee4204aaf45dc))
+
+- **deps**: Update dependency certifi to v2026.10.18
+  ([`7067be5`](https://github.com/ashcoft/document-mcp/commit/7067be5c43e66f17504dd908cff063b00cdfbf3d))
+
+- **deps**: Update dependency certifi to v2026.10.19
+  ([`d910ce8`](https://github.com/ashcoft/document-mcp/commit/d910ce8ecdd6bbeba0380da0549fa9e46e755ce8))
+
+- **deps**: Update dependency chardet to v7.7.0
+  ([`aa7b300`](https://github.com/ashcoft/document-mcp/commit/aa7b3004ee36118b5b5009496bffdb203806b290))
+
+- **deps**: Update dependency ezdxf to v1.4.5
+  ([`d87c556`](https://github.com/ashcoft/document-mcp/commit/d87c556d006c77634912f0e239277e9c6a79e844))
+
+- **deps**: Update dependency fastapi to v0.143.1
+  ([`96eec6e`](https://github.com/ashcoft/document-mcp/commit/96eec6ea3f0264b0ffe3f85c91878d315e851097))
+
+- **deps**: Update dependency fastapi to v0.143.2
+  ([`943bcb7`](https://github.com/ashcoft/document-mcp/commit/943bcb7154fff3a076fa318fa22b9d2e7ea0ec4d))
+
+- **deps**: Update dependency fastapi to v0.143.3
+  ([`0561cd2`](https://github.com/ashcoft/document-mcp/commit/0561cd2965eb21e147a7d67bde6554a1cba7c143))
+
+- **deps**: Update dependency fastapi to v0.144.0
+  ([`60a8972`](https://github.com/ashcoft/document-mcp/commit/60a89729b5c802dc8f641b9825968d793e5d4432))
+
+- **deps**: Update dependency fastapi to v0.146.0
+  ([`cedceb4`](https://github.com/ashcoft/document-mcp/commit/cedceb4f2eb999e0ef4c6d7fd18413d0ca3dcc08))
+
+- **deps**: Update dependency fastapi to v0.156.4
+  ([`ca21f4f`](https://github.com/ashcoft/document-mcp/commit/ca21f4fc7547fdc57ab9f275bd11bab4b3efe894))
+
+- **deps**: Update dependency fastapi to v0.156.8
+  ([`720cf31`](https://github.com/ashcoft/document-mcp/commit/720cf31825c03c8c138e854ed931ce15977bbf09))
+
+- **deps**: Update dependency fastapi to v0.159.1
+  ([`dfc0a5b`](https://github.com/ashcoft/document-mcp/commit/dfc0a5b41fcb16589348517b50dbbe5e25cc6ae6))
+
+- **deps**: Update dependency filelock to v4.2.0
+  ([`bbe12ee`](https://github.com/ashcoft/document-mcp/commit/bbe12eeae6e869bbf19e52c8ff22246981623f6a))
+
+- **deps**: Update dependency filelock to v4.2.1
+  ([`801834f`](https://github.com/ashcoft/document-mcp/commit/801834f7100322ac76b3b3798b9d38624c4e3b3f))
+
+- **deps**: Update dependency filelock to v4.2.2
+  ([`a6d0322`](https://github.com/ashcoft/document-mcp/commit/a6d0322ed262fdb7ea77d2c09c1a0578ec40d3d3))
+
+- **deps**: Update dependency filelock to v4.2.3
+  ([`3df6dba`](https://github.com/ashcoft/document-mcp/commit/3df6dba6de81824fe45b1cf170d41f37e91cf093))
+
+- **deps**: Update dependency filelock to v4.2.4
+  ([`d64d168`](https://github.com/ashcoft/document-mcp/commit/d64d168d347a02109a66e681217e22931d1087b7))
+
+- **deps**: Update dependency fonttools to v4.67.0
+  ([`4e98984`](https://github.com/ashcoft/document-mcp/commit/4e98984dbaef26650084e37a0052a4f6657073ad))
+
+- **deps**: Update dependency jsonpatch to v1.36
+  ([`bc09747`](https://github.com/ashcoft/document-mcp/commit/bc097471edc8c3475b090c6cddd2d9ab7279b9bb))
+
+- **deps**: Update dependency jsonpointer to v3.3
+  ([`e657569`](https://github.com/ashcoft/document-mcp/commit/e6575695a63f5989ce9e1885598780e681503a45))
+
+- **deps**: Update dependency jsonpointer to v3.4
+  ([`f9b410c`](https://github.com/ashcoft/document-mcp/commit/f9b410cd1c875120b87dc2c84634460884790922))
+
+- **deps**: Update dependency langchain to v1.4.6
+  ([`2788a50`](https://github.com/ashcoft/document-mcp/commit/2788a509dbb990f443b815dc9075d8ffb1801bf9))
+
+- **deps**: Update dependency langchain to v1.4.7
+  ([`830e2a8`](https://github.com/ashcoft/document-mcp/commit/830e2a83529276d9d12fbcd330ee5f56b4ca8258))
+
+- **deps**: Update dependency langchain-core to v1.6.11
+  ([`753f0cd`](https://github.com/ashcoft/document-mcp/commit/753f0cdeb36aaeb17f028c2b61148e754b52771b))
+
+- **deps**: Update dependency langchain-core to v1.6.12
+  ([`65086ab`](https://github.com/ashcoft/document-mcp/commit/65086abb0d4f9a7ff3fcb29605c98767e8e13942))
+
+- **deps**: Update dependency langchain-core to v1.6.13
+  ([`ecc06a0`](https://github.com/ashcoft/document-mcp/commit/ecc06a0c975d312c314585412bfff376983ad0ee))
+
+- **deps**: Update dependency langchain-protocol to v0.0.20
+  ([`6888156`](https://github.com/ashcoft/document-mcp/commit/6888156063181b4393ebac3def811d25abd79726))
+
+- **deps**: Update dependency langgraph to v1.2.16
+  ([`f5855ba`](https://github.com/ashcoft/document-mcp/commit/f5855baa5832891ce14a114d87f6d2ee808a4c31))
+
+- **deps**: Update dependency langgraph-prebuilt to v1.1.1
+  ([`a86ff81`](https://github.com/ashcoft/document-mcp/commit/a86ff8176527c3b7ad8d4ade90183087f2715f79))
+
+- **deps**: Update dependency langgraph-sdk to v0.4.8
+  ([`00870c4`](https://github.com/ashcoft/document-mcp/commit/00870c48c60be151dee1e3ef4eef39f136b9cbf7))
+
+- **deps**: Update dependency langsmith to v0.14.11
+  ([`9105873`](https://github.com/ashcoft/document-mcp/commit/910587309b3e9ffe95ee76c02c916b0060ac8f8a))
+
+- **deps**: Update dependency langsmith to v0.14.12
+  ([`b78fba4`](https://github.com/ashcoft/document-mcp/commit/b78fba4417b9484ffba94f57438d72dd6f8f2bcb))
+
+- **deps**: Update dependency langsmith to v0.14.9
+  ([`8adfa60`](https://github.com/ashcoft/document-mcp/commit/8adfa6041979fd8790660e2d95e30ae9dc3a7468))
+
+- **deps**: Update dependency ormsgpack to v1.13.0
+  ([`76606be`](https://github.com/ashcoft/document-mcp/commit/76606bed7730df10958f236a6b99ecb744e99732))
+
+- **deps**: Update dependency pillow to v13
+  ([`aafb7b6`](https://github.com/ashcoft/document-mcp/commit/aafb7b6a60abdbbaf1d6f785c6a9c6d42a0f696c))
+
+- **deps**: Update dependency pinia to v4.1.0
+  ([`d3c0b5f`](https://github.com/ashcoft/document-mcp/commit/d3c0b5fe5ef2d1150a572486e40a3d03cdc17031))
+
+- **deps**: Update dependency platformdirs to v4.13.3
+  ([`214fc86`](https://github.com/ashcoft/document-mcp/commit/214fc8656a32bdf656aaf11a0bab5930dec6bbce))
+
+- **deps**: Update dependency platformdirs to v4.13.4
+  ([`0fa6e38`](https://github.com/ashcoft/document-mcp/commit/0fa6e38ea1e861838c6afce678171084414022a8))
+
+- **deps**: Update dependency platformdirs to v4.13.5
+  ([`55ac6ec`](https://github.com/ashcoft/document-mcp/commit/55ac6ec1ae120308787a530cce3e22bd6dd30c44))
+
+- **deps**: Update dependency pluggy to v1.7.0
+  ([`eac8e5f`](https://github.com/ashcoft/document-mcp/commit/eac8e5f9abd74d7d4aaf7268135f59a8696140ff))
+
+- **deps**: Update dependency pycryptodome to v4
+  ([`b070fab`](https://github.com/ashcoft/document-mcp/commit/b070fab4b3ee5adccaede49cf196f4cab66b5f1c))
+
+- **deps**: Update dependency pycryptodome to v4.0.1
+  ([`2c08837`](https://github.com/ashcoft/document-mcp/commit/2c0883793f5b54c3eb5e3a7b82f7485a52e5d314))
+
+- **deps**: Update dependency pycryptodome to v4.1.0
+  ([`dcb35ca`](https://github.com/ashcoft/document-mcp/commit/dcb35ca7917d5f2513ea046a97e64313f2a7c4bf))
+
+- **deps**: Update dependency pydantic-settings to v2.16.0
+  ([`b641a15`](https://github.com/ashcoft/document-mcp/commit/b641a159e59d5e2b4a520536e7f37dafa44afc19))
+
+- **deps**: Update dependency pydantic-settings to v2.16.1
+  ([`f96c368`](https://github.com/ashcoft/document-mcp/commit/f96c3684aa539426174fa189fad60c156ade8c31))
+
+- **deps**: Update dependency pymupdf to v2
+  ([`dfb9aa6`](https://github.com/ashcoft/document-mcp/commit/dfb9aa648f368117364cf65986e9f514bab0b176))
+
+- **deps**: Update dependency python-bidi to v0.6.12
+  ([`10ff041`](https://github.com/ashcoft/document-mcp/commit/10ff04148eb319c53f0c3b857e1d4101a569fd46))
+
+- **deps**: Update dependency python-dateutil to v3
+  ([`481f908`](https://github.com/ashcoft/document-mcp/commit/481f9089283bd2b98a59149410cea4c54435eba3))
+
+- **deps**: Update dependency ruff to v0.17.1
+  ([`a391d9a`](https://github.com/ashcoft/document-mcp/commit/a391d9af89c396220d13a604319389f1b90361a2))
+
+- **deps**: Update dependency sentence-transformers to v6.2.0
+  ([`81b9aa7`](https://github.com/ashcoft/document-mcp/commit/81b9aa7467b24450dd5d9e4d493cc3c1bf3564d3))
+
+- **deps**: Update dependency setuptools to v84.2.1
+  ([`f91dfef`](https://github.com/ashcoft/document-mcp/commit/f91dfef85199d5ea5f074ae3a149d55ffcffff8c))
+
+- **deps**: Update dependency sqlalchemy to v2.1.5
+  ([`238533e`](https://github.com/ashcoft/document-mcp/commit/238533e9e2d62485fdfeed787ea1922c72f9a2d3))
+
+- **deps**: Update dependency sqlalchemy to v2.1.6
+  ([`1424a5b`](https://github.com/ashcoft/document-mcp/commit/1424a5b1b94dc4e4053f5f4ad4e336665b30c1e1))
+
+- **deps**: Update dependency starlette to v1.9.0
+  ([`091575a`](https://github.com/ashcoft/document-mcp/commit/091575af27532ed26e0e670d1592f35031dd4608))
+
+- **deps**: Update dependency transformers to v5.20.0
+  ([`4c68b74`](https://github.com/ashcoft/document-mcp/commit/4c68b747708e747996cefed019cc12d404a9c07b))
+
+- **deps**: Update dependency transformers to v5.20.1
+  ([`156d5d1`](https://github.com/ashcoft/document-mcp/commit/156d5d18eda01b75dc894fe7e5ed5e33fc68931b))
+
+- **deps**: Update dependency transformers to v5.20.2
+  ([`4ec952a`](https://github.com/ashcoft/document-mcp/commit/4ec952a67c2207043086c2f457dc6d13608a3908))
+
+- **deps**: Update dependency vite to v8.3.5
+  ([`2a59457`](https://github.com/ashcoft/document-mcp/commit/2a594579b8eb4fddb6da77073d3ca3b9d309c42f))
+
+- **deps**: Update dependency vuetify to v4.2.6
+  ([`2700986`](https://github.com/ashcoft/document-mcp/commit/2700986553fbb4a33994a30cb82dfc45c8a424c2))
+
+- **deps**: Update dependency vuetify to v4.3.0
+  ([`635bbfb`](https://github.com/ashcoft/document-mcp/commit/635bbfb3e2073f6fe869367d6933ff947de6c231))
+
+- **deps**: Update dependency wcwidth to v0.9.3
+  ([`8bf37c3`](https://github.com/ashcoft/document-mcp/commit/8bf37c3808c236b8390376ca760067582f47f19d))
+
+- **deps**: Update dependency websockets to v17.3
+  ([`3e35b79`](https://github.com/ashcoft/document-mcp/commit/3e35b79ea335e9d7edcaa36c1fef5dc7ac8fc096))
+
+- **deps**: Update dependency xlsxwriter to v3.3.0
+  ([`435f1d3`](https://github.com/ashcoft/document-mcp/commit/435f1d32e94897f6c09644ef00f4d68a20b3c143))
+
+- **deps**: Update dependency xxhash to v4.0.2
+  ([`ca2b7af`](https://github.com/ashcoft/document-mcp/commit/ca2b7af2e72523f352f3508723c4c0bd60657eeb))
+
+- **deps**: Update httpx2-httpcore2 to v2.14.0
+  ([`bef6e0c`](https://github.com/ashcoft/document-mcp/commit/bef6e0ceaca25cd359364f87728ff8d8a267db1d))
+
+- **deps**: Update httpx2-httpcore2 to v2.15.1
+  ([`31a54f8`](https://github.com/ashcoft/document-mcp/commit/31a54f85723483c0413dc2f88bfb67696a6c8886))
+
+- **deps**: Update httpx2-httpcore2 to v2.16.0
+  ([`cd5670f`](https://github.com/ashcoft/document-mcp/commit/cd5670f2ff57fecab52b6f237d6809c14fb7e237))
+
+
 ## v0.1.6 (2026-10-14)
 
 ### Bug Fixes

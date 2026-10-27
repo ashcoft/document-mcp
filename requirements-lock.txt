@@ -1712,9 +1712,9 @@ joblib==1.6.0 \
     --hash=sha256:2ccc96785b12046c08fd6d55839c12857831b54a3c1673ffadd2f04bfc4eda03 \
     --hash=sha256:3dbbf9f6e4b592a2357b854608e980fe6390d131d7a82f011a377ef2ebef7aba
     # via scikit-learn
-jsonpatch==1.37 \
-    --hash=sha256:04288ef93e60084bcb118101cd9d53424e627b91bb47ec5a95c02ec3795f6d23 \
-    --hash=sha256:7905646db52668a89d10945a07ca1c10337094dcf07d172ca384dccfca0b7438
+jsonpatch==1.38 \
+    --hash=sha256:46260c5df952abd4734a098f94512dc00bc38539152ac3ef069ed0475e4f5695 \
+    --hash=sha256:debc3e7bdc3d446468d64987f51a0e7a9deea42987ff90a6d1005a489b471c19
     # via langchain-core
 jsonpointer==3.5 \
     --hash=sha256:81f28618a019cf1b011a6cf757439737972de1ccbeca2e1f86dfb4d661800792 \

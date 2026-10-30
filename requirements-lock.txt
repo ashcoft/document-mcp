@@ -4612,9 +4612,9 @@ tqdm==4.70.1 \
     #   modelscope-hub
     #   sentence-transformers
     #   transformers
-transformers==5.22.0 \
-    --hash=sha256:3cca65f94b0aa33511433c7c1a661c513e4ad8bc0504cb370d181d771e7c9aa0 \
-    --hash=sha256:f2864f282383820089b21d104d55cb72118b8594f053c2cbeb58d0740f9ff662
+transformers==5.22.1 \
+    --hash=sha256:bed9fd76d6f43b4a1a9fc5d0c565ace7c77edbd029784f8cbcdf772cb5e924d8 \
+    --hash=sha256:c940b4bf98de4f568723895f330ba1460a398bd83061b93b70238c3fe32e4389
     # via sentence-transformers
 triton==3.9.0 \
     --hash=sha256:1622118a038b0c6e16fa4a0305da62c8b3c15904ee1cc4d4e65846a25969e41e \

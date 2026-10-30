@@ -1,6 +1,51 @@
 # CHANGELOG
 
 
+## v0.1.9 (2026-10-30)
+
+### Bug Fixes
+
+- **deps**: Bump pydantic-core to 2.50.2 in lock file
+  ([`a9752cf`](https://github.com/ashcoft/document-mcp/commit/a9752cf1a5803f2fefcf5cdc937b14e84ce694cf))
+
+pydantic 2.14.2 requires pydantic-core==2.50.2, but the lock file still pinned 2.50.1, so the Docker
+  build failed with an unsatisfiable dependency set. Update the pinned version and hashes from PyPI.
+
+Co-authored-by: openhands <openhands@all-hands.dev>
+
+### Chores
+
+- **deps**: Update dependency cuda-pathfinder to v1.8.5
+  ([`f981209`](https://github.com/ashcoft/document-mcp/commit/f981209b4138498ed8dae99d17131609a3ae3542))
+
+- **deps**: Update dependency langchain-core to v1.7.3
+  ([`64cc693`](https://github.com/ashcoft/document-mcp/commit/64cc69370b77ec885107b669a981f6e8e569f903))
+
+- **deps**: Update dependency langsmith to v0.14.15
+  ([`cb1a21f`](https://github.com/ashcoft/document-mcp/commit/cb1a21f380bb8f47cb3486df554f2f33d45ea683))
+
+- **deps**: Update dependency langsmith to v0.14.16
+  ([`237b73e`](https://github.com/ashcoft/document-mcp/commit/237b73e489b9023df380ebea1fb041664ade5b69))
+
+- **deps**: Update dependency modelscope-hub to v0.6.0
+  ([`00c5103`](https://github.com/ashcoft/document-mcp/commit/00c5103d04e406281f5cd5224d51f85b255c5c9d))
+
+- **deps**: Update dependency opentelemetry-api to v1.45.2
+  ([`b573a36`](https://github.com/ashcoft/document-mcp/commit/b573a3689fc381750fa550016d6605f4e1fe0735))
+
+- **deps**: Update dependency pydantic to v2.14.2
+  ([`94a0bf4`](https://github.com/ashcoft/document-mcp/commit/94a0bf4828f46e7db75ac80ac58852a81393a909))
+
+- **deps**: Update dependency transformers to v5.21.1
+  ([`87ec800`](https://github.com/ashcoft/document-mcp/commit/87ec80082c420d7a9dbfaa9563e9c6be62a9f40c))
+
+- **deps**: Update dependency transformers to v5.22.0
+  ([`ff5e088`](https://github.com/ashcoft/document-mcp/commit/ff5e088161d1a85ad226b1fb2f3db2e0a51b1ef0))
+
+- **deps**: Update dependency vue-tsc to v3.3.14
+  ([`f21902f`](https://github.com/ashcoft/document-mcp/commit/f21902f88476b97539956e947a10f847cbdeeab0))
+
+
 ## v0.1.8 (2026-10-29)
 
 ### Bug Fixes

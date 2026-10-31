@@ -2289,9 +2289,9 @@ modelscope==1.40.2 \
     --hash=sha256:7a642cef8c144c28c4ddcc37db5fd803f5481f0d78a7f26c2b9e0e2a225b528c \
     --hash=sha256:ea03e0ec4a73398a488d3d240cda4f0c5b62390377a134756d4074a3036cb909
     # via paddlex
-modelscope-hub==0.6.0 \
-    --hash=sha256:4b8c8ca475ef06caa270027200abf43ef24fb6f6ff54d5d2145c6066674f9cfe \
-    --hash=sha256:f0831505b2d3e494e9ef6df1705755b48d845e32da7f070acc404eecd2c3a71f
+modelscope-hub==0.6.1 \
+    --hash=sha256:b1dfed21d24ae2ec7f9ada2ca12a463ab8a8fadf17b2101fdd14d61b1466788f \
+    --hash=sha256:e4e4172fda39f332ca2419cd1907e23207ec9d2ea14bdd35ad36ee9b031da401
     # via modelscope
 mpmath==1.3.0 \
     --hash=sha256:7a28eb2a9774d00c7bc92411c19a89209d5da7c4c9a9e227be8330a23a25b91f \

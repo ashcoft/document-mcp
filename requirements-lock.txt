@@ -3777,9 +3777,9 @@ python-bidi==0.6.12 \
     --hash=sha256:fba1d22260c14259be50c1ca58bab8b90e976a8ee9e645c56ee64b2430b2c484 \
     --hash=sha256:ff0376483e1114334a1ad59305aa313045655f5e7495e79517cc40e38c9a281c
     # via paddlex
-python-dateutil==3.0.0 \
-    --hash=sha256:3c79630202e4152c6add678446984236efe4f57e84d8e892aab0637bab82e9fd \
-    --hash=sha256:7ebcb3c29a92f3ceafe79a7a48a5c45677e9e004bbeec5742ac0bbb00560b7a2
+python-dateutil==4.0.0 \
+    --hash=sha256:a5e246f79eb80475e691bf93862cead98decd8a498cf53ba0516fcdc0f50dc1c \
+    --hash=sha256:d7295ff14fdc0f92f662100bfb6c551d160ca090f2939f1ec5b9794265c03f06
     # via
     #   celery
     #   pandas

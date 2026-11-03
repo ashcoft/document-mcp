@@ -1736,9 +1736,9 @@ jsonpatch==1.41 \
     --hash=sha256:1aca06402f94e5cd7bc133af0cb4f7b2c2f9c0bc172f9de52c9aa4c6104b0d1c \
     --hash=sha256:fd493e82a57da7dd60e22ff2521f75d2be3ce41d76a845799d898de6da682922
     # via langchain-core
-jsonpointer==3.7 \
-    --hash=sha256:41005d228d8a6ec517b727d2821b7fa16e6bfc7c695ca3339f8331cccaba3887 \
-    --hash=sha256:58734c45431c9a268df029a39bce8d57e8aebe32f1d58d28a17c9aa246e10929
+jsonpointer==3.8 \
+    --hash=sha256:d69af85adaea202111bbc931067ead68dc16bca4592c74e1a1953152e2a330ab \
+    --hash=sha256:a627a255641390bfb4d51d4cfbb90648078ae855b45804ef7e19ea13a4cca355
     # via jsonpatch
 jsonschema==4.26.0 \
     --hash=sha256:0c26707e2efad8aa1bfc5b7ce170f3fccc2e4918ff85989ba9ffa9facb2be326 \

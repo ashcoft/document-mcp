@@ -1,6 +1,31 @@
 # CHANGELOG
 
 
+## v0.1.11 (2026-11-03)
+
+### Bug Fixes
+
+- **deps**: Bump pymupdf-layout and pymupdf4llm to 2.1 in lockfile
+  ([`aaaaef2`](https://github.com/ashcoft/document-mcp/commit/aaaaef2db7ef80368093cfeb6c63bf73b383ebf8))
+
+pymupdf 2.1 hard-pins pymupdf-layout==2.1 and pymupdf4llm==2.1, but requirements-lock.txt still
+  pinned both at 2.0, so Docker Build failed with "No solution found when resolving dependencies"
+  during `uv pip install --require-hashes -r requirements-lock.txt`.
+
+Bump both companions to 2.1 with their wheel hashes so the locked set resolves. Verified with `uv
+  pip install --dry-run --only-binary :all: --require-hashes` and a full `docker build`.
+
+Co-authored-by: openhands <openhands@all-hands.dev>
+
+### Chores
+
+- **deps**: Update dependency pycryptodome to v4.3.0
+  ([`504d764`](https://github.com/ashcoft/document-mcp/commit/504d76400fe5597ca188879c82b6d748b4ec6fea))
+
+- **deps**: Update dependency pymupdf to v2.1
+  ([`7927397`](https://github.com/ashcoft/document-mcp/commit/7927397d1fcde8e2b32526cb8eb275188b5aefce))
+
+
 ## v0.1.10 (2026-11-03)
 
 ### Bug Fixes

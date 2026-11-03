@@ -1,6 +1,94 @@
 # CHANGELOG
 
 
+## v0.1.10 (2026-11-03)
+
+### Bug Fixes
+
+- **deps**: Bump jsonpointer to 3.8 in lockfile
+  ([`58d258c`](https://github.com/ashcoft/document-mcp/commit/58d258cdfda5e2b4a8d44ef0f609f204851462d3))
+
+jsonpatch 1.41 requires jsonpointer>=3.8, but requirements-lock.txt still pinned jsonpointer==3.7,
+  so Docker Build failed with "No solution found when resolving dependencies" during `uv pip install
+  --require-hashes -r requirements-lock.txt`.
+
+Bump jsonpointer to 3.8 with its wheel/sdist hashes so the locked set resolves. Verified with `uv
+  pip install --dry-run --only-binary :all: --require-hashes` and a full `docker build`.
+
+Co-authored-by: openhands <openhands@all-hands.dev>
+
+### Chores
+
+- **deps**: Update dependency amqp to v5.4.2
+  ([`18f4268`](https://github.com/ashcoft/document-mcp/commit/18f4268e94e044b4697c623f703e08007bd956d7))
+
+- **deps**: Update dependency anyio to v4.16.0
+  ([`7f46097`](https://github.com/ashcoft/document-mcp/commit/7f4609735006602167b9aebbac2d7a5350801b18))
+
+- **deps**: Update dependency billiard to v4.3.2
+  ([`0ff674d`](https://github.com/ashcoft/document-mcp/commit/0ff674dffeddd2019f0bfcab03f1cd22f885484e))
+
+- **deps**: Update dependency filelock to v4.2.5
+  ([`031dab3`](https://github.com/ashcoft/document-mcp/commit/031dab37434e7b1d572e6000358c027afacc7fb6))
+
+- **deps**: Update dependency filelock to v4.2.6
+  ([`4a5f5dd`](https://github.com/ashcoft/document-mcp/commit/4a5f5ddc9fd864809726e6d739e39e585e42fa69))
+
+- **deps**: Update dependency filelock to v4.2.7
+  ([`5763055`](https://github.com/ashcoft/document-mcp/commit/57630551840c559c081f674f3b4674bbd636e757))
+
+- **deps**: Update dependency hf-xet to v1.8.0
+  ([`0276bd9`](https://github.com/ashcoft/document-mcp/commit/0276bd9dbe77021fbcd092af5e86cece92b70abb))
+
+- **deps**: Update dependency jsonpatch to v1.39
+  ([`286098d`](https://github.com/ashcoft/document-mcp/commit/286098dc7b21c133f01f6e78191b8a35a5136f98))
+
+- **deps**: Update dependency jsonpatch to v1.41
+  ([`519d983`](https://github.com/ashcoft/document-mcp/commit/519d983b7d70d874e4bb73e5ee6c1294c089064c))
+
+- **deps**: Update dependency jsonpointer to v3.7
+  ([`b8869bd`](https://github.com/ashcoft/document-mcp/commit/b8869bd234e5902acbe52c61abcb4efb9567b41c))
+
+- **deps**: Update dependency langchain to v1.4.8
+  ([`206d282`](https://github.com/ashcoft/document-mcp/commit/206d2820663ec1153ce05fd56b8cb2d60197c481))
+
+- **deps**: Update dependency langchain-core to v1.7.4
+  ([`d3fb353`](https://github.com/ashcoft/document-mcp/commit/d3fb353742c04131e9d0952939d761b0ad8ccb66))
+
+- **deps**: Update dependency langgraph to v1.2.19
+  ([`865e0ec`](https://github.com/ashcoft/document-mcp/commit/865e0ecf5b72195602c937cd99a385a229d1430b))
+
+- **deps**: Update dependency langgraph-sdk to v0.4.11
+  ([`63bcf6f`](https://github.com/ashcoft/document-mcp/commit/63bcf6fb6718025e9ae1f44eab0bde16bd2d023b))
+
+- **deps**: Update dependency langsmith to v0.14.17
+  ([`9bd0a5b`](https://github.com/ashcoft/document-mcp/commit/9bd0a5b46610cbd0729b3af11969185ce8d1c03f))
+
+- **deps**: Update dependency modelscope-hub to v0.6.1
+  ([`450bf51`](https://github.com/ashcoft/document-mcp/commit/450bf51d4fc0b86e5f6866adc2a2bab333cd124a))
+
+- **deps**: Update dependency platformdirs to v4.14.2
+  ([`df15dcc`](https://github.com/ashcoft/document-mcp/commit/df15dcc2c3cc7da124e632520f01cbeb8bd5c41d))
+
+- **deps**: Update dependency platformdirs to v4.14.3
+  ([`7cc5646`](https://github.com/ashcoft/document-mcp/commit/7cc564637b054fc92efbd32879152572016a3da3))
+
+- **deps**: Update dependency pytest-asyncio to v1.4.1.post1
+  ([`fd14a1d`](https://github.com/ashcoft/document-mcp/commit/fd14a1d061dc969a1a1d013b3e217e6a91267a12))
+
+- **deps**: Update dependency python-dateutil to v4
+  ([`59d49f7`](https://github.com/ashcoft/document-mcp/commit/59d49f7dec39ecb8f15a359d46dfac28a32024be))
+
+- **deps**: Update dependency python-multipart to v0.0.33
+  ([`714033c`](https://github.com/ashcoft/document-mcp/commit/714033c8328d9cb44227c6ac1db43687e8fb21b8))
+
+- **deps**: Update dependency transformers to v5.22.1
+  ([`8989ded`](https://github.com/ashcoft/document-mcp/commit/8989dedf575b947afe0f98030fb80f0567559023))
+
+- **deps**: Update dependency websockets to v17.4
+  ([`8a5d091`](https://github.com/ashcoft/document-mcp/commit/8a5d09178d58e0c7ccd7d4d4e6a68df87166c9ff))
+
+
 ## v0.1.9 (2026-10-30)
 
 ### Bug Fixes

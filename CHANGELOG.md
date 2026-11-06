@@ -1,6 +1,36 @@
 # CHANGELOG
 
 
+## v0.1.14 (2026-11-06)
+
+### Bug Fixes
+
+- **deps**: Align python-dateutil with celery 5.7.0 in lock file
+  ([`8ac57c5`](https://github.com/ashcoft/document-mcp/commit/8ac57c54b887b9a0a820b06240684941845fa51e))
+
+celery 5.7.0 hard-pins python-dateutil==2.9.0.post0, but requirements-lock.txt pinned
+  python-dateutil==4.0.0 (bumped independently by Renovate). pandas only requires
+  python-dateutil>=2.9.0, so the exact pin can be satisfied by downgrading the lock to 2.9.0.post0.
+  The Docker Build failed with "No solution found when resolving dependencies" during `uv pip
+  install --require-hashes -r requirements-lock.txt`.
+
+Also disable Renovate's independent python-dateutil updates so the lock cannot be bumped out of
+  celery's exact pin again.
+
+Co-authored-by: openhands <openhands@all-hands.dev>
+
+### Chores
+
+- **deps**: Update dependency celery to v5.7.0
+  ([`ceba61f`](https://github.com/ashcoft/document-mcp/commit/ceba61f97971d24909d922e2fd778d97711446d0))
+
+- **deps**: Update dependency jsonpointer to v3.9
+  ([`beafc2e`](https://github.com/ashcoft/document-mcp/commit/beafc2e6fba41cf10da905a491489472b5edabea))
+
+- **deps**: Update dependency threadpoolctl to v3.8.0
+  ([`4585a9c`](https://github.com/ashcoft/document-mcp/commit/4585a9c37b46db2a1a5cb60cb28a142b8cd26fa3))
+
+
 ## v0.1.13 (2026-11-06)
 
 ### Bug Fixes

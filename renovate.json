@@ -41,6 +41,13 @@
     },
     {
       "enabled": false,
+      "description": "python-dateutil is pinned exactly by celery (celery==5.7.0 requires python-dateutil==2.9.0.post0, while pandas only needs >=2.9.0); do not bump it independently until celery relaxes the exact pin, or requirements-lock.txt becomes unsatisfiable during `uv pip install --require-hashes -r requirements-lock.txt`",
+      "matchPackageNames": [
+        "/^python-dateutil$/"
+      ]
+    },
+    {
+      "enabled": false,
       "description": "huggingface-hub is capped at <2.0.0 by sentence-transformers (sentence-transformers==6.1.0 requires huggingface-hub>=1.3.0,<2.0.0) and at <2.0 by tokenizers (tokenizers==0.23.2 requires huggingface-hub>=0.16.4,<2.0); do not bump to 2.x until those releases relax the upper bound",
       "matchPackageNames": [
         "/^huggingface-hub$/"

@@ -1,6 +1,31 @@
 # CHANGELOG
 
 
+## v0.1.13 (2026-11-06)
+
+### Bug Fixes
+
+- **deps**: Bump pydantic-core to 2.50.4 in lock file
+  ([`e45c3c9`](https://github.com/ashcoft/document-mcp/commit/e45c3c93efd3c8f092f1d32349cf15d3839ad6f5))
+
+pydantic 2.14.3 hard-pins pydantic-core==2.50.4, but requirements-lock.txt still pinned
+  pydantic-core==2.50.2. The Docker Build failed with "No solution found when resolving
+  dependencies" during `uv pip install --require-hashes -r requirements-lock.txt`.
+
+Update the pin and the full set of wheel hashes so the locked set resolves. Verified with `uv pip
+  install --dry-run --only-binary :all: --require-hashes`.
+
+Co-authored-by: openhands <openhands@all-hands.dev>
+
+### Chores
+
+- **deps**: Update dependency jsonpatch to v1.43
+  ([`116e629`](https://github.com/ashcoft/document-mcp/commit/116e629187dafa737ebd6cfa3b3eb264d14146da))
+
+- **deps**: Update dependency pydantic to v2.14.3
+  ([`a238b03`](https://github.com/ashcoft/document-mcp/commit/a238b0331e3a1955a2c8fc6266ce6c6f26ab5807))
+
+
 ## v0.1.12 (2026-11-06)
 
 ### Bug Fixes

@@ -1,6 +1,99 @@
 # CHANGELOG
 
 
+## v0.1.12 (2026-11-06)
+
+### Bug Fixes
+
+- **deps**: Sync frontend lock file with @playwright/test 1.65.0
+  ([`40827f2`](https://github.com/ashcoft/document-mcp/commit/40827f22f1df5e75c88085f14600d4e4149f5b11))
+
+The dependency bump updated package.json but not package-lock.json, so `npm ci` failed with EUSAGE
+  because the lock file still pinned @playwright/test, playwright and playwright-core at 1.64.1.
+
+Co-authored-by: openhands <openhands@all-hands.dev>
+
+### Chores
+
+- **deps**: Update dependency @playwright/test to v1.65.0
+  ([`1bbc114`](https://github.com/ashcoft/document-mcp/commit/1bbc11413f6e2495479f9d353d5f1803c844eed8))
+
+- **deps**: Update dependency coverage to v7.17.1
+  ([`ea44743`](https://github.com/ashcoft/document-mcp/commit/ea4474396cb13df7b54f99a5d89078f7d8b229dc))
+
+- **deps**: Update dependency coverage to v7.17.2
+  ([`35f262b`](https://github.com/ashcoft/document-mcp/commit/35f262bc3a4d15f5e0c6d0e22464e2048d5c6ba7))
+
+- **deps**: Update dependency cuda-pathfinder to v1.8.6
+  ([`9eb8be2`](https://github.com/ashcoft/document-mcp/commit/9eb8be260af1c5ea537afc89554cff7f22e0e107))
+
+- **deps**: Update dependency filelock to v4.2.8
+  ([`468541e`](https://github.com/ashcoft/document-mcp/commit/468541e16f19f7389ddbcc83e4c2ca1861168b13))
+
+- **deps**: Update dependency filelock to v4.2.9
+  ([`770282e`](https://github.com/ashcoft/document-mcp/commit/770282e0db80340032eb0341c5e1f557f6e73797))
+
+- **deps**: Update dependency jsonpatch to v1.42
+  ([`2c54fac`](https://github.com/ashcoft/document-mcp/commit/2c54facc01cebc166472d98821227ee4688b30a9))
+
+- **deps**: Update dependency kombu to v5.7.0
+  ([`a145bb2`](https://github.com/ashcoft/document-mcp/commit/a145bb2a2a1192d6b7b473ed4bd47c5404718c83))
+
+- **deps**: Update dependency langchain to v1.4.9
+  ([`ca6734b`](https://github.com/ashcoft/document-mcp/commit/ca6734bb38e4e948fb76cf74556b6787b53022aa))
+
+- **deps**: Update dependency langchain-core to v1.7.5
+  ([`e417b44`](https://github.com/ashcoft/document-mcp/commit/e417b44bdd9dfaf2d7bc68a7aa4206a359198740))
+
+- **deps**: Update dependency langchain-core to v1.7.6
+  ([`b4b281f`](https://github.com/ashcoft/document-mcp/commit/b4b281f469383b725e6a516b463751d5bfecc998))
+
+- **deps**: Update dependency langchain-protocol to v0.0.21
+  ([`adf6bbf`](https://github.com/ashcoft/document-mcp/commit/adf6bbf4f1bc68e617af3bd999487e0c8cf1aa79))
+
+- **deps**: Update dependency langgraph to v1.2.20
+  ([`e4da876`](https://github.com/ashcoft/document-mcp/commit/e4da876bdd4dba2cea834a76ef4d18a30f7fec9c))
+
+- **deps**: Update dependency langgraph-sdk to v0.4.12
+  ([`3528f0c`](https://github.com/ashcoft/document-mcp/commit/3528f0c78075300b7a8a3d9b09d23d2bac1ac6df))
+
+- **deps**: Update dependency langgraph-sdk to v0.4.13
+  ([`fe95032`](https://github.com/ashcoft/document-mcp/commit/fe95032354902aec355710fd5e3a2b6310fbf84e))
+
+- **deps**: Update dependency mypy-extensions to v1.2.0
+  ([`b2eb017`](https://github.com/ashcoft/document-mcp/commit/b2eb017c2df6ab21e440e10700188ee8d695a4e9))
+
+- **deps**: Update dependency pandas to v3.1.1
+  ([`c19ecfe`](https://github.com/ashcoft/document-mcp/commit/c19ecfea7b28b239856d6a97b77dda69c1f3dffc))
+
+- **deps**: Update dependency platformdirs to v4.14.4
+  ([`52ef524`](https://github.com/ashcoft/document-mcp/commit/52ef524d8df5ffa7c17053355f1736e3b92e05c8))
+
+- **deps**: Update dependency platformdirs to v4.14.5
+  ([`9d3549f`](https://github.com/ashcoft/document-mcp/commit/9d3549fb5e94e8ac4548409932d3543a38ff7425))
+
+- **deps**: Update dependency ruff to v0.17.4
+  ([`2164263`](https://github.com/ashcoft/document-mcp/commit/21642632b3302e6ba0c66a8007a69124cb25c4d0))
+
+- **deps**: Update dependency sqlalchemy to v2.1.8
+  ([`3320285`](https://github.com/ashcoft/document-mcp/commit/33202850799b63ea3919de171c01280af16d0601))
+
+- **deps**: Update dependency typing-inspection to v0.4.5
+  ([`75cb92d`](https://github.com/ashcoft/document-mcp/commit/75cb92d4101e01ac21a3e78b3aa60408e0e49cb3))
+
+- **deps**: Update dependency ujson to v6.1.0
+  ([`1a846a8`](https://github.com/ashcoft/document-mcp/commit/1a846a8bb4ff7180325c54b57bfa7aa31630c720))
+
+- **deps**: Update dependency vite to v8.3.6
+  ([`83a8cd8`](https://github.com/ashcoft/document-mcp/commit/83a8cd8c50a293693738d177ce26c7e185751cf7))
+
+- **deps**: Update dependency vue to v3.5.45
+  ([`816a91e`](https://github.com/ashcoft/document-mcp/commit/816a91e85a17150de43751c4be9f4e4059aa0307))
+
+- **deps**: Update dependency vuetify to v4.3.2
+  ([`5761b74`](https://github.com/ashcoft/document-mcp/commit/5761b748f642813b9798cf4dd6e62bbc3fcce44e))
+
+
 ## v0.1.11 (2026-11-03)
 
 ### Bug Fixes

@@ -1,6 +1,70 @@
 # CHANGELOG
 
 
+## v0.1.15 (2026-11-11)
+
+### Bug Fixes
+
+- **deps**: Bump modelscope-hub to 0.7.1 for modelscope 1.40.3
+  ([`7f65cd6`](https://github.com/ashcoft/document-mcp/commit/7f65cd6215a054caab0db1594b2eacd548002cb1))
+
+modelscope 1.40.3 requires modelscope-hub>=0.7.0, but the lock file still pinned
+  modelscope-hub==0.6.1, so `uv pip install --require-hashes` failed to resolve during the Docker
+  Build with "No solution found".
+
+Co-authored-by: openhands <openhands@all-hands.dev>
+
+### Chores
+
+- **deps**: Update dependency click to v8.5.1
+  ([`0938908`](https://github.com/ashcoft/document-mcp/commit/0938908107c4537f1f494f293b0190611b519535))
+
+- **deps**: Update dependency fastapi to v0.162.2
+  ([`08a60b7`](https://github.com/ashcoft/document-mcp/commit/08a60b73e26d7075ceb0ff0a0a77cf0afedd8de1))
+
+- **deps**: Update dependency filelock to v4.2.10
+  ([`57d46e6`](https://github.com/ashcoft/document-mcp/commit/57d46e60bb66a6a47d546fd102a8c1ff6282a9bc))
+
+- **deps**: Update dependency jsonpatch to v1.44
+  ([`2b7fe4c`](https://github.com/ashcoft/document-mcp/commit/2b7fe4cc994881a2590fbf00c707e9d3c065eb26))
+
+- **deps**: Update dependency jsonpointer to v3.10
+  ([`426892e`](https://github.com/ashcoft/document-mcp/commit/426892edce57e199c0e66cc5c7f2e5d176db9cd8))
+
+- **deps**: Update dependency langgraph-sdk to v0.4.14
+  ([`9624d2d`](https://github.com/ashcoft/document-mcp/commit/9624d2d3b9b897497fff10b221d5ef9435fce33f))
+
+- **deps**: Update dependency modelscope to v1.40.3
+  ([`82a7423`](https://github.com/ashcoft/document-mcp/commit/82a7423794e54a1a2b3586510b5d2a97729cc84c))
+
+- **deps**: Update dependency ormsgpack to v1.13.1
+  ([`f70c4c5`](https://github.com/ashcoft/document-mcp/commit/f70c4c5f913fd2d6ed764987c057c304db57d6af))
+
+- **deps**: Update dependency pycryptodome to v4.4.0
+  ([`7f205e2`](https://github.com/ashcoft/document-mcp/commit/7f205e269c193676690f4376c98fe2f46c462266))
+
+- **deps**: Update dependency pypdfium2 to v5.15.0
+  ([`ad01796`](https://github.com/ashcoft/document-mcp/commit/ad017963ff2358e6dec9e2f2a087b8b74eaa2472))
+
+- **deps**: Update dependency pypdfium2 to v5.15.1
+  ([`2b57eef`](https://github.com/ashcoft/document-mcp/commit/2b57eef75f9ee3c9734e0d8ef41a0d658662017a))
+
+- **deps**: Update dependency regex to v2026.11.7
+  ([`5071a0a`](https://github.com/ashcoft/document-mcp/commit/5071a0a1f347a31080c5fee0b1726e3de35e0c48))
+
+- **deps**: Update dependency regex to v2026.11.9
+  ([`14b97c1`](https://github.com/ashcoft/document-mcp/commit/14b97c10920be1cde23177089ca938957c4078dc))
+
+- **deps**: Update dependency sse-starlette to v3.7.0
+  ([`6bef51f`](https://github.com/ashcoft/document-mcp/commit/6bef51f9bd5b93e8ddceaf7e647689840b3075eb))
+
+- **deps**: Update dependency transformers to v5.22.2
+  ([`cef170f`](https://github.com/ashcoft/document-mcp/commit/cef170f40b73e016017e764d430a0b8da4efd5d7))
+
+- **deps**: Update dependency typer to v0.28.0
+  ([`48a45f0`](https://github.com/ashcoft/document-mcp/commit/48a45f0e5d0db62485080aa6c82809435c21b9d8))
+
+
 ## v0.1.14 (2026-11-06)
 
 ### Bug Fixes

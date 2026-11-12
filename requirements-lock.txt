@@ -1752,9 +1752,9 @@ kombu==5.7.0 \
     --hash=sha256:31e62fdfd2381caa3422f8e02b84a491d9a2180ddda74507b57f4cb1e1c2c2c9 \
     --hash=sha256:dede73bff4c89175be382c4203d2f167cf7017c384396ec75c36a1b5678f1587
     # via celery
-langchain==1.4.9 \
-    --hash=sha256:449905dd841442562f897267ceaa05f80f42daa2cf019549b2650a9b02e85d8b \
-    --hash=sha256:87cf3c15dfddaebd0e421d253e3b4abf70b70d6e18e56c45b9eb1873cc46f154
+langchain==1.5.0 \
+    --hash=sha256:24e94c496a3e532be1f9541edb475d5d0975aeb1211c3f8fecc042da3ec44cfa \
+    --hash=sha256:62b8d048847d7063cf769b39d32219c4a8ff8abc75f3ebfde461e65b9ff8ff49
     # via -r requirements.txt
 langchain-core==1.8.0 \
     --hash=sha256:89732f9e7d311de9913ba22caf921c72520145a829f05ec1d9c85013e904213c \

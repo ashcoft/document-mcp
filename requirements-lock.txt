@@ -4344,9 +4344,9 @@ scipy==1.18.1 \
     # via
     #   scikit-learn
     #   sentence-transformers
-sentence-transformers==6.2.0 \
-    --hash=sha256:1e3cd8796ab7bcad4cfa2f51e2083d8b37b15d6b68e6fa6b91a147c67380574d \
-    --hash=sha256:ffb51ccfef65427cfa61776d0eeeb257600b0099cf0c7533ae9a6856d31e4665
+sentence-transformers==6.3.0 \
+    --hash=sha256:a19acbf76a958817136ee4e89f90b483255d77f3dc9a7309814f7600592c450e \
+    --hash=sha256:fb89d876edb6cb3a82b7a90f74bd7eb1118412ffabe56b249bd1884d35e705db
     # via -r requirements.txt
 shapely==2.2.0 \
     --hash=sha256:000c0ce2a3ba49427e6288b7add9de5d8525d4e65d6ebc8840103040d4d57b86 \

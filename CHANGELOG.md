@@ -1,6 +1,71 @@
 # CHANGELOG
 
 
+## v0.1.16 (2026-11-12)
+
+### Bug Fixes
+
+- **deps**: Bump langchain-core to 1.8.0 for langchain 1.5.0
+  ([`8f55b44`](https://github.com/ashcoft/document-mcp/commit/8f55b44050d6403c28079ddbd3c1db752797a997))
+
+langchain 1.5.0 requires langchain-core>=1.8.0,<2.0.0, but the lock file still pinned
+  langchain-core==1.7.7, so `uv pip install --require-hashes` failed to resolve during the Docker
+  Build with "No solution found".
+
+All other langchain-core consumers (langchain-ollama, langgraph, langgraph-checkpoint,
+  langgraph-prebuilt, langgraph-sdk) accept >=1.8.0,<2.0.0, and langchain-core 1.8.0 has the same
+  dependency set as 1.7.7.
+
+Co-authored-by: openhands <openhands@all-hands.dev>
+
+### Chores
+
+- **deps**: Update dependency annotated-doc to v0.0.6
+  ([`17ad1be`](https://github.com/ashcoft/document-mcp/commit/17ad1bed56f02ec589331941ae640f5ce21b3adb))
+
+- **deps**: Update dependency fastapi to v0.162.4
+  ([`d171d55`](https://github.com/ashcoft/document-mcp/commit/d171d5507c8b1574753b2b6d1e6b4dc44e0ebf73))
+
+- **deps**: Update dependency fastapi to v0.162.5
+  ([`64568ad`](https://github.com/ashcoft/document-mcp/commit/64568adea804856b6eaab22d304dd3c3ca139d27))
+
+- **deps**: Update dependency jsonpatch to v1.47
+  ([`af829cb`](https://github.com/ashcoft/document-mcp/commit/af829cbddc0cee570f0d8f1cdcca1dc7c9766a34))
+
+- **deps**: Update dependency jsonpointer to v3.12
+  ([`3ee6003`](https://github.com/ashcoft/document-mcp/commit/3ee6003cb9c60b9a0f7f4fae5b965568025aaf15))
+
+- **deps**: Update dependency langchain to v1.5.0
+  ([`34ade87`](https://github.com/ashcoft/document-mcp/commit/34ade8713ce03b0a682e0a23c0bb0a5e8d2f9325))
+
+- **deps**: Update dependency langchain-core to v1.7.7
+  ([`96b3b9d`](https://github.com/ashcoft/document-mcp/commit/96b3b9d0fc3f21b4586f0243e8b1e17458e0e0d3))
+
+- **deps**: Update dependency langchain-core to v1.8.0
+  ([`a137fef`](https://github.com/ashcoft/document-mcp/commit/a137fef1b52f954227c5cacf3d7ecba6c1ac4dc4))
+
+- **deps**: Update dependency markdown-it-py to v4.3.0
+  ([`e6151c2`](https://github.com/ashcoft/document-mcp/commit/e6151c2503c91efa58892906c9aa37af892c72d0))
+
+- **deps**: Update dependency pypdfium2 to v5.15.2
+  ([`ede991b`](https://github.com/ashcoft/document-mcp/commit/ede991b2aeb9555a26ae1c2cf1df12cee3b085b5))
+
+- **deps**: Update dependency typer to v0.29.1
+  ([`e652ec0`](https://github.com/ashcoft/document-mcp/commit/e652ec0999e41b9729695f3323ea0c910e69c34c))
+
+- **deps**: Update dependency vite to v8.3.8
+  ([`1e16d0f`](https://github.com/ashcoft/document-mcp/commit/1e16d0f79dd97d5be8a86b05a36eb9a845d30c59))
+
+- **deps**: Update dependency vue-router to v5.5.0
+  ([`5865b2f`](https://github.com/ashcoft/document-mcp/commit/5865b2f24b3b0bc7b27ee5f935a83796c3892886))
+
+- **deps**: Update dependency vuetify to v4.3.3
+  ([`d6415d3`](https://github.com/ashcoft/document-mcp/commit/d6415d3586ad2b76d9e66007831e165f3cf2d363))
+
+- **deps**: Update dependency xxhash to v4.1.0
+  ([`e97cb61`](https://github.com/ashcoft/document-mcp/commit/e97cb6182dfc73e71cdbd08fec9adce0324916de))
+
+
 ## v0.1.15 (2026-11-11)
 
 ### Bug Fixes

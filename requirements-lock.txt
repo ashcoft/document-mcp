@@ -1780,9 +1780,9 @@ langgraph==1.2.21 \
     --hash=sha256:382b657eaf3cd568245de4bf264db94d514e2a6d0916046b3125a228aee1c307 \
     --hash=sha256:e3e8ed606cbf577ee394d0e4bba0ba723de18c2ecd2f51529fc2ef4051fbca93
     # via langchain
-langgraph-checkpoint==4.3.1 \
-    --hash=sha256:215a826935c8db4d9676e79fd95943e5b3847d78604390898e1d98581cc594e5 \
-    --hash=sha256:625e7c78a72b33e7c47f7e87ca051060fb90aa66f5fd551c472c08376fb669cb
+langgraph-checkpoint==4.3.2 \
+    --hash=sha256:60e02eb2c2eefc4c22fb1549f1c90b85ce9617377604596c5f34fbd6af0bd6e9 \
+    --hash=sha256:fcab8468c7e965d7055e2a35c253d73a145624ef4728b150ca7c361f4afca286
     # via
     #   langgraph
     #   langgraph-prebuilt

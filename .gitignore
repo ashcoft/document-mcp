@@ -74,3 +74,5 @@ temp/
 
 #Ignore vscode AI rules
 .github\instructions\codacy.instructions.md
+.agent/dist/
+.agent/node_modules/

@@ -74,3 +74,9 @@ temp/
 
 #Ignore vscode AI rules
 .github\instructions\codacy.instructions.md
+
+.nx/installation
+.nx/cache
+.nx/workspace-data
+.nx/self-healing
+.nx/migrate-runs

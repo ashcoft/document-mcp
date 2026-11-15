@@ -1,6 +1,20 @@
 # CHANGELOG
 
 
+## v0.1.18 (2026-11-15)
+
+### Bug Fixes
+
+- **nx**: Build frontend before e2e target
+  ([`9b27460`](https://github.com/ashcoft/document-mcp/commit/9b274606bbb1feb1d2023c9655226b8016807672))
+
+The frontend e2e target starts Playwright, which serves the existing dist/ via `vite preview`.
+  Without a build dependency it fails on a fresh checkout and can pass against a stale bundle after
+  source changes. Add `dependsOn: ["build"]` so Nx builds or restores the current artifact first.
+
+Co-authored-by: openhands <openhands@all-hands.dev>
+
+
 ## v0.1.17 (2026-11-15)
 
 ### Bug Fixes

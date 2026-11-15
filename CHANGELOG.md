@@ -1,6 +1,83 @@
 # CHANGELOG
 
 
+## v0.1.17 (2026-11-15)
+
+### Bug Fixes
+
+- **nx**: Register projects, quote launcher paths, fix schema
+  ([`4e707ca`](https://github.com/ashcoft/document-mcp/commit/4e707cabca42c66a50f9fde7bd6f963a53c9c66b))
+
+Address CI and review feedback on the Nx setup:
+
+- Add project.json for the frontend and the Python backend so Nx has runnable build/test targets
+  instead of an empty workspace. - Quote path expansions in the `nx` and `nx.bat` launchers so
+  checkouts with spaces or shell metacharacters work. - Point nx.json `$schema` at the standalone
+  wrapper install location and declare build outputs so cache hits restore dist/. - Exclude the
+  vendored .nx/nxw.js from Codacy, whose dynamic require and path-construction findings are inherent
+  to the generated wrapper.
+
+Co-authored-by: openhands <openhands@all-hands.dev>
+
+### Chores
+
+- Add Nx
+  ([`cbb86f1`](https://github.com/ashcoft/document-mcp/commit/cbb86f18c048da8a8ce91fca9bd8491255e33f55))
+
+Initialize Nx for incremental adoption: adds nx.json and an nx devDependency. Existing scripts are
+  left unchanged and no plugins are added.
+
+Co-authored-by: openhands <openhands@all-hands.dev>
+
+- **deps**: Update dependency @playwright/test to v1.65.1
+  ([`b413723`](https://github.com/ashcoft/document-mcp/commit/b4137231fc5a4cab9ce34deea1fa3d493657db1a))
+
+- **deps**: Update dependency @vitejs/plugin-vue to v6.0.11
+  ([`44c2959`](https://github.com/ashcoft/document-mcp/commit/44c2959913905d2d55202a171a8284e8b60de05d))
+
+- **deps**: Update dependency coverage to v7.17.3
+  ([`4ecd9ef`](https://github.com/ashcoft/document-mcp/commit/4ecd9ef65e86f52d7ca41fb4d16b80ecc0bff1bd))
+
+- **deps**: Update dependency cuda-pathfinder to v1.9.0
+  ([`905a74c`](https://github.com/ashcoft/document-mcp/commit/905a74c7369ab8fedcbfb8c72669f0875d4938c0))
+
+- **deps**: Update dependency fastapi to v0.163.0
+  ([`e387fa2`](https://github.com/ashcoft/document-mcp/commit/e387fa27cbe07d5d858965f32808e9256ecb8e5b))
+
+- **deps**: Update dependency langgraph to v1.2.21
+  ([`b90a655`](https://github.com/ashcoft/document-mcp/commit/b90a655b5380f55ea1596d171546f383c60d0add))
+
+- **deps**: Update dependency langgraph to v1.2.22
+  ([`f9f9cf9`](https://github.com/ashcoft/document-mcp/commit/f9f9cf90668a99590e1abdcb42f48e28def088d2))
+
+- **deps**: Update dependency langgraph-checkpoint to v4.3.2
+  ([`a296bde`](https://github.com/ashcoft/document-mcp/commit/a296bde013c6b51e619d0279385c389c443e1cac))
+
+- **deps**: Update dependency langgraph-prebuilt to v1.1.2
+  ([`9076e42`](https://github.com/ashcoft/document-mcp/commit/9076e4264663c808bf08964d569d4b055df8d85d))
+
+- **deps**: Update dependency onnxruntime to v1.32.0
+  ([`79d3ab3`](https://github.com/ashcoft/document-mcp/commit/79d3ab364d598678e321a17b4107f504fe12958d))
+
+- **deps**: Update dependency pydantic-settings to v2.16.3
+  ([`98f7d28`](https://github.com/ashcoft/document-mcp/commit/98f7d28077572c12fa9b8337756f8dc55864a996))
+
+- **deps**: Update dependency pytest-asyncio to v1.5.0
+  ([`2b5a11c`](https://github.com/ashcoft/document-mcp/commit/2b5a11c85135431b41cf17d1baa92399b36bc558))
+
+- **deps**: Update dependency ruff to v0.17.5
+  ([`92993b3`](https://github.com/ashcoft/document-mcp/commit/92993b39fd4a6115e642a68f621344dd9b96ecaf))
+
+- **deps**: Update dependency sentence-transformers to v6.3.0
+  ([`68bb3a6`](https://github.com/ashcoft/document-mcp/commit/68bb3a689d615e5057cf6e2ebbaeb87a7194e50e))
+
+- **deps**: Update dependency transformers to v5.23.0
+  ([`bc65489`](https://github.com/ashcoft/document-mcp/commit/bc65489a5b8550527df6ab5bcd49890b3a2304a0))
+
+- **deps**: Update dependency vue-router to v5.5.1
+  ([`64668da`](https://github.com/ashcoft/document-mcp/commit/64668daf893c0c9d1d0692249e59a2483cd259eb))
+
+
 ## v0.1.16 (2026-11-12)
 
 ### Bug Fixes

@@ -8,6 +8,9 @@ on:
       - "frontend/**"
       - ".github/workflows/playwright.yml"
 
+permissions:
+  contents: read
+
 jobs:
   playwright:
     timeout-minutes: 60

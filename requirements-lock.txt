@@ -1756,9 +1756,9 @@ langchain==1.5.0 \
     --hash=sha256:24e94c496a3e532be1f9541edb475d5d0975aeb1211c3f8fecc042da3ec44cfa \
     --hash=sha256:62b8d048847d7063cf769b39d32219c4a8ff8abc75f3ebfde461e65b9ff8ff49
     # via -r requirements.txt
-langchain-core==1.8.1 \
-    --hash=sha256:778b9bf1d18d4b7a716311defa230db190006ef75fe175930e00012d82df603b \
-    --hash=sha256:e093de87371e648af23517f1e98cefc316f8be7c72a137b0e0f94d3e8e8cc421
+langchain-core==1.8.2 \
+    --hash=sha256:11f1047c4b243df746c01c10208082f580bb55f5fbf17bdb38355b6b63c4f63b \
+    --hash=sha256:6d35fae6c7f9946bcb9a8a0fa02a2c176cc958ea264ebc59d2dc5e0b01046f22
     # via
     #   langchain
     #   langchain-ollama

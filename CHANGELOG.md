@@ -1,6 +1,83 @@
 # CHANGELOG
 
 
+## v0.1.19 (2026-11-18)
+
+### Bug Fixes
+
+- **ci**: Resolve CodeQL alerts in actions and js
+  ([`e5922e3`](https://github.com/ashcoft/document-mcp/commit/e5922e3cb6f7819e95612fbc008ecf684e25ed47))
+
+Re-enabling CodeQL default setup (it had been disabled, leaving results stale since Jul 24) surfaced
+  two alerts:
+
+- actions/missing-workflow-permissions in playwright.yml: add a least-privilege `permissions:
+  contents: read` block, matching the other workflows. - js/functionality-from-untrusted-source in
+  preview.html: remove the file. It is unreferenced dead code (not shipped by the Dockerfile or
+  Vercel config) whose only content was an http:// localhost iframe.
+
+Co-authored-by: openhands <openhands@all-hands.dev>
+
+### Chores
+
+- **deps**: Update actions/dependency-review-action action to v5.0.1
+  ([`c9c0116`](https://github.com/ashcoft/document-mcp/commit/c9c0116c64361112660dc821f6d4c41ac422cab0))
+
+- **deps**: Update dependency annotated-doc to v0.0.7
+  ([`8e726b0`](https://github.com/ashcoft/document-mcp/commit/8e726b01d01e157e34219eab8d3d79a110258cf0))
+
+- **deps**: Update dependency fastapi to v0.163.1
+  ([`2a0dbce`](https://github.com/ashcoft/document-mcp/commit/2a0dbce5e787873ab0eac5c233f50646abd164ee))
+
+- **deps**: Update dependency fastapi to v0.163.2
+  ([`54c4f1f`](https://github.com/ashcoft/document-mcp/commit/54c4f1fcaca2b9a9e4951efb2029c525432df370))
+
+- **deps**: Update dependency filelock to v4.2.11
+  ([`e4e4e3a`](https://github.com/ashcoft/document-mcp/commit/e4e4e3a917d6416b5ac7912a3668c65979b4d55d))
+
+- **deps**: Update dependency filelock to v4.2.12
+  ([`ebd102a`](https://github.com/ashcoft/document-mcp/commit/ebd102a9154f461d791edc0802b42bee3c3a5586))
+
+- **deps**: Update dependency langchain-core to v1.8.1
+  ([`b21297e`](https://github.com/ashcoft/document-mcp/commit/b21297e795e9b851c1be8363a9852194345b23cd))
+
+- **deps**: Update dependency langchain-core to v1.8.2
+  ([`dfe353a`](https://github.com/ashcoft/document-mcp/commit/dfe353aad2faf47305dec37a40222dbeccf8a968))
+
+- **deps**: Update dependency langsmith to v0.15.0
+  ([`37b7728`](https://github.com/ashcoft/document-mcp/commit/37b772839bb528344207e5148b76ea8539937a20))
+
+- **deps**: Update dependency narwhals to v2.29.0
+  ([`262cec7`](https://github.com/ashcoft/document-mcp/commit/262cec715f6c413e9cd7c46280012bae8e4b29dd))
+
+- **deps**: Update dependency platformdirs to v4.14.7
+  ([`db41fb3`](https://github.com/ashcoft/document-mcp/commit/db41fb3d9730cb3f9305e8580598922b7da1e9bb))
+
+- **deps**: Update dependency prettytable to v3.19.0
+  ([`8ad6ebe`](https://github.com/ashcoft/document-mcp/commit/8ad6ebe28221b025f7651b7d668c5fb5487c20f9))
+
+- **deps**: Update dependency pycryptodome to v4.5.0
+  ([`2034764`](https://github.com/ashcoft/document-mcp/commit/2034764baf252f5f3a489e14ba19df27355893e0))
+
+- **deps**: Update dependency python-multipart to v0.0.34
+  ([`9e4722f`](https://github.com/ashcoft/document-mcp/commit/9e4722fa5682506a07ec5d1913dac73aa68383fd))
+
+- **deps**: Update dependency regex to v2026.11.15
+  ([`6f9b9b3`](https://github.com/ashcoft/document-mcp/commit/6f9b9b365288a9f46ade7d24a127dab9b9c1ca77))
+
+- **deps**: Update dependency regex to v2026.11.18
+  ([`67956e5`](https://github.com/ashcoft/document-mcp/commit/67956e5d080b19cccbfb598124abc3bad1d9b799))
+
+- **deps**: Update dependency sqlalchemy to v2.1.9
+  ([`94c3aef`](https://github.com/ashcoft/document-mcp/commit/94c3aef3b47739489d8523caf0052f04018e4348))
+
+- **deps**: Update dependency vuetify to v4.3.4
+  ([`43171af`](https://github.com/ashcoft/document-mcp/commit/43171afc26ddd44b9c8427e11eaeaa14e7c289f0))
+
+- **deps**: Update httpx2-httpcore2 to v2.16.2
+  ([`f1f9507`](https://github.com/ashcoft/document-mcp/commit/f1f9507ad60ed623825cf10066cb11f77078b55e))
+
+
 ## v0.1.18 (2026-11-15)
 
 ### Bug Fixes

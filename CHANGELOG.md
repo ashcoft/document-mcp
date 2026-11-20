@@ -1,6 +1,76 @@
 # CHANGELOG
 
 
+## v0.1.20 (2026-11-20)
+
+### Bug Fixes
+
+- **deps**: Bump pydantic-core to 2.50.5 with pydantic 2.14.4
+  ([`e4a083e`](https://github.com/ashcoft/document-mcp/commit/e4a083ee3cae7a282cd1a0eebdab8d9b0f0f9b05))
+
+pydantic 2.14.4 requires pydantic-core==2.50.5, but the lockfile still pinned pydantic-core==2.50.4,
+  so `uv pip install --require-hashes` failed with "No solution found when resolving dependencies"
+  and the Docker Build job failed.
+
+Renovate cannot fix this on its own: the pydantic-core rule in renovate.json is `enabled: false`
+  because pydantic pins it exactly, so a pydantic bump never brings its coupled pydantic-core along.
+
+Regenerate the pydantic-core entry with the 2.50.5 hashes from PyPI. Verified with a real `uv pip
+  install --require-hashes` (hashes pass) and the 27-test suite.
+
+Co-authored-by: openhands <openhands@all-hands.dev>
+
+### Chores
+
+- **deps**: Update dependency cloudpickle to v3.1.3
+  ([`4c68fae`](https://github.com/ashcoft/document-mcp/commit/4c68fae5458df4daace85f6f858a47aa90b7d0ca))
+
+- **deps**: Update dependency cuda-pathfinder to v1.9.1
+  ([`f2bb6f1`](https://github.com/ashcoft/document-mcp/commit/f2bb6f1a07e2b95d360a2054fd896e06470b2ff3))
+
+- **deps**: Update dependency fastapi to v0.164.0
+  ([`f77ca36`](https://github.com/ashcoft/document-mcp/commit/f77ca36f982db1fc36b663ce4d0801396fe57036))
+
+- **deps**: Update dependency fastapi to v0.165.0
+  ([`0d07af1`](https://github.com/ashcoft/document-mcp/commit/0d07af1cd0ad0fd789a6f77b5811a526e0b0fb08))
+
+- **deps**: Update dependency langchain to v1.5.1
+  ([`07909f4`](https://github.com/ashcoft/document-mcp/commit/07909f4f9db0df5a87ce46a1f3efc06c529e04b1))
+
+- **deps**: Update dependency langchain to v1.5.2
+  ([`78ba533`](https://github.com/ashcoft/document-mcp/commit/78ba533dab6cf25903b3445035edd567395919a3))
+
+- **deps**: Update dependency langchain-core to v1.8.3
+  ([`2c38ec5`](https://github.com/ashcoft/document-mcp/commit/2c38ec563be5b6f560567240492bc18a5cb20a76))
+
+- **deps**: Update dependency langchain-protocol to v0.0.22
+  ([`f6dfbb3`](https://github.com/ashcoft/document-mcp/commit/f6dfbb37cdbce43d23bf8e2b7dd1baeb50b8ec6a))
+
+- **deps**: Update dependency langgraph to v1.2.23
+  ([`992479a`](https://github.com/ashcoft/document-mcp/commit/992479a8821a455bf02bf34503a1f73ec2b41674))
+
+- **deps**: Update dependency langgraph-prebuilt to v1.1.3
+  ([`3b959d4`](https://github.com/ashcoft/document-mcp/commit/3b959d4f587edc4f011cb1fed9d9a1836fa191d9))
+
+- **deps**: Update dependency librt to v0.17.0
+  ([`53a241c`](https://github.com/ashcoft/document-mcp/commit/53a241c338fc58f04d4cbf94d0b6afaa84b24e8d))
+
+- **deps**: Update dependency pydantic to v2.14.4
+  ([`a679c51`](https://github.com/ashcoft/document-mcp/commit/a679c51986a809f750a970a01418bdf20247507e))
+
+- **deps**: Update dependency regex to v2026.11.19
+  ([`e7c90ad`](https://github.com/ashcoft/document-mcp/commit/e7c90adfa42830d3102abefaf645876fb7f3a637))
+
+- **deps**: Update dependency ruff to v0.17.6
+  ([`255a7b5`](https://github.com/ashcoft/document-mcp/commit/255a7b58857c6dec495812b27af2f330f5192f63))
+
+- **deps**: Update dependency typer to v0.29.2
+  ([`f74f731`](https://github.com/ashcoft/document-mcp/commit/f74f7318c91ae6b1cdbad1ed6c0f7fbf2d624527))
+
+- **deps**: Update dependency xlsxwriter to v3.3.2
+  ([`f6417f7`](https://github.com/ashcoft/document-mcp/commit/f6417f71b73c640563c89413dd08497ba5027be9))
+
+
 ## v0.1.19 (2026-11-18)
 
 ### Bug Fixes

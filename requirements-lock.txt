@@ -1776,9 +1776,9 @@ langchain-protocol==0.0.22 \
     # via
     #   langchain-core
     #   langgraph-sdk
-langgraph==1.2.23 \
-    --hash=sha256:148eb984aed7641248875634f9b06ec8965aa2582751483c186527eed38c2c06 \
-    --hash=sha256:c405d9c750730e252b07f66d78fc3d7ace7d42414172fdf392c97d0143c7b041
+langgraph==1.2.24 \
+    --hash=sha256:312f9a75c1aa0dde5571da32c5c24b891e726fa9781b835b956ec6d9746fa943 \
+    --hash=sha256:86b0dd611b7201cb393da2de0e064029c1bef520f11a5e6ee04be53c2a815bc7
     # via langchain
 langgraph-checkpoint==4.3.2 \
     --hash=sha256:60e02eb2c2eefc4c22fb1549f1c90b85ce9617377604596c5f34fbd6af0bd6e9 \

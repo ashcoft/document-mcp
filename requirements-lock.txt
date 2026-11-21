@@ -5102,9 +5102,9 @@ websockets==15.0.1 \
     #   langgraph-sdk
     #   langsmith
     #   uvicorn
-xlsxwriter==3.3.2 \
-    --hash=sha256:a7ec4285416ee246753ad21c18ef6c161cdeaf2c29a7b9475236cce6098b21fe \
-    --hash=sha256:bc10b314ec3bbcc910b489f095f1a365863d9482afa681748f97d6d5e976f944
+xlsxwriter==3.3.3 \
+    --hash=sha256:2b83c5e184d872275e87718ebc88688acc258a50fc84dcad965b3d10be6e345f \
+    --hash=sha256:ad3743bd5f96019ee75aae19a51e9c26faf03f218670b934dac1159692d0d5e3
     # via python-pptx
 xxhash==4.1.0 \
     --hash=sha256:007b639130c0c9c6b3b7b8e1862470f14a30645d4436f96bf8c666958001ceb8 \

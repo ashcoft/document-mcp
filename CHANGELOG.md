@@ -24,6 +24,9 @@ Restore the lock entry to pyyaml 6.0.2, the version the locked paddlex pin requi
 
 ### Chores
 
+- **deps**: Update dependency certifi to v2026.11.20
+  ([`b8589ba`](https://github.com/ashcoft/document-mcp/commit/b8589ba9a6a2ca5977c0239137740c258b4931f9))
+
 - **deps**: Update dependency coverage to v7.17.4
   ([`fd4feab`](https://github.com/ashcoft/document-mcp/commit/fd4feab274d105851dccd8014059c95444ac1a88))
 

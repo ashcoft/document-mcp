@@ -54,6 +54,12 @@
       ]
     },
     {
+      "enabled": false,
+      "description": "pyyaml is pinned exactly by paddlex (paddlex==3.7.2 requires PyYAML==6.0.2, and 3.7.2 is the newest paddlex release); do not bump it independently until a paddlex release relaxes the exact pin, or requirements-lock.txt becomes unsatisfiable during `uv pip install --require-hashes -r requirements-lock.txt` (Docker Build fails with 'No solution found when resolving dependencies')",
+      "matchPackageNames": ["/^pyyaml$/"],
+      "matchFileNames": ["requirements-lock.txt"]
+    },
+    {
       "matchPackageNames": ["httpx2", "httpcore2"],
       "groupName": "httpx2-httpcore2",
       "description": "httpx2 and httpcore2 are released together from the same upstream monorepo and httpx2 hard-pins httpcore2 exactly (httpx2==2.13.0 requires httpcore2==2.13.0); group them so a one-sided bump cannot break Docker Build resolution (e.g. httpcore2 2.13.0 alone is unsatisfiable while httpx2 stays at 2.12.0)"

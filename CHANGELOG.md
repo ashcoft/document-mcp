@@ -1,6 +1,68 @@
 # CHANGELOG
 
 
+## v0.1.21 (2026-11-21)
+
+### Bug Fixes
+
+- **deps**: Disable independent pyyaml bumps in Renovate
+  ([`0edb8fc`](https://github.com/ashcoft/document-mcp/commit/0edb8fcc8c5994c052a109372ae09af933d0aead))
+
+paddlex==3.7.2 pins PyYAML==6.0.2 exactly, so requirements-lock.txt cannot be bumped to 6.0.4 until
+  a paddlex release relaxes the pin. Disable Renovate's pyyaml updates for the lock file so the lock
+  cannot be bumped out of range again.
+
+- **deps**: Keep pyyaml at 6.0.2 in the lock file
+  ([`71955c9`](https://github.com/ashcoft/document-mcp/commit/71955c9c813c4e1ae728a4579171c00fd8464be5))
+
+paddlex==3.7.2 hard-pins PyYAML==6.0.2 and is the newest paddlex release, so the pinned set is
+  unsatisfiable with pyyaml 6.0.4. Docker Build failed with "No solution found when resolving
+  dependencies" during `uv pip install --require-hashes -r requirements-lock.txt`
+  (paddlex[ocr-core]==3.7.2 depends on pyyaml==6.0.2 and you require pyyaml==6.0.4).
+
+Restore the lock entry to pyyaml 6.0.2, the version the locked paddlex pin requires.
+
+### Chores
+
+- **deps**: Update dependency coverage to v7.17.4
+  ([`fd4feab`](https://github.com/ashcoft/document-mcp/commit/fd4feab274d105851dccd8014059c95444ac1a88))
+
+- **deps**: Update dependency jsonpatch to v1.48
+  ([`77a1d50`](https://github.com/ashcoft/document-mcp/commit/77a1d50905b5e538cd815437ffe66874d9ba1b3a))
+
+- **deps**: Update dependency langchain-core to v1.8.4
+  ([`da4d341`](https://github.com/ashcoft/document-mcp/commit/da4d3415431d63659076fbd0db3b66232a961ba5))
+
+- **deps**: Update dependency langgraph to v1.2.24
+  ([`087e5e2`](https://github.com/ashcoft/document-mcp/commit/087e5e267673e010e0d2ab3f64caceca2bc73388))
+
+- **deps**: Update dependency langsmith to v0.16.0
+  ([`284a135`](https://github.com/ashcoft/document-mcp/commit/284a135b0731fbf5cff38aa25363474a0424ddac))
+
+- **deps**: Update dependency pdfplumber to v0.11.11
+  ([`b5d7467`](https://github.com/ashcoft/document-mcp/commit/b5d74671f8c150e4e3ddf52c56391cdae2c98208))
+
+- **deps**: Update dependency platformdirs to v4.14.8
+  ([`85c8413`](https://github.com/ashcoft/document-mcp/commit/85c8413f31e776999f81c3f7c3060431a606ebd5))
+
+- **deps**: Update dependency pyyaml to v6.0.4
+  ([`064f81a`](https://github.com/ashcoft/document-mcp/commit/064f81acda8c977ac172210eea2b8b4253d8d77c))
+
+- **deps**: Update dependency vue to v3.5.46
+  ([`0f02d43`](https://github.com/ashcoft/document-mcp/commit/0f02d43adb8954c4aba441bcbd942f5464ba911f))
+
+- **deps**: Update dependency xlsxwriter to v3.3.3
+  ([`0feb359`](https://github.com/ashcoft/document-mcp/commit/0feb359f1124577ec4d20c6febca53c84e2ab76a))
+
+### Documentation
+
+- **deps**: Record why pyyaml stays at 6.0.2 in the lock file
+  ([`f6982b2`](https://github.com/ashcoft/document-mcp/commit/f6982b217ac0f33f1fba6c08de8025a9c9d866fb))
+
+A comment makes the paddlex exact pin visible to the next reader (and to Renovate reviewers) instead
+  of leaving the downgrade unexplained.
+
+
 ## v0.1.20 (2026-11-20)
 
 ### Bug Fixes

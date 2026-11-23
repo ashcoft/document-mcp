@@ -10,7 +10,7 @@ python-multipart==0.0.34
 httpx==0.28.1
 websockets==17.4
 pyjwt==2.15.1
-passlib[bcrypt]==1.7.4
+passlib[bcrypt]==1.9.5
 aiofiles==25.1.0
 
 # Database (optional - requires external service on Vercel)

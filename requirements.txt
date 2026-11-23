@@ -40,7 +40,7 @@ torch==2.15.0
 
 # Background Processing
 celery==5.7.0
-redis==8.1.0
+redis==8.2.0
 
 # Utilities
 python-dotenv==1.2.4

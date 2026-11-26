@@ -35,11 +35,14 @@ function daysAgo(days: number): string {
   return new Date(Date.now() - days * 86_400_000).toISOString();
 }
 
+let jobSequence = 0;
+
 function newId(): string {
   if (typeof crypto !== 'undefined' && 'randomUUID' in crypto) {
     return crypto.randomUUID();
   }
-  return `demo-${Date.now()}-${Math.floor(Math.random() * 1_000_000)}`;
+  jobSequence += 1;
+  return `demo-job-${jobSequence}`;
 }
 
 // ============================================================
@@ -414,6 +417,62 @@ export async function uploadDocument(
   });
 }
 
+interface Stage {
+  status: string;
+  progress: number;
+}
+
+function stageFor(elapsed: number, rejected: boolean): Stage {
+  if (elapsed >= 4000) {
+    return { status: rejected ? 'Rejected' : 'Approved', progress: 100 };
+  }
+  if (elapsed >= 3000) return { status: 'Checking', progress: 90 };
+  if (elapsed >= 2000) return { status: 'Checking', progress: 70 };
+  if (elapsed >= 1000) return { status: 'Checking', progress: 45 };
+  return { status: 'Checking', progress: 15 };
+}
+
+function completeJob(job: UploadJob, doc: DocumentResponse, status: string): void {
+  if (doc.status === status) return;
+
+  doc.status = status;
+  doc.updated_at = new Date().toISOString();
+  if (status !== 'Approved') return;
+
+  const prefix = job.discipline ?? 'GEN';
+  doc.document_number = `${prefix}-NEW-${String(doc.id).padStart(4, '0')}`;
+  doc.revision = '0';
+  doc.issue_status = 'Issued for Review';
+  chunksByDocument[doc.id] = [
+    {
+      id: nextChunkId++,
+      document_id: doc.id,
+      level: 'parent',
+      content: `Extracted text from ${job.filename}: title block parsed, revision 0 identified, and the body content chunked for retrieval.`,
+      token_count: 28,
+      page: 1,
+    },
+  ];
+}
+
+function statusMessage(progress: number, rejected: boolean): string {
+  if (progress < 100) return 'Processing document…';
+  return rejected ? 'Validation failed: missing contract number.' : 'Document validated and approved.';
+}
+
+function rejectionNote(doc: DocumentResponse): Record<string, unknown> {
+  return {
+    document_number: doc.document_number,
+    rejection_date: new Date().toISOString(),
+    comments: [
+      {
+        comment: 'Contract number is missing from the title block.',
+        response: 'To be corrected and resubmitted as revision B.',
+      },
+    ],
+  };
+}
+
 export async function getUploadStatus(jobId: string): Promise<StatusResponse> {
   const job = jobs.get(jobId);
   if (!job) {
@@ -421,62 +480,19 @@ export async function getUploadStatus(jobId: string): Promise<StatusResponse> {
   }
 
   const doc = findDocument(job.documentId);
-  const elapsed = Date.now() - job.startedAt;
-  const finished = elapsed >= 4000;
-
-  let status = 'Checking';
-  let progress = 15;
-  if (elapsed >= 1000) progress = 45;
-  if (elapsed >= 2000) progress = 70;
-  if (elapsed >= 3000) progress = 90;
-
+  const stage = stageFor(Date.now() - job.startedAt, job.rejected);
+  const finished = stage.progress === 100;
   if (finished) {
-    status = job.rejected ? 'Rejected' : 'Approved';
-    progress = 100;
-    if (doc.status !== status) {
-      doc.status = status;
-      doc.updated_at = new Date().toISOString();
-      if (status === 'Approved') {
-        const prefix = job.discipline ?? 'GEN';
-        doc.document_number = `${prefix}-NEW-${String(doc.id).padStart(4, '0')}`;
-        doc.revision = '0';
-        doc.issue_status = 'Issued for Review';
-      }
-      chunksByDocument[doc.id] = [
-        {
-          id: nextChunkId++,
-          document_id: doc.id,
-          level: 'parent',
-          content: `Extracted text from ${job.filename}: title block parsed, revision 0 identified, and the body content chunked for retrieval.`,
-          token_count: 28,
-          page: 1,
-        },
-      ];
-    }
+    completeJob(job, doc, stage.status);
   }
 
   return delay({
     job_id: jobId,
     document_id: doc.id,
-    status,
-    progress,
-    message: finished
-      ? job.rejected
-        ? 'Validation failed: missing contract number.'
-        : 'Document validated and approved.'
-      : 'Processing document…',
-    rejection_note: finished && job.rejected
-      ? {
-          document_number: doc.document_number,
-          rejection_date: new Date().toISOString(),
-          comments: [
-            {
-              comment: 'Contract number is missing from the title block.',
-              response: 'To be corrected and resubmitted as revision B.',
-            },
-          ],
-        }
-      : null,
+    status: stage.status,
+    progress: stage.progress,
+    message: statusMessage(stage.progress, job.rejected),
+    rejection_note: finished && job.rejected ? rejectionNote(doc) : null,
     created_at: doc.created_at,
     updated_at: doc.updated_at,
   });
@@ -521,6 +537,31 @@ export async function searchDocuments(request: SearchRequest): Promise<SearchRes
   });
 }
 
+function citationsFromResults(results: SearchResult[]): Citation[] {
+  const citations: Citation[] = [];
+  for (const result of results) {
+    const doc = findDocument(result.document_id);
+    const chunk = (chunksByDocument[doc.id] ?? []).find((c) => c.id === result.chunk_id);
+    const citation = citationFor(doc, chunk?.page);
+    if (!citations.some((c) => c.document_number === citation.document_number)) {
+      citations.push(citation);
+    }
+  }
+  return citations;
+}
+
+function emptyAnswer(query: string): AskResponse {
+  return {
+    answer:
+      'No approved document in the demo set covers this question. Try asking about transformer ' +
+      'ratings, cable sizing, cooling water pumps, or HAZOP findings.',
+    confidence: 'Low',
+    citations: [],
+    query,
+    context_chunks_used: 0,
+  };
+}
+
 export async function askQuestion(request: AskRequest): Promise<AskResponse> {
   const search = await searchDocuments({
     query: request.query,
@@ -530,37 +571,17 @@ export async function askQuestion(request: AskRequest): Promise<AskResponse> {
   });
 
   if (search.results.length === 0) {
-    return delay({
-      answer:
-        'No approved document in the demo set covers this question. Try asking about transformer ' +
-        'ratings, cable sizing, cooling water pumps, or HAZOP findings.',
-      confidence: 'Low',
-      citations: [],
-      query: request.query,
-      context_chunks_used: 0,
-    });
+    return delay(emptyAnswer(request.query));
   }
 
   const top = search.results.slice(0, 3);
-  const citations: Citation[] = [];
-  for (const result of top) {
-    const doc = findDocument(result.document_id);
-    const chunk = (chunksByDocument[doc.id] ?? []).find((c) => c.id === result.chunk_id);
-    const citation = citationFor(doc, chunk?.page);
-    if (!citations.some((c) => c.document_number === citation.document_number)) {
-      citations.push(citation);
-    }
-  }
-
   const confidence = search.results[0].score >= 0.8 ? 'High' : 'Medium';
-  const answer =
-    `Based on ${top.length} retrieved passage${top.length > 1 ? 's' : ''}: ` +
-    top.map((r) => r.content).join(' ');
+  const passages = top.map((r) => r.content).join(' ');
 
   return delay({
-    answer,
+    answer: `Based on ${top.length} retrieved passage${top.length > 1 ? 's' : ''}: ${passages}`,
     confidence,
-    citations,
+    citations: citationsFromResults(top),
     query: request.query,
     context_chunks_used: top.length,
   });

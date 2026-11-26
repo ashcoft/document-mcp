@@ -18,8 +18,11 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 
 ENV PATH="/usr/local/bin:$PATH"
 
-# Create non-root user for security
-RUN useradd -m app && chown -R app:app /app
+# Create non-root user and the writable data directory. Creating /app/data in the
+# image lets a fresh named volume inherit app ownership instead of root.
+RUN useradd -m app \
+    && mkdir -p /app/data \
+    && chown -R app:app /app
 USER app
 
 # Copy application code

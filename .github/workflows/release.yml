@@ -5,6 +5,12 @@ on:
     branches: [main]
   workflow_dispatch:
 
+# Serialize releases so an older image build cannot finish last and move
+# `latest` and the major.minor tag backwards.
+concurrency:
+  group: release-${{ github.ref }}
+  cancel-in-progress: false
+
 jobs:
   release:
     name: Semantic Release

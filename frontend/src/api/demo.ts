@@ -26,6 +26,7 @@ import type {
 } from '../types';
 
 const LATENCY_MS = 220;
+const PIPELINE_MS = 4000;
 
 function delay<T>(value: T, ms = LATENCY_MS): Promise<T> {
   return new Promise((resolve) => setTimeout(() => resolve(value), ms));
@@ -408,6 +409,9 @@ export async function uploadDocument(
     rejected,
   });
 
+  // Finish on a timer so the job completes even if the upload page stops polling.
+  setTimeout(() => finalizeJob(jobId), PIPELINE_MS);
+
   return delay({
     job_id: jobId,
     document_id: documentId,
@@ -423,7 +427,7 @@ interface Stage {
 }
 
 function stageFor(elapsed: number, rejected: boolean): Stage {
-  if (elapsed >= 4000) {
+  if (elapsed >= PIPELINE_MS) {
     return { status: rejected ? 'Rejected' : 'Approved', progress: 100 };
   }
   if (elapsed >= 3000) return { status: 'Checking', progress: 90 };
@@ -473,6 +477,12 @@ function rejectionNote(doc: DocumentResponse): Record<string, unknown> {
   };
 }
 
+function finalizeJob(jobId: string): void {
+  const job = jobs.get(jobId);
+  if (!job) return;
+  completeJob(job, findDocument(job.documentId), job.rejected ? 'Rejected' : 'Approved');
+}
+
 export async function getUploadStatus(jobId: string): Promise<StatusResponse> {
   const job = jobs.get(jobId);
   if (!job) {
@@ -480,11 +490,12 @@ export async function getUploadStatus(jobId: string): Promise<StatusResponse> {
   }
 
   const doc = findDocument(job.documentId);
-  const stage = stageFor(Date.now() - job.startedAt, job.rejected);
-  const finished = stage.progress === 100;
+  const elapsed = Date.now() - job.startedAt;
+  const finished = elapsed >= PIPELINE_MS;
   if (finished) {
-    completeJob(job, doc, stage.status);
+    finalizeJob(jobId);
   }
+  const stage = stageFor(elapsed, job.rejected);
 
   return delay({
     job_id: jobId,
@@ -502,32 +513,39 @@ export async function getUploadStatus(jobId: string): Promise<StatusResponse> {
 // Search and Q&A
 // ============================================================
 
+function matchesFilters(doc: DocumentResponse, request: SearchRequest): boolean {
+  if (doc.status !== 'Approved') return false;
+  if (request.discipline && doc.discipline !== request.discipline) return false;
+  if (request.document_ids?.length && !request.document_ids.includes(doc.id)) return false;
+  return true;
+}
+
+function resultsForDocument(doc: DocumentResponse, terms: string[]): SearchResult[] {
+  const results: SearchResult[] = [];
+  for (const chunk of chunksByDocument[doc.id] ?? []) {
+    const score = scoreChunk(chunk.content, terms);
+    if (score <= 0) continue;
+    results.push({
+      chunk_id: chunk.id,
+      content: chunk.content,
+      document_id: doc.id,
+      document_number: doc.document_number,
+      title: doc.title,
+      discipline: doc.discipline,
+      score: Math.min(0.97, 0.45 + score * 0.5),
+      search_type: score > 0.6 ? 'hybrid' : 'vector',
+    });
+  }
+  return results;
+}
+
 export async function searchDocuments(request: SearchRequest): Promise<SearchResponse> {
   const terms = request.query.toLowerCase().split(/\s+/).filter((t) => t.length > 2);
   const limit = request.limit ?? 10;
 
-  const results: SearchResult[] = [];
-  for (const doc of documents) {
-    if (request.discipline && doc.discipline !== request.discipline) continue;
-    if (request.document_ids?.length && !request.document_ids.includes(doc.id)) continue;
-    if (doc.status !== 'Approved') continue;
-
-    for (const chunk of chunksByDocument[doc.id] ?? []) {
-      const score = scoreChunk(chunk.content, terms);
-      if (score <= 0) continue;
-      results.push({
-        chunk_id: chunk.id,
-        content: chunk.content,
-        document_id: doc.id,
-        document_number: doc.document_number,
-        title: doc.title,
-        discipline: doc.discipline,
-        score: Math.min(0.97, 0.45 + score * 0.5),
-        search_type: score > 0.6 ? 'hybrid' : 'vector',
-      });
-    }
-  }
-
+  const results = documents
+    .filter((doc) => matchesFilters(doc, request))
+    .flatMap((doc) => resultsForDocument(doc, terms));
   results.sort((a, b) => b.score - a.score);
 
   return delay({
@@ -755,13 +773,16 @@ export async function validateDocument(documentId: number): Promise<ValidationRe
             severity: 'major',
           },
         ],
-    warnings: [
-      {
-        rule_code: 'VAL-011',
-        description: 'Issue status is not "Issued for Construction".',
-        severity: 'minor',
-      },
-    ],
+    warnings:
+      doc.issue_status === 'Issued for Construction'
+        ? []
+        : [
+            {
+              rule_code: 'VAL-011',
+              description: 'Issue status is not "Issued for Construction".',
+              severity: 'minor',
+            },
+          ],
     validated_at: new Date().toISOString(),
   });
 }

@@ -56,6 +56,18 @@ jobs:
         with:
           ref: v${{ needs.release.outputs.version }}
 
+      - name: Check whether this is the newest release
+        id: newest
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          latest=$(gh api "repos/${{ github.repository }}/releases/latest" --jq .tag_name)
+          if [ "$latest" = "v${{ needs.release.outputs.version }}" ]; then
+            echo "value=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "value=false" >> "$GITHUB_OUTPUT"
+          fi
+
       - name: Extract metadata
         id: meta
         uses: docker/metadata-action@v6
@@ -63,8 +75,8 @@ jobs:
           images: ghcr.io/${{ github.repository }}
           tags: |
             type=semver,pattern={{version}},value=${{ needs.release.outputs.version }}
-            type=semver,pattern={{major}}.{{minor}},value=${{ needs.release.outputs.version }}
-            type=raw,value=latest
+            type=semver,pattern={{major}}.{{minor}},value=${{ needs.release.outputs.version }},enable=${{ steps.newest.outputs.value }}
+            type=raw,value=latest,enable=${{ steps.newest.outputs.value }}
             type=sha,prefix=
 
       - name: Set up Docker Buildx

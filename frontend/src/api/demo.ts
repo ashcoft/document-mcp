@@ -338,7 +338,25 @@ const agentActions: AgentActionResponse[] = [
     success: true,
     created_at: daysAgo(2),
   },
+  {
+    id: 7005,
+    document_id: 3,
+    job_id: 'demo-job-0003',
+    action_type: 'qa_answer',
+    decision: 'accepted',
+    reasoning: 'Answered a cooling water question from two approved passages with citations.',
+    context: { citations: 2 },
+    model_version: 'llama3.1:8b-instruct-q4_K_M',
+    confidence: 0.86,
+    success: true,
+    created_at: new Date(Date.now() - 2 * 3_600_000).toISOString(),
+  },
 ];
+
+function actionsSince(hours: number): AgentActionResponse[] {
+  const cutoff = Date.now() - hours * 3_600_000;
+  return agentActions.filter((action) => new Date(action.created_at).getTime() >= cutoff);
+}
 
 interface UploadJob {
   documentId: number;
@@ -677,7 +695,7 @@ export async function getDocuments(
 
   const start = (page - 1) * pageSize;
   return delay({
-    documents: filtered.slice(start, start + pageSize),
+    documents: filtered.slice(start, start + pageSize).map((doc) => ({ ...doc })),
     total: filtered.length,
     page,
     page_size: pageSize,
@@ -707,7 +725,7 @@ export async function getSystemMetrics(): Promise<SystemMetricsResponse> {
     documents: { total: documents.length, by_status: byStatus },
     review_queue: { unreviewed_regions: regions.filter((r) => !r.reviewed).length },
     activity: {
-      recent_agent_actions: agentActions.length,
+      recent_agent_actions: actionsSince(24).length,
       recent_qa_queries: 12,
       total_submissions: 3,
     },
@@ -749,30 +767,33 @@ export async function getAgentActions(params?: {
 }
 
 export async function getAgentActionStats(hours = 24): Promise<AgentActionStatsResponse> {
+  const cutoff = new Date(Date.now() - hours * 3_600_000);
+  const windowed = actionsSince(hours);
+
   const byType: Record<string, number> = {};
   const byDecision: Record<string, number> = {};
-  for (const action of agentActions) {
+  for (const action of windowed) {
     byType[action.action_type] = (byType[action.action_type] ?? 0) + 1;
     byDecision[action.decision] = (byDecision[action.decision] ?? 0) + 1;
   }
 
-  const successful = agentActions.filter((a) => a.success).length;
-  const confidences = agentActions
+  const successful = windowed.filter((a) => a.success).length;
+  const confidences = windowed
     .map((a) => a.confidence)
     .filter((c): c is number => c !== null);
 
   return delay({
     period_hours: hours,
-    total_actions: agentActions.length,
+    total_actions: windowed.length,
     successful_actions: successful,
-    success_rate: agentActions.length ? successful / agentActions.length : 0,
+    success_rate: windowed.length ? successful / windowed.length : 0,
     by_action_type: byType,
     by_decision: byDecision,
     average_confidence:
       confidences.length > 0
         ? confidences.reduce((sum, c) => sum + c, 0) / confidences.length
         : null,
-    cutoff: daysAgo(0),
+    cutoff: cutoff.toISOString(),
   });
 }
 

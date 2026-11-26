@@ -75,8 +75,9 @@ Q&A, and the review queue therefore read tables that no code path populates.
 - ❌ Persist pipeline output: parsed fields, parent/child chunks, embeddings, and low-confidence
   regions are returned as a dict and discarded; no session or repository writes them
   (`src/ingestion/orchestrator.py:105`)
-- ❌ Background execution: the upload endpoint stores the record and stops; there is no Celery task
-  or worker, so nothing in the running app calls the orchestrator (`src/api/routers/upload.py:109`)
+- ❌ Background execution on the REST path: `POST /api/upload` stores the record and stops; there is
+  no Celery task or worker (`src/api/routers/upload.py:109`). Only the MCP `ingest_document` tool
+  calls the orchestrator, and it discards the returned data (`src/mcp/server.py:99`)
 - ❌ Per-stage progress: the orchestrator never writes status back, and the status endpoint returns a
   hardcoded 50/100 (`src/api/routers/upload.py:159`)
 

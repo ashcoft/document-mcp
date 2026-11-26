@@ -369,16 +369,19 @@ function citationFor(doc: DocumentResponse, page: number | undefined): Citation 
 }
 
 const STOPWORDS = new Set([
-  'and', 'are', 'but', 'can', 'did', 'does', 'for', 'from', 'has', 'have', 'how', 'into',
-  'its', 'not', 'per', 'the', 'this', 'that', 'was', 'were', 'what', 'when', 'where',
-  'which', 'why', 'with',
+  'a', 'an', 'and', 'are', 'as', 'at', 'be', 'but', 'by', 'can', 'did', 'do', 'does',
+  'for', 'from', 'has', 'have', 'how', 'if', 'in', 'into', 'is', 'it', 'its', 'no',
+  'not', 'of', 'on', 'or', 'per', 'so', 'that', 'the', 'this', 'to', 'up', 'us',
+  'was', 'we', 'were', 'what', 'when', 'where', 'which', 'why', 'with',
 ]);
 
 function tokenize(query: string): string[] {
   return query
     .toLowerCase()
-    .split(/[^a-z0-9]+/)
-    .filter((term) => term.length > 2 && !STOPWORDS.has(term));
+    // Keep dots so engineering values such as 12.5 or 6.35 stay whole.
+    .split(/[^a-z0-9.]+/)
+    .map((term) => term.replace(/^\.+|\.+$/g, ''))
+    .filter((term) => term.length >= 2 && !STOPWORDS.has(term));
 }
 
 function scoreChunk(content: string, terms: string[]): number {

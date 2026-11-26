@@ -381,7 +381,7 @@ function splitTerms(text: string): string[] {
     // Keep dots so engineering values such as 12.5 or 6.35 stay whole, and trim
     // sentence-ending dots so YNd11. and YNd11 compare equal.
     .split(/[^a-z0-9.]+/)
-    .map((term) => term.replace(/^\.+|\.+$/g, ''))
+    .map((term) => term.replace(/^\.(?=\d)/, '0.').replace(/^\.+|\.+$/g, ''))
     .filter((term) => term.length > 0);
 }
 

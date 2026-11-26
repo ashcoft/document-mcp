@@ -376,13 +376,22 @@ const STOPWORDS = new Set([
   'we', 'were', 'what', 'when', 'where', 'which', 'why', 'will', 'with', 'would', 'you', 'your',
 ]);
 
+function isDigit(char: string): boolean {
+  return char >= '0' && char <= '9';
+}
+
+function normalizeTerm(term: string): string {
+  // Keep dots so 12.5 and 6.35 stay whole, give .75 a leading zero, and trim
+  // sentence-ending dots so YNd11. and YNd11 compare equal.
+  const value = term.length > 1 && term[0] === '.' && isDigit(term[1]) ? `0${term}` : term;
+  return value.replace(/^\.+|\.+$/g, '');
+}
+
 function splitTerms(text: string): string[] {
   return text
     .toLowerCase()
-    // Keep dots so engineering values such as 12.5 or 6.35 stay whole, and trim
-    // sentence-ending dots so YNd11. and YNd11 compare equal.
     .split(/[^a-z0-9.]+/)
-    .map((term) => term.replace(/^\.(?=\d)/, '0.').replace(/^\.+|\.+$/g, ''))
+    .map(normalizeTerm)
     .filter((term) => term.length > 0);
 }
 

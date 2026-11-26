@@ -368,6 +368,19 @@ function citationFor(doc: DocumentResponse, page: number | undefined): Citation 
   };
 }
 
+const STOPWORDS = new Set([
+  'and', 'are', 'but', 'can', 'did', 'does', 'for', 'from', 'has', 'have', 'how', 'into',
+  'its', 'not', 'per', 'the', 'this', 'that', 'was', 'were', 'what', 'when', 'where',
+  'which', 'why', 'with',
+]);
+
+function tokenize(query: string): string[] {
+  return query
+    .toLowerCase()
+    .split(/[^a-z0-9]+/)
+    .filter((term) => term.length > 2 && !STOPWORDS.has(term));
+}
+
 function scoreChunk(content: string, terms: string[]): number {
   if (terms.length === 0) return 0;
   const haystack = content.toLowerCase();
@@ -441,10 +454,11 @@ function completeJob(job: UploadJob, doc: DocumentResponse, status: string): voi
 
   doc.status = status;
   doc.updated_at = new Date().toISOString();
-  if (status !== 'Approved') return;
 
   const prefix = job.discipline ?? 'GEN';
   doc.document_number = `${prefix}-NEW-${String(doc.id).padStart(4, '0')}`;
+  if (status !== 'Approved') return;
+
   doc.revision = '0';
   doc.issue_status = 'Issued for Review';
   chunksByDocument[doc.id] = [
@@ -540,7 +554,7 @@ function resultsForDocument(doc: DocumentResponse, terms: string[]): SearchResul
 }
 
 export async function searchDocuments(request: SearchRequest): Promise<SearchResponse> {
-  const terms = request.query.toLowerCase().split(/\s+/).filter((t) => t.length > 2);
+  const terms = tokenize(request.query);
   const limit = request.limit ?? 10;
 
   const results = documents
@@ -561,7 +575,10 @@ function citationsFromResults(results: SearchResult[]): Citation[] {
     const doc = findDocument(result.document_id);
     const chunk = (chunksByDocument[doc.id] ?? []).find((c) => c.id === result.chunk_id);
     const citation = citationFor(doc, chunk?.page);
-    if (!citations.some((c) => c.document_number === citation.document_number)) {
+    const seen = citations.some(
+      (c) => c.document_number === citation.document_number && c.page_or_sheet === citation.page_or_sheet
+    );
+    if (!seen) {
       citations.push(citation);
     }
   }
@@ -676,6 +693,9 @@ export async function getAgentActions(params?: {
   }
   if (params?.action_type) {
     filtered = filtered.filter((a) => a.action_type === params.action_type);
+  }
+  if (params?.job_id) {
+    filtered = filtered.filter((a) => a.job_id === params.job_id);
   }
   if (params?.success !== undefined) {
     filtered = filtered.filter((a) => a.success === params.success);

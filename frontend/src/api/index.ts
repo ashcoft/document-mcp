@@ -19,8 +19,15 @@ import type {
   ValidationResponse,
   DocumentChunksResponse,
 } from '../types';
+import * as demo from './demo';
 
 const API_BASE = '/api';
+
+/**
+ * Replaced at build time with a literal boolean (see vite.config.ts), so the
+ * unused implementation is tree-shaken out of the bundle.
+ */
+export const isDemoMode = __DEMO_MODE__;
 
 /**
  * Wraps fetch() to convert network-level failures (backend unreachable,
@@ -66,6 +73,7 @@ async function parseErrorResponse(response: Response): Promise<string> {
 // ============================================================
 
 export async function uploadDocument(file: File, discipline?: string): Promise<UploadResponse> {
+  if (isDemoMode) return demo.uploadDocument(file, discipline);
   const formData = new FormData();
   formData.append('file', file);
   if (discipline) {
@@ -94,6 +102,7 @@ export async function uploadDocument(file: File, discipline?: string): Promise<U
 }
 
 export async function getUploadStatus(jobId: string): Promise<StatusResponse> {
+  if (isDemoMode) return demo.getUploadStatus(jobId);
   const response = await apiFetch(`${API_BASE}/upload/status/${encodeURIComponent(jobId)}`);
 
   if (!response.ok) {
@@ -108,6 +117,7 @@ export async function getUploadStatus(jobId: string): Promise<StatusResponse> {
 // ============================================================
 
 export async function searchDocuments(request: SearchRequest): Promise<SearchResponse> {
+  if (isDemoMode) return demo.searchDocuments(request);
   const response = await apiFetch(`${API_BASE}/search`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
@@ -122,6 +132,7 @@ export async function searchDocuments(request: SearchRequest): Promise<SearchRes
 }
 
 export async function askQuestion(request: AskRequest): Promise<AskResponse> {
+  if (isDemoMode) return demo.askQuestion(request);
   const response = await apiFetch(`${API_BASE}/ask`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
@@ -144,6 +155,7 @@ export async function getDocuments(
   pageSize = 20,
   filters?: { discipline?: string; status?: string }
 ): Promise<DocumentListResponse> {
+  if (isDemoMode) return demo.getDocuments(page, pageSize, filters);
   let url = `${API_BASE}/documents?page=${page}&page_size=${pageSize}`;
   if (filters?.discipline) {
     url += `&discipline=${encodeURIComponent(filters.discipline)}`;
@@ -162,6 +174,7 @@ export async function getDocuments(
 }
 
 export async function getDocument(id: number): Promise<DocumentResponse> {
+  if (isDemoMode) return demo.getDocument(id);
   const response = await apiFetch(`${API_BASE}/documents/${id}`);
 
   if (!response.ok) {
@@ -178,6 +191,7 @@ export async function getDocument(id: number): Promise<DocumentResponse> {
 export async function getDocumentChunks(
   id: number
 ): Promise<DocumentChunksResponse> {
+  if (isDemoMode) return demo.getDocumentChunks(id);
   const response = await apiFetch(`${API_BASE}/documents/${id}/chunks`);
 
   if (!response.ok) {
@@ -192,6 +206,7 @@ export async function getDocumentChunks(
 // ============================================================
 
 export async function getSystemMetrics(): Promise<SystemMetricsResponse> {
+  if (isDemoMode) return demo.getSystemMetrics();
   const response = await apiFetch(`${API_BASE}/admin/metrics`);
 
   if (!response.ok) {
@@ -209,6 +224,7 @@ export async function getAgentActions(params?: {
   job_id?: string;
   success?: boolean;
 }): Promise<AgentActionsListResponse> {
+  if (isDemoMode) return demo.getAgentActions(params);
   const paramsArr: string[] = [];
   if (params?.limit !== undefined) paramsArr.push(`limit=${params.limit}`);
   if (params?.offset !== undefined) paramsArr.push(`offset=${params.offset}`);
@@ -228,6 +244,7 @@ export async function getAgentActions(params?: {
 }
 
 export async function getAgentActionStats(hours = 24): Promise<AgentActionStatsResponse> {
+  if (isDemoMode) return demo.getAgentActionStats(hours);
   const response = await apiFetch(`${API_BASE}/admin/actions/stats?hours=${hours}`);
 
   if (!response.ok) {
@@ -245,6 +262,7 @@ export async function getFlaggedRegions(
   documentId?: number,
   reviewed = false
 ): Promise<LowConfidenceRegionResponse[]> {
+  if (isDemoMode) return demo.getFlaggedRegions(documentId, reviewed);
   let url = `${API_BASE}/review/flagged?reviewed=${reviewed}`;
   if (documentId !== undefined) {
     url += `&document_id=${documentId}`;
@@ -260,6 +278,7 @@ export async function getFlaggedRegions(
 }
 
 export async function getReviewStats(): Promise<ReviewStatsResponse> {
+  if (isDemoMode) return demo.getReviewStats();
   const response = await apiFetch(`${API_BASE}/review/stats/summary`);
 
   if (!response.ok) {
@@ -274,6 +293,7 @@ export async function getReviewStats(): Promise<ReviewStatsResponse> {
 // ============================================================
 
 export async function validateDocument(documentId: number): Promise<ValidationResponse> {
+  if (isDemoMode) return demo.validateDocument(documentId);
   const response = await apiFetch(`${API_BASE}/validation/${documentId}`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },

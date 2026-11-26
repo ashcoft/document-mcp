@@ -154,6 +154,7 @@
 import { ref, computed, onMounted, reactive } from 'vue';
 import { useRoute } from 'vue-router';
 import { useTheme } from 'vuetify';
+import { isDemoMode } from './api';
 
 const route = useRoute();
 const theme = useTheme();
@@ -185,6 +186,9 @@ const currentIcon = computed(() => (route.meta.icon as string) || 'mdi-file-docu
 // Backend status
 const backendOnline = ref(false);
 const backendStatus = computed(() => {
+  if (isDemoMode) {
+    return { color: 'info', icon: 'mdi-flask-outline', text: 'Demo data' };
+  }
   if (backendOnline.value) {
     return { color: 'success', icon: 'mdi-server-network', text: 'Online' };
   }
@@ -202,6 +206,10 @@ const snackbar = reactive({
 
 // Check backend health on mount
 onMounted(async () => {
+  if (isDemoMode) {
+    backendOnline.value = true;
+    return;
+  }
   try {
     const response = await fetch('/health');
     if (response.ok) {

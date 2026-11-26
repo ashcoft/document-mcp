@@ -369,10 +369,10 @@ function citationFor(doc: DocumentResponse, page: number | undefined): Citation 
 }
 
 const STOPWORDS = new Set([
-  'a', 'an', 'and', 'are', 'as', 'at', 'be', 'but', 'by', 'can', 'did', 'do', 'does',
-  'for', 'from', 'has', 'have', 'how', 'if', 'in', 'into', 'is', 'it', 'its', 'no',
-  'not', 'of', 'on', 'or', 'per', 'so', 'that', 'the', 'this', 'to', 'up', 'us',
-  'was', 'we', 'were', 'what', 'when', 'where', 'which', 'why', 'with',
+  'a', 'an', 'and', 'are', 'been', 'being', 'can', 'could', 'did', 'does', 'for', 'from',
+  'had', 'has', 'have', 'how', 'its', 'may', 'might', 'not', 'should', 'that', 'the',
+  'their', 'there', 'these', 'they', 'this', 'those', 'was', 'were', 'what', 'when',
+  'where', 'which', 'why', 'will', 'with', 'would', 'you', 'your',
 ]);
 
 function splitTerms(text: string): string[] {
@@ -394,8 +394,10 @@ function scoreChunk(content: string, terms: string[]): number {
   const haystack = content.toLowerCase();
   const contentTokens = new Set(splitTerms(content));
   const hits = terms.filter((term) => {
-    // Numeric values must match exactly, so 2.5 does not match 12.5.
-    if (/\d/.test(term)) return contentTokens.has(term);
+    // Values, identifiers, and short terms must match a whole token: 2.5 must
+    // not match 12.5, YNd11 must not match XYNd11, and "in" must not match
+    // "single". Longer words keep substring matching for plurals and suffixes.
+    if (/\d/.test(term) || term.length <= 3) return contentTokens.has(term);
     return haystack.includes(term);
   }).length;
   return hits / terms.length;

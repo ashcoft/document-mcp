@@ -1,6 +1,97 @@
 # CHANGELOG
 
 
+## v0.1.22 (2026-11-26)
+
+### Bug Fixes
+
+- **deps**: Bump pymupdf-layout and pymupdf4llm to 2.2 in lockfile
+  ([`1982aa4`](https://github.com/ashcoft/document-mcp/commit/1982aa4762b448647ece2dcf15baedded2bdd94e))
+
+pymupdf 2.2 hard-pins pymupdf-layout==2.2 and pymupdf4llm==2.2, but requirements-lock.txt still
+  pinned both at 2.1, so Docker Build failed with "No solution found when resolving dependencies"
+  during `uv pip install --require-hashes -r requirements-lock.txt`.
+
+Bump both companions to 2.2 with their wheel hashes so the locked set resolves. Verified with `uv
+  pip install --dry-run --only-binary :all: --require-hashes -r requirements-lock.txt`.
+
+Co-authored-by: openhands <openhands@all-hands.dev>
+
+### Chores
+
+- **deps**: Update dependency @types/node to v26.6.11
+  ([`c540adf`](https://github.com/ashcoft/document-mcp/commit/c540adf8dc18d9606db0a2a3bcf939c95b5ece0d))
+
+- **deps**: Update dependency @types/node to v26.6.7
+  ([`350a22e`](https://github.com/ashcoft/document-mcp/commit/350a22eafda1367b8a5cf1a7277ab7e7f46eefda))
+
+- **deps**: Update dependency charset-normalizer to v3.5.3
+  ([`d78c689`](https://github.com/ashcoft/document-mcp/commit/d78c689b047c7084ada24c9dc33e8c662f036677))
+
+- **deps**: Update dependency coverage to v7.17.5
+  ([`107e680`](https://github.com/ashcoft/document-mcp/commit/107e680dfa07142111cc737342545d4e92680824))
+
+- **deps**: Update dependency filelock to v4.3.0
+  ([`74e5fbc`](https://github.com/ashcoft/document-mcp/commit/74e5fbcc924d055f6ecd11dda010ca0378547b66))
+
+- **deps**: Update dependency filelock to v4.3.1
+  ([`4ef6d44`](https://github.com/ashcoft/document-mcp/commit/4ef6d4499504e38fbe569a095f94db8c6303f65d))
+
+- **deps**: Update dependency fonttools to v4.69.1
+  ([`cbe555b`](https://github.com/ashcoft/document-mcp/commit/cbe555b4f66ce9e31701b888c439ed074091840c))
+
+- **deps**: Update dependency langchain-core to v1.8.5
+  ([`4073abe`](https://github.com/ashcoft/document-mcp/commit/4073abe6fba916e1aa117f7e1fd49e4e2afe26ab))
+
+- **deps**: Update dependency langchain-ollama to v1.2.0
+  ([`30ea0d5`](https://github.com/ashcoft/document-mcp/commit/30ea0d5edfca15463dae8c7ebc84b9e49e2f1d93))
+
+- **deps**: Update dependency langsmith to v0.16.1
+  ([`152d7ff`](https://github.com/ashcoft/document-mcp/commit/152d7ff64c3492ba7faae0b49b10c9aa8464c487))
+
+- **deps**: Update dependency langsmith to v0.16.2
+  ([`4e90c5b`](https://github.com/ashcoft/document-mcp/commit/4e90c5b3b6569f5705bc40587e3c137b3aa6c8c5))
+
+- **deps**: Update dependency modelscope-hub to v0.7.2
+  ([`c2d8fa7`](https://github.com/ashcoft/document-mcp/commit/c2d8fa73babffe995ed2b23d3b7ea0a687c55218))
+
+- **deps**: Update dependency packaging to v26.4
+  ([`910f37b`](https://github.com/ashcoft/document-mcp/commit/910f37b340a71cb775434676fed4fe799ba205ab))
+
+- **deps**: Update dependency passlib to v1.9.5
+  ([`1e45c40`](https://github.com/ashcoft/document-mcp/commit/1e45c400912fa813bfacdcb5d2081c9727ccda89))
+
+- **deps**: Update dependency pycryptodome to v4.6.0
+  ([`e5ea10b`](https://github.com/ashcoft/document-mcp/commit/e5ea10b61a30c0b779a8439dc868855c1f31a71c))
+
+- **deps**: Update dependency pymupdf to v2.2
+  ([`9739de5`](https://github.com/ashcoft/document-mcp/commit/9739de57e0fa29e1c17fba87f8e57e4dda991104))
+
+- **deps**: Update dependency redis to v8.2.0
+  ([`32d00b8`](https://github.com/ashcoft/document-mcp/commit/32d00b8019348727992b79fd4667e61a44186fff))
+
+- **deps**: Update dependency regex to v2026.11.23
+  ([`8599a7b`](https://github.com/ashcoft/document-mcp/commit/8599a7bdf07e3a71f1a18d7c524e14b8470fe2f3))
+
+- **deps**: Update dependency regex to v2026.11.24
+  ([`91d243f`](https://github.com/ashcoft/document-mcp/commit/91d243fd0b35c261b9a1239d67e884c62cb000d6))
+
+- **deps**: Update dependency sse-starlette to v3.7.1
+  ([`936d66c`](https://github.com/ashcoft/document-mcp/commit/936d66c4f008e1cc76c64ab956eb35b3a9c58cb9))
+
+- **deps**: Update dependency transformers to v5.24.0
+  ([`6a60ef6`](https://github.com/ashcoft/document-mcp/commit/6a60ef6a777a9c996d11fa906c61d1be35ee96f4))
+
+- **deps**: Update dependency transformers to v5.24.1
+  ([`c9dc70c`](https://github.com/ashcoft/document-mcp/commit/c9dc70c44c4e983ed73b9a23b51e87092e08efb8))
+
+- **deps**: Update dependency wcwidth to v0.9.5
+  ([`1887b43`](https://github.com/ashcoft/document-mcp/commit/1887b431fb1eb32b47de244818eda15b0fb0a819))
+
+- **deps**: Update dependency xlsxwriter to v3.3.4
+  ([`be22944`](https://github.com/ashcoft/document-mcp/commit/be22944ce094ada163cf3b25ef31d6a94747d546))
+
+
 ## v0.1.21 (2026-11-21)
 
 ### Bug Fixes

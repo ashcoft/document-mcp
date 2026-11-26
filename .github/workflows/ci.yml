@@ -99,6 +99,13 @@ jobs:
       - name: Run container health check
         run: |
           docker run -d --name doc-mcp-test -p 8000:8000 document-mcp:test
-          sleep 5
+          status=starting
+          for _ in $(seq 1 30); do
+            status=$(docker inspect --format '{{.State.Health.Status}}' doc-mcp-test)
+            echo "health: $status"
+            [ "$status" = "starting" ] || break
+            sleep 2
+          done
           docker logs doc-mcp-test
           docker stop doc-mcp-test
+          [ "$status" = "healthy" ]

@@ -55,6 +55,8 @@ logs/
 .pytest_cache/
 .coverage
 htmlcov/
+frontend/playwright-report/
+frontend/test-results/
 
 # Alembic
 alembic/versions/*.pyc

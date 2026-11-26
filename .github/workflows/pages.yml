@@ -1,0 +1,76 @@
+name: Pages
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'frontend/**'
+      - '.github/workflows/pages.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    name: Build Demo Site
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pages: write
+    defaults:
+      run:
+        working-directory: frontend
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: '26'
+
+      - name: Clean install dependencies
+        run: |
+          rm -rf node_modules
+          npm ci --ignore-scripts
+
+      - name: Configure Pages
+        id: pages
+        uses: actions/configure-pages@v6
+        with:
+          enablement: true
+
+      - name: Build demo site
+        env:
+          VITE_DEMO_MODE: 'true'
+          VITE_BASE_PATH: ${{ steps.pages.outputs.base_path }}/
+        run: npm run build
+
+      - name: Add SPA fallback and disable Jekyll
+        run: |
+          cp dist/index.html dist/404.html
+          touch dist/.nojekyll
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v5
+        with:
+          path: frontend/dist
+
+  deploy:
+    name: Deploy to GitHub Pages
+    needs: [build]
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v5

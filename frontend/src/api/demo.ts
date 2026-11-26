@@ -387,7 +387,12 @@ function tokenize(query: string): string[] {
 function scoreChunk(content: string, terms: string[]): number {
   if (terms.length === 0) return 0;
   const haystack = content.toLowerCase();
-  const hits = terms.filter((term) => haystack.includes(term)).length;
+  const contentTokens = new Set(haystack.split(/[^a-z0-9.]+/));
+  const hits = terms.filter((term) => {
+    // Numeric values must match exactly, so 2.5 does not match 12.5.
+    if (/\d/.test(term)) return contentTokens.has(term);
+    return haystack.includes(term);
+  }).length;
   return hits / terms.length;
 }
 

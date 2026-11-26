@@ -369,10 +369,11 @@ function citationFor(doc: DocumentResponse, page: number | undefined): Citation 
 }
 
 const STOPWORDS = new Set([
-  'a', 'an', 'and', 'are', 'been', 'being', 'can', 'could', 'did', 'does', 'for', 'from',
-  'had', 'has', 'have', 'how', 'its', 'may', 'might', 'not', 'should', 'that', 'the',
-  'their', 'there', 'these', 'they', 'this', 'those', 'was', 'were', 'what', 'when',
-  'where', 'which', 'why', 'will', 'with', 'would', 'you', 'your',
+  'a', 'an', 'and', 'are', 'as', 'at', 'be', 'been', 'being', 'but', 'by', 'can', 'could',
+  'did', 'do', 'does', 'for', 'from', 'had', 'has', 'have', 'how', 'if', 'in', 'into',
+  'is', 'it', 'its', 'may', 'might', 'no', 'not', 'of', 'on', 'or', 'per', 'should', 'so',
+  'that', 'the', 'their', 'there', 'these', 'they', 'this', 'those', 'to', 'up', 'us', 'was',
+  'we', 'were', 'what', 'when', 'where', 'which', 'why', 'will', 'with', 'would', 'you', 'your',
 ]);
 
 function splitTerms(text: string): string[] {
@@ -386,7 +387,10 @@ function splitTerms(text: string): string[] {
 }
 
 function tokenize(query: string): string[] {
-  return splitTerms(query).filter((term) => term.length >= 2 && !STOPWORDS.has(term));
+  const terms = splitTerms(query).filter((term) => term.length >= 2);
+  const meaningful = terms.filter((term) => !STOPWORDS.has(term));
+  // A query made only of common words still searches those words.
+  return meaningful.length > 0 ? meaningful : terms;
 }
 
 function scoreChunk(content: string, terms: string[]): number {

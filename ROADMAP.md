@@ -12,23 +12,23 @@ moves when an item is finished and verified in the codebase.
 
 | Phase | Area | Done | Progress |
 | :---: | :--- | :---: | ---: |
-| 0 | Platform and delivery foundation | 5 / 6 | 83% |
+| 0 | Platform and delivery foundation | 6 / 7 | 86% |
 | 1 | Ingestion and extraction pipeline | 12 / 15 | 80% |
 | 2 | Data model and storage | 6 / 7 | 86% |
 | 3 | Retrieval and grounded Q&A | 5 / 8 | 63% |
 | 4 | Validation and Document Controller handoff | 5 / 9 | 56% |
-| 5 | Interfaces: MCP, REST, web UI | 7 / 9 | 78% |
+| 5 | Interfaces: MCP, REST, web UI | 8 / 10 | 80% |
 | 6 | Test coverage and type safety | 3 / 8 | 38% |
 | 7 | Security and compliance | 4 / 8 | 50% |
 | 8 | Operations and observability | 4 / 7 | 57% |
-| | **Overall** | **51 / 77** | **66%** |
+| | **Overall** | **53 / 79** | **67%** |
 
 ### Milestones
 
 | Milestone | Theme | State |
 | :--- | :--- | :--- |
 | v0.1.x | Core pipeline, REST API, SPA scaffolding, CI and releases | ✅ shipped |
-| v0.2.0 | End-to-end in one process: upload → ingest → persist → validate → submit | 🟡 66% overall, blocked on the P0 items below |
+| v0.2.0 | End-to-end in one process: upload → ingest → persist → validate → submit | 🟡 67% overall, blocked on the P0 items below |
 | v0.3.0 | Hardening: auth, test coverage, type safety, observability | ❌ not started |
 | v1.0 | Production readiness (all phases at 100% with gates enforced) | ❌ not started |
 
@@ -48,6 +48,8 @@ Q&A, and the review queue therefore read tables that no code path populates.
 - ✅ Hash-pinned dependency lock installed with `--require-hashes` — `requirements-lock.txt`, `Dockerfile`
 - ✅ CI gates: ruff, black, pytest, Docker build and container health check — `.github/workflows/ci.yml`
 - ✅ Automated semantic-release versioning and changelog — `pyproject.toml`, `.github/workflows/release.yml`
+- ✅ Container images published to GHCR on every release with semver, major.minor, and `latest`
+  tags — `.github/workflows/release.yml`
 - ❌ Local stack orchestration: no Compose file exists, although the README documents a `docker/`
   directory and a four-service stack (app, PostgreSQL + pgvector, Redis, Ollama)
 
@@ -149,13 +151,15 @@ cannot be measured until Phase 1 persistence lands.
   `frontend/src/views/`
 - ✅ Playwright smoke coverage of navigation and screens — `frontend/e2e/app.spec.ts`
 - ✅ CORS configuration for the local dev origins — `src/main.py`
+- ✅ Static demo build with in-browser data, deployed to GitHub Pages —
+  `frontend/src/api/demo.ts`, `.github/workflows/pages.yml`
 - ❌ Streamable HTTP MCP: the README documents Streamable HTTP, but the server runs stdio-only and is
   not mounted in the FastAPI app
 - ❌ SPA delivery: the backend does not serve `frontend/dist` and the Docker image does not build or
   copy the frontend, so the container exposes no dashboard
 
 **Remaining:** mount MCP over Streamable HTTP at a stable path and serve the built SPA from the
-container.
+backend container. GitHub Pages covers the demo, not the production deployment.
 
 ## Phase 6 — Test coverage and type safety
 

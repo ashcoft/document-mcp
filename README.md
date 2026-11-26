@@ -13,9 +13,33 @@ A fully offline, on-premise engineering document-control knowledge base delivere
 - **Audit Trail**: Complete logging of all operations with SHA-256 hashes
 - **Human-in-the-Loop**: Review queue for low-confidence OCR regions
 
+## Live Demo
+
+A static build of the web dashboard runs on GitHub Pages with an in-browser demo data set, so every
+screen is clickable without a backend:
+
+**https://ashcoft.github.io/document-mcp/**
+
+The demo build is produced with `VITE_DEMO_MODE=true`; it never calls an API and resets on reload.
+Uploading a file in the demo runs a simulated pipeline and adds the document to the library.
+
+## Container Image
+
+Every release publishes a multi-tag image to GitHub Container Registry:
+
+```bash
+docker pull ghcr.io/ashcoft/document-mcp:latest
+docker run -d --name doccontrol -p 8000:8000 \
+  -e DB_URL=postgresql+asyncpg://doccontrol:secure_password@host:5432/engineering_docs \
+  ghcr.io/ashcoft/document-mcp:latest
+```
+
+Tags: `latest`, `<major>.<minor>.<patch>` (for example `0.1.23`), `<major>.<minor>`, and the commit
+SHA. The image is public; no authentication is required to pull it.
+
 ## Roadmap
 
-Current delivery status is tracked in [ROADMAP.md](ROADMAP.md) — 66% of tracked items complete as of
+Current delivery status is tracked in [ROADMAP.md](ROADMAP.md) — 67% of tracked items complete as of
 v0.1.21, with the remaining work grouped into phases and a prioritized backlog.
 
 ## Architecture

@@ -375,19 +375,24 @@ const STOPWORDS = new Set([
   'was', 'we', 'were', 'what', 'when', 'where', 'which', 'why', 'with',
 ]);
 
-function tokenize(query: string): string[] {
-  return query
+function splitTerms(text: string): string[] {
+  return text
     .toLowerCase()
-    // Keep dots so engineering values such as 12.5 or 6.35 stay whole.
+    // Keep dots so engineering values such as 12.5 or 6.35 stay whole, and trim
+    // sentence-ending dots so YNd11. and YNd11 compare equal.
     .split(/[^a-z0-9.]+/)
     .map((term) => term.replace(/^\.+|\.+$/g, ''))
-    .filter((term) => term.length >= 2 && !STOPWORDS.has(term));
+    .filter((term) => term.length > 0);
+}
+
+function tokenize(query: string): string[] {
+  return splitTerms(query).filter((term) => term.length >= 2 && !STOPWORDS.has(term));
 }
 
 function scoreChunk(content: string, terms: string[]): number {
   if (terms.length === 0) return 0;
   const haystack = content.toLowerCase();
-  const contentTokens = new Set(haystack.split(/[^a-z0-9.]+/));
+  const contentTokens = new Set(splitTerms(content));
   const hits = terms.filter((term) => {
     // Numeric values must match exactly, so 2.5 does not match 12.5.
     if (/\d/.test(term)) return contentTokens.has(term);

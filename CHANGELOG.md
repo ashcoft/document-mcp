@@ -1,6 +1,208 @@
 # CHANGELOG
 
 
+## v0.2.0 (2026-11-26)
+
+### Bug Fixes
+
+- **review**: Filter common words but keep single-word queries searchable
+  ([`326a2eb`](https://github.com/ashcoft/document-mcp/commit/326a2eb541d0796f1f54bb56c936795be53608c8))
+
+Restore the broader stopword list so questions like "What is the warranty period?" stop matching on
+  "is", and fall back to the unfiltered terms when a query consists only of common words, so
+  searching "in" still works.
+
+Co-authored-by: openhands <openhands@all-hands.dev>
+
+- **review**: Gate shared image tags and correct demo windows
+  ([`282ecdd`](https://github.com/ashcoft/document-mcp/commit/282ecdd1d67c1c59aa4d5c606650cbdf4e272d83))
+
+CodeRabbit follow-up:
+
+- release.yml: publish `latest` and the minor tag only when the released version is still the newest
+  release, so re-running a failed docker job for an older version cannot move shared tags backward.
+  - ci.yml: fail the Docker job when the container never reports healthy; the step previously only
+  printed logs. - demo.ts: copy listed documents before the simulated latency, count only the last
+  24 hours of agent actions, and apply the requested period to every action statistic and its
+  cutoff. Adds one recent seeded action so the dashboard window is not empty. - README: state that
+  the image serves the backend only, bind the example to localhost, mount a volume for uploads, and
+  warn about missing auth. - ROADMAP: scope the background-execution gap to the REST upload path,
+  since the MCP tool does call the orchestrator.
+
+Co-authored-by: openhands <openhands@all-hands.dev>
+
+- **review**: Grant Pages read to build job and tighten demo data
+  ([`6d17f54`](https://github.com/ashcoft/document-mcp/commit/6d17f5449a0da5b4ea677f4dcd4e50185ef5a2a6))
+
+- pages.yml: the build job runs configure-pages, which needs the pages scope; keep the write
+  permission scoped to that job rather than the workflow. - demo.ts: assign a document number before
+  the approval branch so rejection notes are not blank, honour the job_id filter in agent actions,
+  strip stopwords and punctuation when tokenizing queries so transformer questions rank transformer
+  passages first, and keep one citation per page instead of per document.
+
+Co-authored-by: openhands <openhands@all-hands.dev>
+
+- **review**: Keep decimal engineering values intact when tokenizing
+  ([`d678c8d`](https://github.com/ashcoft/document-mcp/commit/d678c8db885247ea948113f1b65a0353e7d2acde))
+
+Splitting on every non-alphanumeric character turned 12.5 into 12 and 5 and dropped both as too
+  short, so exact ratings were unsearchable. Split on everything except dots, trim edge dots, and
+  rely on an expanded stopword list instead of a length cutoff.
+
+Co-authored-by: openhands <openhands@all-hands.dev>
+
+- **review**: Keep engineering abbreviations searchable
+  ([`33f8381`](https://github.com/ashcoft/document-mcp/commit/33f8381b74e2e26d10757470875ef81333b53dc6))
+
+Narrow the stopword list to articles, pronouns, auxiliaries, and question words so terms like in,
+  no, and on survive, and match short or digit-bearing terms against whole tokens so they stay
+  precise. Also correct the comment about the digit check, which covers identifiers such as YNd11.
+
+Co-authored-by: openhands <openhands@all-hands.dev>
+
+- **review**: Make the data volume writable and tolerate a missing release
+  ([`8f50f24`](https://github.com/ashcoft/document-mcp/commit/8f50f24c23a3d00b77740a9bd0c73e9e3b86d0d0))
+
+- Dockerfile: create /app/data before chown so a fresh named volume inherits app ownership. Verified
+  with a minimal image: with the directory, a new volume is writable by the app user; without it,
+  mkdir fails with permission denied, which would stop the server during FileStorage import. -
+  release.yml: fall back to the highest remote tag when releases/latest is unavailable, so the first
+  release still publishes latest instead of failing the docker job.
+
+Co-authored-by: openhands <openhands@all-hands.dev>
+
+- **review**: Normalize content tokens the same way as query terms
+  ([`75c58fb`](https://github.com/ashcoft/document-mcp/commit/75c58fb25bdb59b49ce2f813775206dc8dd18f5d))
+
+A sentence-ending period kept YNd11. from matching YNd11 because numeric tokens compare exactly.
+  Both sides now go through splitTerms, which trims edge dots while preserving decimals.
+
+Co-authored-by: openhands <openhands@all-hands.dev>
+
+- **review**: Normalize leading-dot decimals to 0.x
+  ([`a4615c3`](https://github.com/ashcoft/document-mcp/commit/a4615c34849b2bd73b074a489dccbea0b26f51d9))
+
+A filename like .75_spec.pdf tokenized to 75, so a whole-number search matched it. Convert a leading
+  dot before a digit to 0. so 0.75 stays the searchable value.
+
+Co-authored-by: openhands <openhands@all-hands.dev>
+
+- **review**: Require exact matches for numeric search terms
+  ([`67ff1e7`](https://github.com/ashcoft/document-mcp/commit/67ff1e7b3153fd9fb6c5ee06fdc43f3761da7eee))
+
+Substring matching let 2.5 match the transformer's 12.5. Numeric terms now compare against the
+  content's tokens, while alphabetic terms keep substring matching so plurals and suffixes still
+  hit.
+
+Co-authored-by: openhands <openhands@all-hands.dev>
+
+- **review**: Serialize releases, complete demo jobs on a timer, read env files
+  ([`af3848d`](https://github.com/ashcoft/document-mcp/commit/af3848dab35b803779f7067268ff0474bdb9fcfb))
+
+Addresses review findings on #1067:
+
+- release.yml: add a concurrency group so overlapping runs cannot publish an older image last and
+  move `latest` or the major.minor tag backwards. - demo.ts: finalize uploads on a timer instead of
+  only when status is polled, so leaving the upload page still produces an approved, searchable
+  document. - demo.ts: emit the VAL-011 warning only when the issue status is not "Issued for
+  Construction", and split search helpers to cut cognitive complexity below the Sonar gate. -
+  vite.config.ts: read VITE_DEMO_MODE/VITE_BASE_PATH with loadEnv so .env.local and .env.production
+  work, while shell variables still take precedence.
+
+Co-authored-by: openhands <openhands@all-hands.dev>
+
+- **review**: Validate the release tag before trusting the API
+  ([`c738eb5`](https://github.com/ashcoft/document-mcp/commit/c738eb503b1b31323b8247cd044248ff78812b4f))
+
+A 200 response with an unexpected body left the tag empty or the literal "null", which skipped the
+  git fallback and published without moving the shared tags. Accept only values that look like a
+  v-prefixed tag and fall back to the highest remote tag otherwise. Verified the fallback resolves
+  v0.1.22 from the repository's tags.
+
+Co-authored-by: openhands <openhands@all-hands.dev>
+
+- **sonar**: Normalize terms without a lookahead regex
+  ([`31b351c`](https://github.com/ashcoft/document-mcp/commit/31b351c95dc9649ed945fc5046cb53c5eea68227))
+
+Replace the lookahead with a small helper so the tokenizer no longer trips the super-linear regex
+  rule, keeping the same decimal and identifier behaviour.
+
+Co-authored-by: openhands <openhands@all-hands.dev>
+
+- **sonar**: Scope Pages write permissions and simplify demo API
+  ([`377e60c`](https://github.com/ashcoft/document-mcp/commit/377e60c0b58c7243aa21298bec8494a5f49302ed))
+
+Move pages/id-token write permissions to the deploy job, drop the Math.random fallback in favour of
+  a counter, and split the upload status and Q&A helpers to keep cognitive complexity under the
+  gate.
+
+Co-authored-by: openhands <openhands@all-hands.dev>
+
+- **sonar**: Trim term dots without a regex
+  ([`c88cf4e`](https://github.com/ashcoft/document-mcp/commit/c88cf4e77b275bfc369fdc9dc5776a384dd8dc9f))
+
+Replace the anchored alternation with a small loop and use startsWith for the leading-dot check,
+  clearing the remaining Sonar findings without changing the tokenizer results.
+
+Co-authored-by: openhands <openhands@all-hands.dev>
+
+### Chores
+
+- **deps**: Update dependency regex to v2026.11.25
+  ([`9f5044a`](https://github.com/ashcoft/document-mcp/commit/9f5044a7859e63768400bb7710cb9224fa20ff01))
+
+### Continuous Integration
+
+- **pages**: Use current upload-pages-artifact major
+  ([`5be1627`](https://github.com/ashcoft/document-mcp/commit/5be162765b837fa61e672d18838973c07d8730aa))
+
+Co-authored-by: openhands <openhands@all-hands.dev>
+
+### Documentation
+
+- Add roadmap with phase progress and prioritized backlog
+  ([`2488c7d`](https://github.com/ashcoft/document-mcp/commit/2488c7d7047568cb383850e5268ec80e9308639d))
+
+Track delivery status as checklists so the percentages move only when an item is finished and
+  verified. Overall 51/77 items (66%) complete at v0.1.21.
+
+Records the largest correctness gap found while auditing the code: the ingestion orchestrator
+  returns parsed fields, chunks, embeddings, and low-confidence regions, but no code path persists
+  them, so search, Q&A, and the review queue read empty tables.
+
+Co-authored-by: openhands <openhands@all-hands.dev>
+
+### Features
+
+- **deploy**: Publish GHCR images with semver tags and deploy demo to Pages
+  ([`d6f130d`](https://github.com/ashcoft/document-mcp/commit/d6f130d74699cf6a678d462e0d718bb13d3d7128))
+
+GHCR: the release workflow derived tags from the branch ref, so metadata-action
+
+emitted only bare commit SHAs and never semver or latest. Feed the released version into the semver
+  patterns and add a latest tag.
+
+Pages: publish a static build of the dashboard at /document-mcp/ with an
+
+in-browser demo data set, so the UI is usable without a backend. The API layer now selects the real
+  backend or demo module at build time, Vite and the router honour VITE_BASE_PATH, and a 404.html
+  fallback keeps deep links working.
+
+Co-authored-by: openhands <openhands@all-hands.dev>
+
+### Refactoring
+
+- **api**: Keep the fetch helper in place and gate demo mode at build time
+  ([`055e9a3`](https://github.com/ashcoft/document-mcp/commit/055e9a3929f86fb7174107f2821984e3085b1bca))
+
+Moving the API module into backend.ts made the existing fetch() wrapper look like new code to static
+  analysis. Keep the module where it was and branch on a compile-time __DEMO_MODE__ constant
+  instead; Rollup drops the demo module from production builds, verified by grepping dist for seeded
+  demo content.
+
+Co-authored-by: openhands <openhands@all-hands.dev>
+
+
 ## v0.1.22 (2026-11-26)
 
 ### Bug Fixes

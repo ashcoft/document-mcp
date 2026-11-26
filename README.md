@@ -13,6 +13,11 @@ A fully offline, on-premise engineering document-control knowledge base delivere
 - **Audit Trail**: Complete logging of all operations with SHA-256 hashes
 - **Human-in-the-Loop**: Review queue for low-confidence OCR regions
 
+## Roadmap
+
+Current delivery status is tracked in [ROADMAP.md](ROADMAP.md) — 66% of tracked items complete as of
+v0.1.21, with the remaining work grouped into phases and a prioritized backlog.
+
 ## Architecture
 
 ```

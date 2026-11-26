@@ -5,6 +5,9 @@ import { fileURLToPath, URL } from 'node:url';
 
 export default defineConfig({
   base: process.env.VITE_BASE_PATH || '/',
+  define: {
+    __DEMO_MODE__: JSON.stringify(process.env.VITE_DEMO_MODE === 'true'),
+  },
   plugins: [
     vue({
       template: {

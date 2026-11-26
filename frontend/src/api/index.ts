@@ -1,25 +1,307 @@
 // ============================================================
-// API entry point — selects the live backend or the static demo
-// data set at build time (VITE_DEMO_MODE=true).
+// API Service — wraps fetch() with error handling
 // ============================================================
 
-import * as backend from './backend';
+import type {
+  UploadResponse,
+  StatusResponse,
+  SearchRequest,
+  SearchResponse,
+  AskRequest,
+  AskResponse,
+  DocumentListResponse,
+  DocumentResponse,
+  SystemMetricsResponse,
+  AgentActionsListResponse,
+  AgentActionStatsResponse,
+  LowConfidenceRegionResponse,
+  ReviewStatsResponse,
+  ValidationResponse,
+  DocumentChunksResponse,
+} from '../types';
 import * as demo from './demo';
 
-export const isDemoMode = import.meta.env.VITE_DEMO_MODE === 'true';
+const API_BASE = '/api';
 
-const impl = isDemoMode ? demo : backend;
+/**
+ * Replaced at build time with a literal boolean (see vite.config.ts), so the
+ * unused implementation is tree-shaken out of the bundle.
+ */
+export const isDemoMode = __DEMO_MODE__;
 
-export const uploadDocument = impl.uploadDocument;
-export const getUploadStatus = impl.getUploadStatus;
-export const searchDocuments = impl.searchDocuments;
-export const askQuestion = impl.askQuestion;
-export const getDocuments = impl.getDocuments;
-export const getDocument = impl.getDocument;
-export const getDocumentChunks = impl.getDocumentChunks;
-export const getSystemMetrics = impl.getSystemMetrics;
-export const getAgentActions = impl.getAgentActions;
-export const getAgentActionStats = impl.getAgentActionStats;
-export const getFlaggedRegions = impl.getFlaggedRegions;
-export const getReviewStats = impl.getReviewStats;
-export const validateDocument = impl.validateDocument;
+/**
+ * Wraps fetch() to convert network-level failures (backend unreachable,
+ * DNS errors, etc.) into a clear, user-friendly error message instead of
+ * the raw browser "NetworkError when attempting to fetch resource".
+ */
+async function apiFetch(input: string, init?: RequestInit): Promise<Response> {
+  try {
+    const response = await fetch(input, init);
+    return response;
+  } catch (err) {
+    if (err instanceof TypeError) {
+      throw new Error(
+        'Cannot connect to the server. Please ensure the backend is running (http://localhost:8000).'
+      );
+    }
+    throw err;
+  }
+}
+
+/**
+ * Safely parses an error response body as JSON, falling back to raw text.
+ */
+async function parseErrorResponse(response: Response): Promise<string> {
+  if ([502, 503, 504].includes(response.status)) {
+    return (
+      'Cannot connect to the backend server. ' +
+      'Please ensure the backend is running (http://localhost:8000).'
+    );
+  }
+
+  const text = await response.text();
+  try {
+    const error = JSON.parse(text);
+    return error.detail || error.message || `${response.status} ${response.statusText}`;
+  } catch {
+    return text || `${response.status} ${response.statusText}`;
+  }
+}
+
+// ============================================================
+// Upload endpoints
+// ============================================================
+
+export async function uploadDocument(file: File, discipline?: string): Promise<UploadResponse> {
+  if (isDemoMode) return demo.uploadDocument(file, discipline);
+  const formData = new FormData();
+  formData.append('file', file);
+  if (discipline) {
+    formData.append('discipline', discipline);
+  }
+
+  const response = await apiFetch(`${API_BASE}/upload/`, {
+    method: 'POST',
+    body: formData,
+  });
+
+  if (!response.ok) {
+    throw new Error(await parseErrorResponse(response));
+  }
+
+  const text = await response.text();
+  if (!text) {
+    throw new Error('Empty response from server');
+  }
+
+  try {
+    return JSON.parse(text);
+  } catch {
+    throw new Error('Invalid JSON response from server');
+  }
+}
+
+export async function getUploadStatus(jobId: string): Promise<StatusResponse> {
+  if (isDemoMode) return demo.getUploadStatus(jobId);
+  const response = await apiFetch(`${API_BASE}/upload/status/${encodeURIComponent(jobId)}`);
+
+  if (!response.ok) {
+    throw new Error(await parseErrorResponse(response));
+  }
+
+  return response.json();
+}
+
+// ============================================================
+// Search & Q&A endpoints
+// ============================================================
+
+export async function searchDocuments(request: SearchRequest): Promise<SearchResponse> {
+  if (isDemoMode) return demo.searchDocuments(request);
+  const response = await apiFetch(`${API_BASE}/search`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(request),
+  });
+
+  if (!response.ok) {
+    throw new Error(await parseErrorResponse(response));
+  }
+
+  return response.json();
+}
+
+export async function askQuestion(request: AskRequest): Promise<AskResponse> {
+  if (isDemoMode) return demo.askQuestion(request);
+  const response = await apiFetch(`${API_BASE}/ask`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(request),
+  });
+
+  if (!response.ok) {
+    throw new Error(await parseErrorResponse(response));
+  }
+
+  return response.json();
+}
+
+// ============================================================
+// Document endpoints
+// ============================================================
+
+export async function getDocuments(
+  page = 1,
+  pageSize = 20,
+  filters?: { discipline?: string; status?: string }
+): Promise<DocumentListResponse> {
+  if (isDemoMode) return demo.getDocuments(page, pageSize, filters);
+  let url = `${API_BASE}/documents?page=${page}&page_size=${pageSize}`;
+  if (filters?.discipline) {
+    url += `&discipline=${encodeURIComponent(filters.discipline)}`;
+  }
+  if (filters?.status) {
+    url += `&status=${encodeURIComponent(filters.status)}`;
+  }
+
+  const response = await apiFetch(url);
+
+  if (!response.ok) {
+    throw new Error(await parseErrorResponse(response));
+  }
+
+  return response.json();
+}
+
+export async function getDocument(id: number): Promise<DocumentResponse> {
+  if (isDemoMode) return demo.getDocument(id);
+  const response = await apiFetch(`${API_BASE}/documents/${id}`);
+
+  if (!response.ok) {
+    throw new Error(await parseErrorResponse(response));
+  }
+
+  return response.json();
+}
+
+// ============================================================
+// Document chunks endpoint (for preview)
+// ============================================================
+
+export async function getDocumentChunks(
+  id: number
+): Promise<DocumentChunksResponse> {
+  if (isDemoMode) return demo.getDocumentChunks(id);
+  const response = await apiFetch(`${API_BASE}/documents/${id}/chunks`);
+
+  if (!response.ok) {
+    throw new Error(await parseErrorResponse(response));
+  }
+
+  return response.json();
+}
+
+// ============================================================
+// Admin endpoints
+// ============================================================
+
+export async function getSystemMetrics(): Promise<SystemMetricsResponse> {
+  if (isDemoMode) return demo.getSystemMetrics();
+  const response = await apiFetch(`${API_BASE}/admin/metrics`);
+
+  if (!response.ok) {
+    throw new Error(await parseErrorResponse(response));
+  }
+
+  return response.json();
+}
+
+export async function getAgentActions(params?: {
+  limit?: number;
+  offset?: number;
+  action_type?: string;
+  document_id?: number;
+  job_id?: string;
+  success?: boolean;
+}): Promise<AgentActionsListResponse> {
+  if (isDemoMode) return demo.getAgentActions(params);
+  const paramsArr: string[] = [];
+  if (params?.limit !== undefined) paramsArr.push(`limit=${params.limit}`);
+  if (params?.offset !== undefined) paramsArr.push(`offset=${params.offset}`);
+  if (params?.action_type) paramsArr.push(`action_type=${encodeURIComponent(params.action_type)}`);
+  if (params?.document_id !== undefined) paramsArr.push(`document_id=${params.document_id}`);
+  if (params?.job_id) paramsArr.push(`job_id=${encodeURIComponent(params.job_id)}`);
+  if (params?.success !== undefined) paramsArr.push(`success=${params.success}`);
+
+  const query = paramsArr.length > 0 ? `?${paramsArr.join('&')}` : '';
+  const response = await apiFetch(`${API_BASE}/admin/actions${query}`);
+
+  if (!response.ok) {
+    throw new Error(await parseErrorResponse(response));
+  }
+
+  return response.json();
+}
+
+export async function getAgentActionStats(hours = 24): Promise<AgentActionStatsResponse> {
+  if (isDemoMode) return demo.getAgentActionStats(hours);
+  const response = await apiFetch(`${API_BASE}/admin/actions/stats?hours=${hours}`);
+
+  if (!response.ok) {
+    throw new Error(await parseErrorResponse(response));
+  }
+
+  return response.json();
+}
+
+// ============================================================
+// Review endpoints
+// ============================================================
+
+export async function getFlaggedRegions(
+  documentId?: number,
+  reviewed = false
+): Promise<LowConfidenceRegionResponse[]> {
+  if (isDemoMode) return demo.getFlaggedRegions(documentId, reviewed);
+  let url = `${API_BASE}/review/flagged?reviewed=${reviewed}`;
+  if (documentId !== undefined) {
+    url += `&document_id=${documentId}`;
+  }
+
+  const response = await apiFetch(url);
+
+  if (!response.ok) {
+    throw new Error(await parseErrorResponse(response));
+  }
+
+  return response.json();
+}
+
+export async function getReviewStats(): Promise<ReviewStatsResponse> {
+  if (isDemoMode) return demo.getReviewStats();
+  const response = await apiFetch(`${API_BASE}/review/stats/summary`);
+
+  if (!response.ok) {
+    throw new Error(await parseErrorResponse(response));
+  }
+
+  return response.json();
+}
+
+// ============================================================
+// Validation endpoints
+// ============================================================
+
+export async function validateDocument(documentId: number): Promise<ValidationResponse> {
+  if (isDemoMode) return demo.validateDocument(documentId);
+  const response = await apiFetch(`${API_BASE}/validation/${documentId}`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+  });
+
+  if (!response.ok) {
+    throw new Error(await parseErrorResponse(response));
+  }
+
+  return response.json();
+}

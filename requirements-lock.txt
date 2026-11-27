@@ -4606,9 +4606,9 @@ truststore==0.10.5 \
     # via
     #   httpcore2
     #   httpx2
-typer==0.29.2 \
-    --hash=sha256:b1998dc5f2c3dedafa1517a9521fa944cc4dc1fadcea085d81a3b10ebcaeb075 \
-    --hash=sha256:f30731f8ca758368b836b3714872e58e395cef8fcaff918c853b1969ed5274e7
+typer==0.29.3 \
+    --hash=sha256:1fd37275046faecc86caa2e0e313978c10db71533fc0fe1a48f4e03a60efc23c \
+    --hash=sha256:8189a53bb9684dc551e0b61e71904b323214884f2eb14bfe71aa859ae980d10a
     # via transformers
 typing-extensions==4.16.0 \
     --hash=sha256:481caa481374e813c1b176ada14e97f1f67a4539ce9cfeb3f350d78d6370c2e8 \

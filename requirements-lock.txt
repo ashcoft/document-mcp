@@ -4879,9 +4879,9 @@ uuid-utils==0.17.1 \
     # via
     #   langchain-core
     #   langsmith
-uvicorn[standard]==0.54.0 \
-    --hash=sha256:505bdb0f318731d45f1f712071fc781a8981f6847a31c902c9f5e652d4f67faf \
-    --hash=sha256:a2e33cbfaa0306f8e6b0c13e0cb89d7d7a2da3e62b90c66e18c33d9807b28620
+uvicorn[standard]==0.55.0 \
+    --hash=sha256:b65ae5f0f30cdcbc26a104b93d7d19723aa5f46fec3915a6c247d5795449331c \
+    --hash=sha256:bee604c5af6e15fb0584913c632b222c09db1048c26fc05053203207c4b9e37d
     # via
     #   -r requirements.txt
     #   mcp
